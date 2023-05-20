@@ -1,0 +1,14 @@
+@use 'src/styles/parts.module' as *;
+
+.contacts {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.contact {
+  @extend %base-item;
+  color: #fff;
+  transition: .2s linear;
+}

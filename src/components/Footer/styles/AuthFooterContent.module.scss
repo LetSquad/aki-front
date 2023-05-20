@@ -1,0 +1,63 @@
+@use 'src/styles/_mq' as *;
+@use 'src/styles/parts.module' as *;
+
+.footer-content {
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  width: 100%;
+
+  @include mq($until: mobile) {
+    padding: 0 30px 20px;
+  }
+  @include mq($from: mobile, $until: tablet) {
+    padding: 0 90px 20px;
+  }
+  @include mq($from: tablet) {
+    flex-wrap: nowrap;
+    padding: 0 120px 20px;
+    row-gap: 30px;
+  }
+}
+
+.additional-content {
+  display: flex;
+
+  @include mq($until: mobile) {
+    align-items: center;
+    flex-direction: column;
+    row-gap: 15px;
+  }
+  @include mq($from: mobile, $until: tablet) {
+    align-items: center;
+    flex-direction: column;
+    row-gap: 15px;
+  }
+  @include mq($from: tablet) {
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+  }
+}
+
+.desktop-content {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+.links {
+  align-content: flex-start;
+  align-items: flex-start;
+  column-gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 310px;
+  row-gap: 20px;
+}
+
+.link {
+  @extend %base-item;
+  flex: 0 0 calc(50% - 10px);
+}

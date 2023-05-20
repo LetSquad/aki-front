@@ -1,0 +1,37 @@
+@use 'src/styles/mq' as *;
+
+.grid,
+%card-grid {
+  margin: 10px 0 !important;
+  width: 100%;
+
+  &-top {
+    width: 100%;
+    @include mq($until: tablet) {
+      margin: 10px 0 0 !important;
+    }
+    @include mq($from: tablet) {
+      margin: 10px 0 !important;
+    }
+  }
+
+  &-middle {
+    width: 100%;
+    @include mq($until: tablet) {
+      margin: 0 !important;
+    }
+    @include mq($from: tablet) {
+      margin: 10px 0 !important;
+    }
+  }
+
+  &-bottom {
+    width: 100%;
+    @include mq($until: tablet) {
+      margin: 0 0 10px !important;
+    }
+    @include mq($from: tablet) {
+      margin: 10px 0 !important;
+    }
+  }
+}

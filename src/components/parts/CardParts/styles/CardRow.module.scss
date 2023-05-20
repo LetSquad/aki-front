@@ -1,0 +1,12 @@
+.row {
+  padding-top: 0 !important;
+
+  &-title {
+    font-weight: bold;
+    padding-left: 0 !important;
+  }
+
+  &-content {
+    overflow-wrap: break-word;
+  }
+}

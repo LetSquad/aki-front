@@ -1,0 +1,85 @@
+@use 'src/styles/variables.module' as variables;
+
+.overlay,
+%overlay {
+  color: variables.$primary-text-color;
+  height: 100%;
+  left: -100%;
+  position: relative;
+  transform: translateX(0);
+  transition: transform 0.6s ease-in-out;
+  width: 200%;
+  z-index: 1;
+
+  &::before {
+    background: repeat-x right center url('../../../static/images/creative.webp');
+    content: "";
+    height: 100%;
+    opacity: .5;
+    position: absolute;
+    width: 200%;
+    z-index: -1;
+  }
+
+  &-right {
+    @extend %overlay;
+    transform: translateX(50%);
+  }
+
+  &-panel {
+    align-items: center;
+    color: variables.$primary-text-color;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    padding: 0 40px;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    transform: translateX(0);
+    transition: transform 0.6s ease-in-out;
+    width: 50%;
+
+    &-right {
+      @extend %overlay-panel;
+    }
+
+    &-left {
+      @extend %overlay-panel;
+      transform: translateX(0);
+
+      &-active {
+        @extend %overlay-panel-left;
+        transform: translateX(-20%);
+      }
+    }
+
+    &-right {
+      @extend %overlay-panel;
+      right: 0;
+      transform: translateX(20%);
+
+      &-active {
+        @extend %overlay-panel-right;
+        transform: translateX(0);
+      }
+    }
+  }
+
+  &-container {
+    height: 100%;
+    left: 50%;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    transition: transform 0.6s ease-in-out;
+    width: 50%;
+    z-index: 100;
+
+    &-right {
+      @extend %overlay-container;
+      transform: translateX(-100%);
+    }
+  }
+}

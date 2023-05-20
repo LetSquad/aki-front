@@ -1,0 +1,11 @@
+.button {
+  height: 100%;
+
+  &-container {
+    height: 100%;
+
+    &::before {
+      width: 0 !important;
+    }
+  }
+}

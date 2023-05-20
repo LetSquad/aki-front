@@ -1,0 +1,26 @@
+@use 'src/styles/_mq' as *;
+
+.footer-content {
+  background-color: transparent;
+  display: flex;
+  width: 100%;
+
+  @include mq($until: mobile) {
+    align-items: center;
+    flex-direction: column;
+    padding: 0 30px 20px;
+    row-gap: 15px;
+  }
+  @include mq($from: mobile, $until: tablet) {
+    align-items: center;
+    flex-direction: column;
+    padding: 0 90px 20px;
+    row-gap: 15px;
+  }
+  @include mq($from: tablet) {
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    padding: 0 120px 20px;
+  }
+}
