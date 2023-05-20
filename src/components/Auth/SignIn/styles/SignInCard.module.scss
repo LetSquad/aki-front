@@ -1,0 +1,23 @@
+@use '../../styles/AuthForm.module' as *;
+@use 'src/styles/variables.module' as variables;
+
+.sign-in,
+%sign-in {
+  @extend %auth-form-container;
+  background: url('/src/static/images/firstBg.jpg') top / 100% no-repeat;
+  background-size: cover;
+  left: 0;
+  width: 50%;
+  z-index: 2;
+
+  &-inactive {
+    @extend %sign-in;
+    transform: translateX(100%);
+  }
+
+  &-mobile {
+    @extend %auth-form-container-mobile;
+    height: 100%;
+    width: 100%;
+  }
+}

@@ -1,0 +1,23 @@
+.socials {
+  display: flex;
+  column-gap: 20px;
+}
+
+.social {
+  align-items: center;
+  border: 1px solid hsla(0,0%,100%,.2);
+  border-radius: 50%;
+  display: inline-flex;
+  height: 60px;
+  justify-content: center;
+  vertical-align: middle;
+  width: 60px;
+
+  &-link {
+    transition: .2s linear;
+
+    :hover > & {
+      opacity: 0.2;
+    }
+  }
+}

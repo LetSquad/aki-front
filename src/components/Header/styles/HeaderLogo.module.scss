@@ -1,0 +1,9 @@
+@use 'src/styles/_mq' as *;
+
+.header-logo {
+  margin: auto 10px auto auto;
+
+  @include mq($until: mobile) {
+    max-width: 90px;
+  }
+}

@@ -1,0 +1,44 @@
+@use '../../styles/AuthForm.module' as *;
+@use 'src/styles/variables.module' as variables;
+@use 'src/styles/mq' as *;
+
+@keyframes show {
+  0%,
+  49.99% {
+    opacity: 0;
+    z-index: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 1;
+    z-index: 5;
+  }
+}
+
+.sign-up,
+%sign-up {
+  @extend %auth-form-container;
+  background: url('/src/static/images/firstBg.jpg') bottom / 100% no-repeat;
+  background-size: cover;
+  left: 0;
+  opacity: 0;
+  padding: 15px 0;
+  width: 50%;
+  z-index: 1;
+
+  &-active {
+    @extend %sign-up;
+    animation: show 0.6s;
+    opacity: 1;
+    transform: translateX(100%);
+    z-index: 5;
+  }
+
+  &-mobile {
+    @extend %auth-form-container-mobile;
+    height: max-content;
+    padding: 15px 0;
+    width: 100%;
+  }
+}
