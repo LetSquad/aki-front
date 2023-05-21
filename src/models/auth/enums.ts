@@ -13,13 +13,13 @@ export enum BaseRegistrationFieldName {
     PHONE = "phone",
     FIRST_NAME = "firstName",
     LAST_NAME = "lastName",
-    SURNAME = "surname",
+    MIDDLE_NAME = "middleName",
     PASSWORD = "password",
     PASSWORD_CONFIRM = "confirmPassword"
 }
 
 export enum LandlordRegistrationFieldName {
     INN = "inn",
-    ENTITY_NAME = "entityName",
+    ORGANIZATION = "organization",
     JOB_TITLE = "jobTitle"
 }

@@ -9,5 +9,9 @@ export const CommonPagesData: PageData = {
     MY_PROFILE: {
         name: "Профиль",
         slug: BasePageSlugs.MY_PROFILE
+    },
+    AREA: {
+        name: "Площадка",
+        slug: BasePageSlugs.AREA
     }
 };

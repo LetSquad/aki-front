@@ -2,7 +2,7 @@
 @use 'src/styles/parts.module' as *;
 
 .item {
-  @extend %base-item;
+  @extend %base-item-link;
 
   &-active {
     &::after {

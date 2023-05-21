@@ -1,0 +1,23 @@
+@use '~sass-mq' as *;
+@use 'src/styles/baseParts.module' as *;
+
+.container {
+  display: flow-root;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  transition: padding 0.2s ease-in;
+  @include mq($until: tablet) {
+    padding: 0 20px;
+  }
+  @include mq($from: tablet) {
+    padding: 0 90px;
+  }
+}
+
+.pass-container {
+  display: flex;
+  @include mq($until: tablet) {
+    flex-direction: column;
+  }
+}

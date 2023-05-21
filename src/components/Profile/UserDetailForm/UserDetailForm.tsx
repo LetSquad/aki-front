@@ -34,7 +34,7 @@ export default function UserDetailForm({
 
     const onSubmit = useCallback(
         (values: UserFormFields) => {
-            dispatch(updateUserRequest({ userId: user.userId, ...values } as User)).then((payload) => {
+            dispatch(updateUserRequest({ id: user.id, ...values } as User)).then((payload) => {
                 if (payload.type === updateUserRequest.fulfilled.type) {
                     onCancel();
                 }
@@ -44,7 +44,7 @@ export default function UserDetailForm({
     );
 
     const initialValues = useMemo<UserFormFields>(() => {
-        const { userId, userRole, ...userFields } = user;
+        const { id, userRole, ...userFields } = user;
 
         return userFields;
     }, [user]);

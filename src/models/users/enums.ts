@@ -11,7 +11,7 @@ export enum UserRole {
 
 export enum BaseUserFieldsName {
     FIRST_NAME = "firstName",
-    SURNAME = "surname",
+    MIDDLE_NAME = "middleName",
     LAST_NAME = "lastName",
     IMAGE = "userImage",
     EMAIL = "email",
@@ -20,6 +20,6 @@ export enum BaseUserFieldsName {
 
 export enum LandlordBaseUserFieldsName {
     INN = "inn",
-    ENTITY_NAME = "entityName",
+    ORGANIZATION = "organization",
     JOB_TITLE = "jobTitle"
 }

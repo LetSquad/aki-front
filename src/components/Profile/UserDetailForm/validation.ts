@@ -71,7 +71,7 @@ export const baseUserValidationSchema = yup.object()
             .required(LAST_NAME_REQUIRED_MESSAGE)
     })
     .shape({
-        [BaseUserFieldsName.SURNAME]: yup.string()
+        [BaseUserFieldsName.MIDDLE_NAME]: yup.string()
             .trim()
             .min(AMOUNT_OF_SURNAME_CHARACTERS.min, SURNAME_INVALID_MESSAGE)
             .max(AMOUNT_OF_NAME_CHARACTERS.max, SURNAME_INVALID_MESSAGE)
@@ -110,7 +110,7 @@ export const landlordProfileValidationSchema = userProfileValidationSchema
             .required(JOB_TITLE_REQUIRED_MESSAGE)
     })
     .shape({
-        [LandlordRegistrationFieldName.ENTITY_NAME]: yup.string()
+        [LandlordRegistrationFieldName.ORGANIZATION]: yup.string()
             .trim()
             .min(AMOUNT_OF_ENTITY_NAME_CHARACTERS.min, ENTITY_NAME_INVALID_MESSAGE)
             .required(ENTITY_NAME_REQUIRED_MESSAGE)

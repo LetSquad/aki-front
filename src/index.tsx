@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { Icon } from "semantic-ui-react";
 
-import App from "@components/App/App";
+import App from "@components/App";
 import { BASENAME } from "@coreUtils/constants";
 import WithErrorBoundaries from "@coreUtils/WithErrorBoundaries";
 import { store } from "@store/index";

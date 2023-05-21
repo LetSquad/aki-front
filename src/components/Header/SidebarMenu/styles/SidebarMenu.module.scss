@@ -11,11 +11,11 @@
 }
 
 .image {
+  cursor: pointer;
   height: 120px;
   margin: 15px auto;
   transition: transform 0.1s linear;
   width: 120px;
-  cursor: pointer;
 
   &:hover {
     transform: scale(1.1);
@@ -29,6 +29,5 @@
 }
 
 .exit-item {
-  @extend %base-item;
-  cursor: pointer;
+  @extend %base-item-link;
 }

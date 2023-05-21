@@ -6,9 +6,6 @@
 .segment,
 %user-info-segment {
   @extend %flip-edit-card-segment;
-  background-color: variables.$background-color !important;
-  border-radius: 7px !important;
-  padding: 30px 30px 15px !important;
 
   @include mq($until: mobile) {
     min-width: 325px;
@@ -25,7 +22,7 @@
 
   &-content {
     @extend %user-info-segment;
-    margin: 70px 0 20px !important;
+    margin: 70px 0 0 !important;
 
     @include mq($until: mobile) {
       max-height: 100%;

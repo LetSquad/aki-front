@@ -6,20 +6,17 @@ import { useMediaQuery } from "react-responsive";
 
 import apiUrls from "@api/apiUrls";
 import AppContent from "@components/App/AppContent";
-import SidebarMenu from "@components/Header/SidebarMenu/SidebarMenu";
+import SidebarMenu from "@components/Header/SidebarMenu";
 import { TABLET_MAX_WIDTH } from "@coreUtils/constants";
 import { useLogout } from "@hooks/useLogout";
-import { SignInResponse } from "@models/responses/types";
-import { useAppDispatch, useAppSelector } from "@store/hooks";
+import { SignInResponse } from "@models/auth/types";
+import { useAppDispatch } from "@store/hooks";
 import { setRole } from "@store/info/reducer";
-import { selectIsUserNotAuth } from "@store/info/selectors";
 
 import styles from "./styles/App.module.scss";
 
 export default function App() {
     const dispatch = useAppDispatch();
-
-    const isNotAuth = useAppSelector(selectIsUserNotAuth);
 
     const logout = useLogout();
 
@@ -49,7 +46,7 @@ export default function App() {
     return (
         <div className={styles.app}>
             {
-                isMobile && !isNotAuth
+                isMobile
                     ? <SidebarMenu />
                     : <AppContent />
             }

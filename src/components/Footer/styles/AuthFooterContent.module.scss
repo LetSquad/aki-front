@@ -36,8 +36,8 @@
   }
   @include mq($from: tablet) {
     align-items: center;
-    justify-content: space-between;
     flex-wrap: nowrap;
+    justify-content: space-between;
   }
 }
 
@@ -58,6 +58,6 @@
 }
 
 .link {
-  @extend %base-item;
+  @extend %base-item-link;
   flex: 0 0 calc(50% - 10px);
 }

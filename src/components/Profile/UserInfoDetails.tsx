@@ -1,4 +1,4 @@
-import {
+import React, {
     lazy,
     useCallback,
     useMemo,
@@ -72,7 +72,7 @@ export default function UserInfoDetails({ user, editable = false }: UserInfoDeta
     }, [user, baseColumnsWidth]);
 
     const landlordRows = useCallback(
-        ({ inn, jobTitle, entityName }: LandlordInfo) => [
+        ({ inn, jobTitle, organization }: LandlordInfo) => [
             (
                 <CardRow
                     key={LandlordBaseUserFieldsName.INN}
@@ -83,9 +83,9 @@ export default function UserInfoDetails({ user, editable = false }: UserInfoDeta
             ),
             (
                 <CardRow
-                    key={LandlordBaseUserFieldsName.ENTITY_NAME}
+                    key={LandlordBaseUserFieldsName.ORGANIZATION}
                     title="Юридическое лицо"
-                    value={entityName}
+                    value={organization}
                     columnsWidth={additionalColumnsWidth}
                 />
             ),
@@ -111,7 +111,7 @@ export default function UserInfoDetails({ user, editable = false }: UserInfoDeta
     const userContent = useMemo(() => {
         const {
             firstName,
-            surname,
+            middleName,
             lastName,
             userImage
         } = user;
@@ -126,7 +126,7 @@ export default function UserInfoDetails({ user, editable = false }: UserInfoDeta
                         src={userImage || nullUserAvatar}
                     />
                     <div className={styles.content}>
-                        <h1 className={styles.contentFullName}>{getFullName(firstName, surname, lastName)}</h1>
+                        <h1 className={styles.contentFullName}>{getFullName(firstName, middleName, lastName)}</h1>
                         <div className={styles.gridContainer}>
                             <WithSuspense>
                                 <CardGrid position="top">{baseRows}</CardGrid>
