@@ -4,7 +4,9 @@ import {
     ResetPasswordFieldName,
     SignInFieldName
 } from "@models/auth/enums";
-import { BaseUserRole } from "@models/users/enums";
+import { BaseResponse } from "@models/responses/types";
+import { BaseUserRole, UserRole } from "@models/users/enums";
+import { User } from "@models/users/types";
 
 export interface ResetPasswordFormValues {
     [ResetPasswordFieldName.EMAIL]: string;
@@ -19,7 +21,7 @@ export interface SignUpFormValues {
     [BaseRegistrationFieldName.ROLE]: BaseUserRole;
     [BaseRegistrationFieldName.FIRST_NAME]: string;
     [BaseRegistrationFieldName.LAST_NAME]: string;
-    [BaseRegistrationFieldName.SURNAME]?: string;
+    [BaseRegistrationFieldName.MIDDLE_NAME]?: string;
     [BaseRegistrationFieldName.EMAIL]: string;
     [BaseRegistrationFieldName.PHONE]: string;
     [BaseRegistrationFieldName.PASSWORD]: string;
@@ -27,3 +29,15 @@ export interface SignUpFormValues {
     [LandlordRegistrationFieldName.INN]?: string;
     [LandlordRegistrationFieldName.JOB_TITLE]?: string;
 }
+
+interface RolesResponse {
+    role: UserRole;
+}
+
+export type SignInResponse = {
+    dataBlock: RolesResponse;
+} & BaseResponse;
+
+export type SignUpResponse = {
+    dataBlock: User;
+} & BaseResponse;

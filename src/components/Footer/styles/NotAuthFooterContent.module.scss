@@ -19,8 +19,8 @@
   }
   @include mq($from: tablet) {
     align-items: center;
-    justify-content: space-between;
     flex-wrap: nowrap;
+    justify-content: space-between;
     padding: 0 120px 20px;
   }
 }

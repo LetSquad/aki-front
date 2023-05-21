@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 
 import apiUrls from "@api/apiUrls";
 import UserInfoDetailsPlaceholder from "@components/Profile/Placeholders/UserInfoDetailsPlaceholder";
-import { UserResponse } from "@models/responses/types";
+import { UserResponse } from "@models/users/types";
 import ErrorBlock from "@parts/ErrorBlock/ErrorBlock";
 import LoadingErrorBlock from "@parts/LoadingErrorBlock/LoadingErrorBlock";
 import { useAppSelector } from "@store/hooks";
@@ -52,7 +52,7 @@ export default function UserCard() {
             <div className={styles.container}>
                 <UserInfoDetails
                     user={data.dataBlock}
-                    editable={user?.userId === data.dataBlock.userId}
+                    editable={user?.id === data.dataBlock.id}
                 />
             </div>
         );

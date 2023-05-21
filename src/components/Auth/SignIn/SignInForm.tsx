@@ -21,10 +21,9 @@ import {
 import { WithSuspense } from "@coreUtils/WithSuspense";
 import { useToggle } from "@hooks/useToogle";
 import { SignInFieldName } from "@models/auth/enums";
-import { SignInFormValues } from "@models/auth/types";
+import { SignInFormValues, SignInResponse } from "@models/auth/types";
 import { FormFieldType } from "@models/forms/enums";
 import { FormFieldProps } from "@models/forms/types";
-import { SignInResponse } from "@models/responses/types";
 import PrimaryButton from "@parts/Buttons/PrimaryButton";
 import UnderscoreButton from "@parts/Buttons/UnderscoreButton";
 import FormFieldPlaceholder from "@parts/FormField/Placeholders/FormFieldPlaceholder";

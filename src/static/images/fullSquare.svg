@@ -1,0 +1,14 @@
+<svg width="48" height="48" xmlns="http://www.w3.org/2000/svg" fill="none">
+
+ <g>
+  <title>Layer 1</title>
+  <path id="svg_1" stroke-width="4" stroke-linejoin="round" stroke="#fff" d="m40,6l-32,0c-1.10457,0 -2,0.89543 -2,2l0,32c0,1.1046 0.89543,2 2,2l32,0c1.1046,0 2,-0.8954 2,-2l0,-32c0,-1.10457 -0.8954,-2 -2,-2z"/>
+  <path id="svg_2" stroke-width="4" stroke-linecap="round" stroke="#fff" d="m16.1231,6l-10.1231,9"/>
+  <path id="svg_3" stroke-width="4" stroke-linecap="round" stroke="#fff" d="m26.0027,6l-20.0027,18"/>
+  <path id="svg_4" stroke-width="4" stroke-linecap="round" stroke="#fff" d="m34.92593,6l-28.25926,25.96296"/>
+  <path id="svg_5" stroke-width="4" stroke-linecap="round" stroke="#fff" d="m41.37037,9.48148l-34.77778,31.48148"/>
+  <path id="svg_10" stroke-width="4" stroke-linecap="round" stroke="#fff" d="m41.88889,17.62963l-26.25926,24.25926"/>
+  <path id="svg_11" stroke-width="4" stroke-linecap="round" stroke="#fff" d="m41.92863,26.07407l-16.81751,15.85185"/>
+  <path id="svg_12" stroke-width="4" stroke-linecap="round" stroke="#fff" d="m41.75273,34.07407l-8.04903,7.74074"/>
+ </g>
+</svg>

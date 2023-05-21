@@ -7,5 +7,6 @@ export enum BasePageSlugs {
 }
 
 export enum LandLordPageSlugs {
-    AREA_CREATE = "/areas/:areaId/create"
+    AREA_CREATE = "/areas/:areaId/create",
+    MY_AREAS = "/profile/areas"
 }

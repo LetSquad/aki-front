@@ -1,0 +1,18 @@
+@use 'src/styles/variables.module' as variables;
+
+.item {
+  align-items: center;
+  column-gap: 7px;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.icon {
+  height: 48px;
+  width: 48px;
+}
+
+.content {
+  font-size: 18px;
+  font-weight: 500;
+}

@@ -3,8 +3,7 @@ import axios, { AxiosResponse } from "axios";
 import { toast } from "react-hot-toast";
 
 import apiUrls from "@api/apiUrls";
-import { UserResponse } from "@models/responses/types";
-import { User } from "@models/users/types";
+import { User, UserResponse } from "@models/users/types";
 
 const UPDATE_USER_TOAST = (id: number) => `update-user-${id}`;
 
@@ -33,7 +32,7 @@ export const updateUserRequest = createAsyncThunk("updateUserRequest", async ({ 
         formData.append("image", userImage);
     }
 
-    formData.append("userTO", new Blob([
+    formData.append("user", new Blob([
         JSON.stringify(typeof userImage === "string" ? { ...data, userImage } : data)
     ], { type: "application/json" }));
 
@@ -62,19 +61,19 @@ export const userSlice = createSlice({
             state.currentUser = action.payload.dataBlock;
         });
         builder.addCase(updateUserRequest.pending, (state, action) => {
-            toast.loading("Информация о вашем профиле обновляется", { id: UPDATE_USER_TOAST(action.meta.arg.userId) });
+            toast.loading("Информация о вашем профиле обновляется", { id: UPDATE_USER_TOAST(action.meta.arg.id) });
             state.isUpdatingCurrentUser = true;
         });
         builder.addCase(updateUserRequest.rejected, (state, action) => {
             state.isUpdatingCurrentUser = false;
             toast.error("При обновлении информации о вашем профиле произошла ошибка. Повторите обновление позже", {
-                id: UPDATE_USER_TOAST(action.meta.arg.userId)
+                id: UPDATE_USER_TOAST(action.meta.arg.id)
             });
         });
         builder.addCase(updateUserRequest.fulfilled, (state, action) => {
             state.isUpdatingCurrentUser = false;
             state.currentUser = action.payload.dataBlock;
-            toast.success("Информация о вашем профиле обновлена успешно", { id: UPDATE_USER_TOAST(action.meta.arg.userId) });
+            toast.success("Информация о вашем профиле обновлена успешно", { id: UPDATE_USER_TOAST(action.meta.arg.id) });
         });
     }
 });

@@ -28,10 +28,9 @@ import { MOBILE_MAX_WIDTH } from "@coreUtils/constants";
 import { WithSuspense } from "@coreUtils/WithSuspense";
 import { useToggle } from "@hooks/useToogle";
 import { BaseRegistrationFieldName, LandlordRegistrationFieldName, SignInFieldName } from "@models/auth/enums";
-import { SignInFormValues, SignUpFormValues } from "@models/auth/types";
+import { SignInFormValues, SignUpFormValues, SignUpResponse } from "@models/auth/types";
 import { FormFieldType } from "@models/forms/enums";
 import { FormFieldProps } from "@models/forms/types";
-import { SignUpResponse } from "@models/responses/types";
 import { BaseUserRole } from "@models/users/enums";
 import PrimaryButton from "@parts/Buttons/PrimaryButton";
 import UnderscoreButton from "@parts/Buttons/UnderscoreButton";
@@ -76,7 +75,7 @@ const BaseInputs: (setEmail: (email: string) => void, setPassword: (password: st
             type: FormFieldType.INPUT,
             placeholder: "Введите вашу фамилию"
         }, {
-            name: BaseRegistrationFieldName.SURNAME,
+            name: BaseRegistrationFieldName.MIDDLE_NAME,
             label: "Отчество",
             required: false,
             type: FormFieldType.INPUT,
@@ -107,7 +106,7 @@ const LandlordAdditionalInputs: FormFieldProps[] =
             type: FormFieldType.INPUT,
             placeholder: "Введите ИНН"
         }, {
-            name: LandlordRegistrationFieldName.ENTITY_NAME,
+            name: LandlordRegistrationFieldName.ORGANIZATION,
             label: "Название юр. лица",
             required: true,
             type: FormFieldType.INPUT,
@@ -126,10 +125,10 @@ const initialValues: (loginData: SignInFormValues) => SignUpFormValues = (loginD
     [BaseRegistrationFieldName.EMAIL]: loginData[SignInFieldName.EMAIL],
     [BaseRegistrationFieldName.FIRST_NAME]: "",
     [BaseRegistrationFieldName.LAST_NAME]: "",
-    [BaseRegistrationFieldName.SURNAME]: undefined,
+    [BaseRegistrationFieldName.MIDDLE_NAME]: undefined,
     [BaseRegistrationFieldName.PHONE]: "",
     [LandlordRegistrationFieldName.INN]: undefined,
-    [LandlordRegistrationFieldName.ENTITY_NAME]: undefined,
+    [LandlordRegistrationFieldName.ORGANIZATION]: undefined,
     [LandlordRegistrationFieldName.JOB_TITLE]: undefined,
     [BaseRegistrationFieldName.PASSWORD]: loginData[SignInFieldName.PASSWORD],
     [BaseRegistrationFieldName.PASSWORD_CONFIRM]: ""
@@ -165,7 +164,6 @@ export default function SignUpCard() {
                     setSignUpEmail(email);
                     setIsDataLoadingSuccessTrue();
                 })
-                // TODO: Добавить обработку типов ошибок и вывод соответствующих сообщений (ошибка сервера, пользователь уже зарегистрирован)
                 .catch(() => isDataLoadingFailedTrue())
                 .finally(() => setIsDataLoadingFalse());
         },

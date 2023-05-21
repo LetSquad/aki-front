@@ -1,0 +1,22 @@
+@use '~sass-mq' as *;
+@use 'src/styles/parts.module' as *;
+
+.content {
+  height: fit-content;
+  margin: 30px !important;
+  @include mq($from: 650px) {
+    width: 100%;
+  }
+}
+
+.image {
+  @extend %base-segment-box-shadow;
+  border-radius: 20px;
+  height: 200px !important;
+  width: 200px;
+
+  &-container {
+    border-radius: 20px;
+    flex-shrink: 0;
+  }
+}

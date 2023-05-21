@@ -1,13 +1,14 @@
+import { BaseResponse } from "@models/responses/types";
 import { UserRole } from "@models/users/enums";
 
 interface BaseUserInfo {
     userRole: UserRole;
-    userId: number;
+    id: number;
     email: string;
     phone: string;
     firstName: string;
     lastName: string;
-    surname?: string;
+    middleName?: string;
     userImage?: string;
 }
 
@@ -18,7 +19,7 @@ export interface RenterInfo extends BaseUserInfo {
 export interface LandlordInfo extends BaseUserInfo {
     userRole: UserRole.LANDLORD;
     inn: string;
-    entityName: string;
+    organization: string;
     jobTitle: string;
 }
 
@@ -28,8 +29,12 @@ export interface AdminInfo extends BaseUserInfo {
 
 export type User = RenterInfo | LandlordInfo | AdminInfo;
 
-type RenterFormFields = Omit<BaseUserInfo, "userId" | "userRole">;
-type LandlordFormFields = Omit<LandlordInfo, "userId" | "userRole">;
-type AdminFormFields = Omit<AdminInfo, "userId" | "userRole">;
+type RenterFormFields = Omit<BaseUserInfo, "id" | "userRole">;
+type LandlordFormFields = Omit<LandlordInfo, "id" | "userRole">;
+type AdminFormFields = Omit<AdminInfo, "id" | "userRole">;
 
 export type UserFormFields = RenterFormFields | LandlordFormFields | AdminFormFields;
+
+export type UserResponse = {
+    dataBlock: User;
+} & BaseResponse;

@@ -1,37 +1,36 @@
-@use 'src/styles/mq' as *;
-
 .grid,
 %card-grid {
-  margin: 10px 0 !important;
+  margin: 0 !important;
   width: 100%;
 
+  div:last-child {
+    padding-bottom: 0 !important;
+  }
+
   &-top {
+    margin: 0 0 10px !important;
     width: 100%;
-    @include mq($until: tablet) {
-      margin: 10px 0 0 !important;
-    }
-    @include mq($from: tablet) {
-      margin: 10px 0 !important;
+
+    div:last-child {
+      padding-bottom: 0 !important;
     }
   }
 
   &-middle {
+    margin: 0 !important;
     width: 100%;
-    @include mq($until: tablet) {
-      margin: 0 !important;
-    }
-    @include mq($from: tablet) {
-      margin: 10px 0 !important;
+
+    div:last-child {
+      padding-bottom: 0 !important;
     }
   }
 
   &-bottom {
+    margin: 10px 0 0 !important;
     width: 100%;
-    @include mq($until: tablet) {
-      margin: 0 0 10px !important;
-    }
-    @include mq($from: tablet) {
-      margin: 10px 0 !important;
+
+    div:last-child {
+      padding-bottom: 0 !important;
     }
   }
 }

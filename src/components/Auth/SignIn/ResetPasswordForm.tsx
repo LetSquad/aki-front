@@ -9,10 +9,9 @@ import { useLoginData, useSetEmail, useSetSignUp } from "@components/Auth/AuthCo
 import { WithSuspense } from "@coreUtils/WithSuspense";
 import { useToggle } from "@hooks/useToogle";
 import { ResetPasswordFieldName, SignInFieldName } from "@models/auth/enums";
-import { ResetPasswordFormValues, SignInFormValues } from "@models/auth/types";
+import { ResetPasswordFormValues, SignInFormValues, SignInResponse } from "@models/auth/types";
 import { FormFieldType } from "@models/forms/enums";
 import { FormFieldProps } from "@models/forms/types";
-import { SignInResponse } from "@models/responses/types";
 import PrimaryButton from "@parts/Buttons/PrimaryButton";
 import UnderscoreButton from "@parts/Buttons/UnderscoreButton";
 import FormFieldPlaceholder from "@parts/FormField/Placeholders/FormFieldPlaceholder";

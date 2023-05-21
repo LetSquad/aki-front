@@ -27,6 +27,13 @@
   font-weight: 400;
   line-height: 20px;
   text-decoration: none;
+}
+
+.item-link,
+%base-item-link {
+  @extend %base-item;
+  cursor: pointer;
+  position: relative;
   transition: .2s linear;
 
   &:hover {

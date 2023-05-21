@@ -17,7 +17,7 @@ export const BaseFields: FormFieldProps[] = [
         type: FormFieldType.INPUT,
         placeholder: "Введите ваше имя"
     }, {
-        name: BaseUserFieldsName.SURNAME,
+        name: BaseUserFieldsName.MIDDLE_NAME,
         label: "Отчество",
         type: FormFieldType.INPUT,
         placeholder: "Введите ваше отчество"
@@ -50,7 +50,7 @@ export const LandlordFields: FormFieldProps[] = [
         type: FormFieldType.INPUT,
         placeholder: "Введите ИНН"
     }, {
-        name: LandlordBaseUserFieldsName.ENTITY_NAME,
+        name: LandlordBaseUserFieldsName.ORGANIZATION,
         label: "Название юр. лица",
         required: true,
         type: FormFieldType.INPUT,

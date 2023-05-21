@@ -2,8 +2,11 @@
 
 .button {
   align-items: center;
+  background-color: variables.$primary-button-main-color !important;
+  border: transparent !important;
   border-radius: 7px !important;
   box-shadow: none !important;
+  color: variables.$primary-text-color !important;
   cursor: pointer !important;
   display: inline-flex !important;
   font-family: inherit !important;
@@ -17,9 +20,6 @@
   padding: 0 32px !important;
   position: relative;
   text-align: center !important;
-  background-color: variables.$primary-button-main-color !important;
-  border: transparent !important;
-  color: variables.$primary-text-color !important;
 
   span {
     display: block;
@@ -34,21 +34,21 @@
     height: 0;
     left: -10%;
     padding-bottom: 120%;
+    position: absolute;
     top: -110%;
     transform: translate3d(0,68%,0) scale3d(0,0,0);
     width: 120%;
-    position: absolute;
   }
 
   &::after {
     background: variables.$primary-button-additional-color;
     content: "";
-    transform: translate3d(0,-100%,0);
-    transition: transform .4s cubic-bezier(.1,0,.3,1);
     height: 100%;
     left: 0;
     position: absolute;
     top: 0;
+    transform: translate3d(0,-100%,0);
+    transition: transform .4s cubic-bezier(.1,0,.3,1);
     width: 100%;
   }
 

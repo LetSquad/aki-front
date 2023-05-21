@@ -16,6 +16,9 @@ export const LandlordItems: { name: string, url: string }[] = [
     {
         name: "Создать площадку",
         url: LandLordPageSlugs.AREA_CREATE
+    }, {
+        name: "Мои площадки",
+        url: LandLordPageSlugs.MY_AREAS
     }
 ];
 

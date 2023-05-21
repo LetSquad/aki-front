@@ -1,0 +1,21 @@
+.item,
+%price-item {
+  border-radius: 7px;
+  display: block;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 0 7px;
+  width: fit-content;
+
+  &-free {
+    @extend %price-item;
+    background-color: #E9FCF3;
+    color: #084;
+  }
+
+  &-cost {
+    @extend %price-item;
+    background-color: #f3f5f7;
+    color: #7a7a7a;
+  }
+}
