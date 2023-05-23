@@ -8,7 +8,9 @@ export enum FormFieldType {
     TIMEPICKER = "timepicker",
     DATE_TIMEPICKER = "dateTimepicker",
     IMAGE_EDITOR = "imageEditor",
-    BUTTON_GROUP = "buttonGroup"
+    BUTTON_GROUP = "buttonGroup",
+    CHECKBOX = "checkbox",
+    IMAGE_SELECTOR = "imageSelector"
 }
 
 export enum ImageEditorPreviewType {

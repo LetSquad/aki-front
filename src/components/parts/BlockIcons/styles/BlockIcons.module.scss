@@ -2,23 +2,26 @@
 
 .icon,
 %block-icon {
-  color: variables.$primary-text-color;
+  color: variables.$primary-button-main-color !important;
 
   &-s {
+    @extend %block-icon;
     font-size: 12px !important;
   }
 
   &-m {
+    @extend %block-icon;
     font-size: 14px !important;
   }
 
   &-l {
+    @extend %block-icon;
     font-size: 16px !important;
   }
 
   &-container {
     position: absolute;
-    z-index: 5;
+    transform: translateY(-50%);
 
     &-m {
       @extend %block-icon-container;
@@ -30,6 +33,12 @@
       @extend %block-icon-container;
       right: 25px;
       top: 30px;
+    }
+
+    &-c {
+      @extend %block-icon-container;
+      right: 0;
+      top: 50%;
     }
   }
 }

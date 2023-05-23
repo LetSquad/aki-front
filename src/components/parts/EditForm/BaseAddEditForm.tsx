@@ -1,17 +1,12 @@
-import { lazy } from "react";
+import React, { PropsWithChildren } from "react";
 
-import classNames from "classnames";
 import { FormikContextType } from "formik";
 
-import { WithSuspense } from "@coreUtils/WithSuspense";
 import { FormFieldProps } from "@models/forms/types";
 import AddEditForm from "@parts/EditForm/AddEditForm";
-import styles from "@parts/EditForm/styles/BaseAddEditForm.module.scss";
-import FormFieldPlaceholder from "@parts/FormField/Placeholders/FormFieldPlaceholder";
+import BaseFormFields from "@parts/EditForm/BaseFormFields";
 
-const FormField = lazy(/* webpackChunkName: "FormField" */ () => import("@parts/FormField/FormField"));
-
-export interface BaseFormProps<Values> {
+export interface BaseFormProps<Values> extends PropsWithChildren {
     fields: FormFieldProps[];
     formik: FormikContextType<Values>;
     isLoading: boolean;
@@ -23,6 +18,7 @@ export interface BaseFormProps<Values> {
 
 export default function BaseAddEditForm<Values>({
     fields,
+    children,
     formik,
     isLoading,
     submitButtonText,
@@ -39,19 +35,7 @@ export default function BaseAddEditForm<Values>({
             cancelButtonText={cancelButtonText}
             className={className}
         >
-            <div className={styles.fields}>
-                {fields.map(({ className: fieldClassName, ...input }) => (
-                    <WithSuspense
-                        key={input.name}
-                        loader={<FormFieldPlaceholder />}
-                    >
-                        <FormField
-                            {...input}
-                            className={classNames(fieldClassName, styles.field)}
-                        />
-                    </WithSuspense>
-                ))}
-            </div>
+            <BaseFormFields fields={fields}>{children}</BaseFormFields>
         </AddEditForm>
     );
 }

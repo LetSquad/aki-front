@@ -1,8 +1,7 @@
-@use 'src/styles/parts.module' as *;
+@use 'src/styles/variables.module' as variables;
 
 .success-toast {
-  @extend %base-segment-box-shadow;
-  background-color: #fff;
+  background-color: variables.$background-color;
   border-radius: 7px;
   display: flex;
   max-width: 350px;
@@ -60,4 +59,9 @@
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
   }
+}
+
+.toast-dismiss-icon {
+  align-self: flex-start;
+  color: variables.$negative-button-main-color !important;
 }

@@ -1,6 +1,7 @@
 @use 'src/styles/variables.module' as variables;
 
-.button {
+.button,
+%secondary-button {
   align-items: center;
   background-color: variables.$secondary-button-main-color !important;
   border: transparent !important;

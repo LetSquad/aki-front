@@ -1,4 +1,3 @@
-@use 'src/styles/parts.module' as *;
 
 .info,
 %flip-edit-card-info {
@@ -11,7 +10,6 @@
 
 .segment,
 %flip-edit-card-segment {
-  @extend %base-segment;
   transition: height 0.2s ease-in, margin-top 0.2s ease-in, transform 0.75s;
 
   &-edit {

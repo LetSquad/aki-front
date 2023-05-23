@@ -4,7 +4,7 @@ import { PageComponents } from "@models/pages/types";
 
 const UserCard = lazy(/* webpackChunkName: "UserCard" */ () => import("@components/Profile/UserCard"));
 const CurrentUserProfile = lazy(/* webpackChunkName: "CurrentUserProfile" */ () => import("@components/Profile/CurrentUserProfile"));
-const Area = lazy(/* webpackChunkName: "Area" */ () => import("@components/Area"));
+const Place = lazy(/* webpackChunkName: "Place" */ () => import("@components/Place"));
 
 export const CommonPagesComponents: PageComponents = {
     USER: {
@@ -13,7 +13,7 @@ export const CommonPagesComponents: PageComponents = {
     MY_PROFILE: {
         component: CurrentUserProfile
     },
-    AREA: {
-        component: Area
+    PLACE: {
+        component: Place
     }
 };

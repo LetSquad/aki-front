@@ -10,8 +10,8 @@ export const CommonPagesData: PageData = {
         name: "Профиль",
         slug: BasePageSlugs.MY_PROFILE
     },
-    AREA: {
+    PLACE: {
         name: "Площадка",
-        slug: BasePageSlugs.AREA
+        slug: BasePageSlugs.PLACE
     }
 };

@@ -42,6 +42,10 @@ export interface PasswordInputFieldProps extends BaseFieldProps {
 
 export type InputFieldProps = NumberInputFieldProps | BaseInputFieldProps;
 
+export interface ImageSelectorFieldProps extends BaseFieldProps {
+    multiple?: boolean;
+}
+
 export interface PhoneNumberInputFieldProps extends BaseFieldProps {
     country?: string | number;
     onlyCountries?: string[];
@@ -113,7 +117,9 @@ export type FormFieldProps =
     (TimePickerFieldProps & { type: FormFieldType.TIMEPICKER }) |
     (DateTimePickerFieldProps & { type: FormFieldType.DATE_TIMEPICKER }) |
     (ImageEditorFieldProps & { type: FormFieldType.IMAGE_EDITOR }) |
-    (ButtonGroupFieldProps & { type: FormFieldType.BUTTON_GROUP });
+    (ButtonGroupFieldProps & { type: FormFieldType.BUTTON_GROUP }) |
+    (BaseFieldProps & { type: FormFieldType.CHECKBOX }) |
+    (ImageSelectorFieldProps & { type: FormFieldType.IMAGE_SELECTOR });
 
 export interface AccordionsFormFieldProps {
     id: string;

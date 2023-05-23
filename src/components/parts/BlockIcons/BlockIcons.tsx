@@ -1,5 +1,5 @@
 import { Link, To } from "react-router-dom";
-import { Icon, SemanticCOLORS } from "semantic-ui-react";
+import { Icon } from "semantic-ui-react";
 
 import { useToggle } from "@hooks/useToogle";
 import ConfirmationModal from "@parts/ConfirmationModal/ConfirmationModal";
@@ -13,6 +13,7 @@ export enum BlockIconsSize {
 }
 
 export enum BlockIconsIndent {
+    CENTER = "c",
     MEDIUM = "m",
     LARGE = "l"
 }
@@ -24,7 +25,6 @@ type BlockIconsProps = {
     deleteConfirmationText?: string;
     deleteAction?: () => void;
     deleteIconName?: "trash" | "cancel" | "ban";
-    color?: SemanticCOLORS;
 } & ({
     onEditClick?: () => void;
 } | {
@@ -38,7 +38,6 @@ export default function BlockIcons({
     deleteAction,
     deleteConfirmationText,
     deleteIconName = "trash",
-    color,
     ...props
 }: BlockIconsProps) {
     const [isConfirmationOpen,, openConfirmation, closeConfirmation] = useToggle();
@@ -73,12 +72,11 @@ export default function BlockIcons({
                 )}
                 {deleteAction && (
                     <Icon
-                        className={`styles.icon${size?.toUpperCase()}`}
+                        className={styles[`icon${size?.toUpperCase()}`]}
                         name={deleteIconName}
                         link
                         disabled={isConfirmationOpen}
                         onClick={() => (deleteConfirmationText ? openConfirmation() : deleteAction())}
-                        color={color}
                     />
                 )}
             </div>

@@ -1,0 +1,26 @@
+@use '~sass-mq' as *;
+
+.title {
+  display: block;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 45px;
+  margin-bottom: 30px;
+}
+
+.container {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  @include mq($until: tablet) {
+    padding: 0 20px;
+  }
+  @include mq($from: tablet) {
+    padding: 0 90px;
+  }
+}
+
+.segment {
+  margin: 20px 0 !important;
+  padding: 30px 30px 15px !important;
+}
