@@ -1,0 +1,43 @@
+@use 'src/styles/mq' as *;
+@use 'src/styles/variables.module' as variables;
+@use 'src/styles/parts.module' as *;
+@use '../../styles/PlaceInfoDetails.module' as *;
+
+.contacts {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+
+  &-links {
+    column-gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &-title {
+    @extend %secondary-place-segment-title;
+  }
+
+  &-item {
+    @extend %base-item;
+  }
+
+  &-link {
+    @extend %base-item-link;
+  }
+}
+
+.description {
+  margin-bottom: 30px;
+
+  &-title {
+    @extend %secondary-place-segment-title;
+  }
+
+  &-content {
+    display: block;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 25px;
+  }
+}

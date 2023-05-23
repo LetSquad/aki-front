@@ -1,5 +1,4 @@
 @use 'src/styles/mq' as *;
-@use 'src/styles/parts.module' as *;
 @use 'src/styles/flipEditCardParts.module' as *;
 @use 'src/styles/variables.module' as variables;
 
@@ -36,7 +35,6 @@
 }
 
 .image {
-  @extend %base-segment-box-shadow;
   height: 200px;
   margin: -70px 0 0;
   width: 200px;

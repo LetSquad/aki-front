@@ -2,13 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import promise from "redux-promise-middleware";
 import thunk from "redux-thunk";
 
-import areaReducer from "./area/reducer";
 import infoReducer from "./info/reducer";
+import placeReducer from "./place/reducer";
 import userReducer from "./user/reducer";
 
 export const store = configureStore({
     reducer: {
-        area: areaReducer,
+        place: placeReducer,
         info: infoReducer,
         user: userReducer
     },

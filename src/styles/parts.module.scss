@@ -8,18 +8,6 @@
   text-decoration-line: underline !important;
 }
 
-.segment-box-shadow,
-%base-segment-box-shadow {
-  box-shadow: 0 5px 11px rgba(0, 0, 0, 0.23) !important;
-}
-
-.segment,
-%base-segment {
-  @extend %base-segment-box-shadow;
-  border: 0 !important;
-  border-radius: 20px !important;
-}
-
 .item,
 %base-item {
   color: variables.$primary-text-color;

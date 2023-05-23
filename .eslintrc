@@ -35,7 +35,8 @@
             "code": 140,
             "ignoreStrings": true,
             "ignoreTemplateLiterals": true,
-            "ignoreComments": true
+            "ignoreComments": true,
+            "ignoreRegExpLiterals": true
          }
       ],
       "curly": [

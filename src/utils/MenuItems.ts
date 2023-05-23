@@ -3,7 +3,7 @@ import { BasePageSlugs, LandLordPageSlugs } from "@models/pages/enums";
 export const CommonItems: { name: string, url: string }[] = [
     {
         name: "Каталог площадок",
-        url: BasePageSlugs.AREA_CATALOG
+        url: BasePageSlugs.PLACE_CATALOG
     }
 ];
 
@@ -15,10 +15,10 @@ export const LandlordItems: { name: string, url: string }[] = [
     ...CommonItems,
     {
         name: "Создать площадку",
-        url: LandLordPageSlugs.AREA_CREATE
+        url: LandLordPageSlugs.NEW_PLACE
     }, {
         name: "Мои площадки",
-        url: LandLordPageSlugs.MY_AREAS
+        url: LandLordPageSlugs.MY_PLACES
     }
 ];
 

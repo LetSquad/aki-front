@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-import { IMAGE_MAX_SIZE, PHONE_REG_EXP } from "@coreUtils/constants";
+import { AVATAR_IMAGE_MAX_SIZE, PHONE_REG_EXP } from "@coreUtils/constants";
 import { LandlordRegistrationFieldName } from "@models/auth/enums";
 import { BaseUserFieldsName } from "@models/users/enums";
 
@@ -33,11 +33,10 @@ const PHONE_REQUIRED_MESSAGE = "Необходимо ввести номер т�
 const INN_INVALID_MESSAGE = "Введите корректный ИНН (12 цифр)";
 const INN_REQUIRED_MESSAGE = "Необходимо ввести ИНН";
 
-const AMOUNT_OF_ENTITY_NAME_CHARACTERS = {
+const AMOUNT_OF_ORGANIZATION_CHARACTERS = {
     min: 1
 };
-const ENTITY_NAME_INVALID_MESSAGE = "Название юр. лица должно состоять более чем из одного символа";
-const ENTITY_NAME_REQUIRED_MESSAGE = "Необходимо ввести название юр. лица";
+const ORGANIZATION_REQUIRED_MESSAGE = "Необходимо ввести название юр. лица";
 
 const AMOUNT_OF_JOB_TITLE_CHARACTERS = {
     min: 1,
@@ -90,7 +89,7 @@ export const userProfileValidationSchema = baseUserValidationSchema
             .test("fileSize", USER_IMAGE_MAX_SIZE_INVALID_MESSAGE, (value: string | File | undefined) => (
                 !value || typeof value === "string"
                     ? true
-                    : value.size <= IMAGE_MAX_SIZE
+                    : value.size <= AVATAR_IMAGE_MAX_SIZE
             ))
     });
 
@@ -112,6 +111,6 @@ export const landlordProfileValidationSchema = userProfileValidationSchema
     .shape({
         [LandlordRegistrationFieldName.ORGANIZATION]: yup.string()
             .trim()
-            .min(AMOUNT_OF_ENTITY_NAME_CHARACTERS.min, ENTITY_NAME_INVALID_MESSAGE)
-            .required(ENTITY_NAME_REQUIRED_MESSAGE)
+            .min(AMOUNT_OF_ORGANIZATION_CHARACTERS.min, ORGANIZATION_REQUIRED_MESSAGE)
+            .required(ORGANIZATION_REQUIRED_MESSAGE)
     });

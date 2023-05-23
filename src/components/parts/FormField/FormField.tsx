@@ -27,6 +27,8 @@ const PhoneInputField = lazy(/* webpackChunkName: "PhoneInputField" */ () => imp
 const DropdownField = lazy(/* webpackChunkName: "DropdownField" */ () => import("./DropdownField"));
 
 const TextAreaField = lazy(/* webpackChunkName: "TextAreaField" */ () => import("./TextAreaField"));
+const CheckboxField = lazy(/* webpackChunkName: "CheckboxField" */ () => import("./CheckboxField"));
+const ImageSelectorField = lazy(/* webpackChunkName: "ImageSelectorField" */ () => import("./ImageSelectorField"));
 
 export default function FormField({
     defaultValue,
@@ -68,6 +70,12 @@ export default function FormField({
             }
             case FormFieldType.BUTTON_GROUP: {
                 return <ButtonGroupField {...props} />;
+            }
+            case FormFieldType.CHECKBOX: {
+                return <CheckboxField {...props} />;
+            }
+            case FormFieldType.IMAGE_SELECTOR: {
+                return <ImageSelectorField {...props} />;
             }
             // skip default
         }

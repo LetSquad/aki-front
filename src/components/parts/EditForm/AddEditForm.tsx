@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { PropsWithChildren, useMemo } from "react";
 
 import classNames from "classnames";
 import { FormikContextType, FormikProvider } from "formik";
@@ -9,8 +9,7 @@ import UnderscoreButton from "@parts/Buttons/UnderscoreButton";
 
 import styles from "./styles/AddEditForm.module.scss";
 
-export interface FormProps<Values> {
-    children: React.JSX.Element;
+export interface FormProps<Values> extends PropsWithChildren {
     formik: FormikContextType<Values>;
     isLoading: boolean;
     submitButtonText?: string;
