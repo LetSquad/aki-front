@@ -1,5 +1,10 @@
-import { PlaceConfirmationStatus, PriceType, Specialization } from "@models/places/enums";
-import { BaseResponse } from "@models/responses/types";
+import { BasePageResponse, BaseResponse } from "@models/http/types";
+import {
+    PlaceConfirmationStatus,
+    PlacesFiltersFieldsName,
+    PriceType,
+    Specialization
+} from "@models/places/enums";
 import { LandlordInfo } from "@models/users/types";
 
 export interface Place {
@@ -9,6 +14,7 @@ export interface Place {
     email: string;
     site: string;
     specialization: Specialization;
+    rating?: PlaceRating;
     placeImages?: (string | File)[];
     phone: string;
     description: string;
@@ -24,6 +30,11 @@ export interface Place {
     equipments?: PlaceEquipment[];
     facilities?: PlaceFacilities[];
     user: LandlordInfo
+}
+
+export interface PlaceRating {
+    rate: number;
+    rateCount: number;
 }
 
 export interface PlacePrice {
@@ -47,17 +58,32 @@ export interface PlaceFacilities {
     count?: number;
 }
 
-export type PlaceResponse = {
+export interface PlaceResponse extends BaseResponse {
     dataBlock: Place;
-} & BaseResponse;
+}
 
-export type PlacesResponse = {
+export interface PlacesResponse extends BasePageResponse {
     dataBlock: Place[];
-} & BaseResponse;
+}
 
-export type PlaceUpdateFormValues = Omit<Place, "user" | "status">;
+export type PlaceUpdateFormValues = Omit<Place, "user" | "status" | "rating">;
 export type PlaceAddFormValues = Omit<PlaceUpdateFormValues, "id">;
 
 export interface PlaceDetailsFormRef {
     resetForm: () => void;
+}
+
+export interface PlacesFiltersFormValues {
+    [PlacesFiltersFieldsName.SPECIALIZATION]?: Specialization;
+    [PlacesFiltersFieldsName.PRICE_MIN]?: number;
+    [PlacesFiltersFieldsName.PRICE_MAX]?: number;
+    [PlacesFiltersFieldsName.CAPACITY_MIN]?: number;
+    [PlacesFiltersFieldsName.CAPACITY_MAX]?: number;
+    [PlacesFiltersFieldsName.SQUARE_MIN]?: number;
+    [PlacesFiltersFieldsName.SQUARE_MAX]?: number;
+    [PlacesFiltersFieldsName.LEVEL_NUMBER_MIN]?: number;
+    [PlacesFiltersFieldsName.LEVEL_NUMBER_MAX]?: number;
+    [PlacesFiltersFieldsName.WITH_PARKING]: boolean;
+    [PlacesFiltersFieldsName.DATE_FROM]?: string;
+    [PlacesFiltersFieldsName.DATE_TO]?: string;
 }

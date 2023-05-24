@@ -4,7 +4,7 @@ import {
     ResetPasswordFieldName,
     SignInFieldName
 } from "@models/auth/enums";
-import { BaseResponse } from "@models/responses/types";
+import { BaseResponse } from "@models/http/types";
 import { BaseUserRole, UserRole } from "@models/users/enums";
 import { User } from "@models/users/types";
 

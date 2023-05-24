@@ -10,7 +10,8 @@ export enum FormFieldType {
     IMAGE_EDITOR = "imageEditor",
     BUTTON_GROUP = "buttonGroup",
     CHECKBOX = "checkbox",
-    IMAGE_SELECTOR = "imageSelector"
+    IMAGE_SELECTOR = "imageSelector",
+    FORM_FIELDS_RANGE = "formFieldsRange"
 }
 
 export enum ImageEditorPreviewType {

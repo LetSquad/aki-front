@@ -99,7 +99,7 @@ export const MainInfoFields: FormFieldProps[] = [
         placeholder: "80"
     }, {
         name: PlaceFieldsName.LEVEL_NUMBER,
-        label: "Этажность",
+        label: "Этаж размещения",
         type: FormFieldType.INPUT,
         inputType: "number",
         step: 1,

@@ -1,0 +1,135 @@
+@use '/src/styles/_mq' as *;
+@use '/src/styles/variables.module' as variables;
+
+.container {
+  column-gap: 30px;
+  display: flex;
+  justify-content: center;
+
+  @include mq($until: tablet) {
+    padding: 0 20px;
+  }
+  @include mq($from: tablet) {
+    padding: 0 45px;
+  }
+}
+
+.filters {
+  height: fit-content;
+  position: sticky;
+  top: 0;
+
+  &-sidebar {
+    @include mq($until: mobile) {
+      transition: height 0.5s ease;
+    }
+    @include mq($from: mobile) {
+      transition: width 0.5s ease;
+    }
+
+    &-hide {
+      visibility: hidden;
+      @include mq($until: mobile) {
+        height: 0;
+        transition: height 0.5s ease;
+      }
+      @include mq($from: mobile) {
+        transition: width 0.5s ease;
+        width: 0;
+      }
+    }
+  }
+}
+
+.sidebar,
+%places-filter-sidebar {
+  position: absolute;
+  z-index: 4;
+
+  &-open {
+    @extend %places-filter-sidebar;
+    @include mq($until: mobile) {
+      bottom: 15px;
+      left: 15px;
+      right: 15px;
+    }
+    @include mq($from: mobile) {
+      right: 15px;
+    }
+  }
+
+  &-close {
+    @extend %places-filter-sidebar;
+    @include mq($until: mobile) {
+      bottom: 0;
+      left: 15px;
+      right: 15px;
+    }
+    @include mq($from: mobile) {
+      right: 0;
+    }
+  }
+
+  &-button {
+    align-items: center;
+    background: variables.$primary-button-main-color;
+    cursor: pointer;
+    display: flex;
+    height: 100px;
+    justify-content: center;
+    position: absolute;
+    z-index: 5;
+
+    @include mq($until: mobile) {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      box-shadow: 1px 1px 3px #000;
+      height: 35px;
+      left: 50%;
+      top: -35px;
+      transform: translate(-50%, 0);
+      transition: height 0.2s ease-out, top 0.5s ease;
+      width: 100px;
+    }
+    @include mq($from: mobile) {
+      border-bottom-left-radius: 10px;
+      border-top-left-radius: 10px;
+      box-shadow: 1px 1px 3px #000;
+      left: -35px;
+      top: 100px;
+      transform: translate(0, -50%);
+      transition: width 0.2s ease-out, left 0.5s ease;
+      width: 35px;
+    }
+
+    &-open {
+      @extend %places-filter-sidebar-button;
+      @include mq($until: mobile) {
+        top: -35px;
+      }
+
+      &:hover {
+        @include mq($until: mobile) {
+          top: -40px;
+        }
+      }
+    }
+
+    &:hover {
+      @include mq($until: mobile) {
+        height: 40px;
+      }
+      @include mq($from: mobile) {
+        left: -40px;
+        width: 40px;
+      }
+    }
+
+    &-text {
+      color: variables.$primary-text-color;
+      @include mq($from: mobile) {
+        transform: rotate(-90deg);
+      }
+    }
+  }
+}

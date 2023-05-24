@@ -1,0 +1,19 @@
+@use "src/styles/variables.module" as variabes;
+
+.rating {
+  width: fit-content;
+
+  i {
+    color: variabes.$primary-button-main-color !important;
+  }
+
+  &-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-count {
+    font-size: 12px;
+    font-weight: 400;
+  }
+}

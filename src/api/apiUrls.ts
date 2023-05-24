@@ -9,6 +9,7 @@ const apiUrls = {
     admin: () => adminUrl,
     userId: (userId: number | string) => `${userUrl}/${userId}`,
     place: () => placesUrl,
+    myPlace: () => `${placesUrl}/my`,
     placeId: (placeId: number | string) => `${placesUrl}/${placeId}`,
     signIn: () => `${baseUrl}/auth`,
     refreshToken: () => `${baseUrl}/auth/refresh`,

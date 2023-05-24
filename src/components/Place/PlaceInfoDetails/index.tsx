@@ -14,6 +14,7 @@ import PlaceGallery from "@components/Place/PlaceInfoDetails/PlaceGallery";
 import { PlaceInfoContext } from "@components/Place/PlaceInfoDetails/PlaceInfoContext";
 import PlaceMainInfo from "@components/Place/PlaceInfoDetails/PlaceMainInfo";
 import PlaceServices from "@components/Place/PlaceInfoDetails/PlaceServices";
+import PlaceRating from "@components/Place/PlaceRating";
 import flipEditCardPartsStyles from "@coreStyles/flipEditCardParts.module.scss";
 import { useChangeEditSearchParam } from "@hooks/useChangeEditSearchParam";
 import { LandLordPageSlugs } from "@models/pages/enums";
@@ -106,6 +107,7 @@ export default function PlaceInfoDetails({ currentPlace, isUserPlaceOwner }: Pla
                                         />
                                     )}
                                     <span className={styles.title}>{currentPlace.name}</span>
+                                    <PlaceRating rating={currentPlace.rating} />
                                 </div>
                                 <div className={styles.segmentsContainer}>
                                     <PlaceMainInfo />

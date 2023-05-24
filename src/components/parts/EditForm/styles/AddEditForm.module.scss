@@ -7,5 +7,9 @@
 .button-container {
   display: flex;
   justify-content: flex-end;
-  margin: 15px;
+  margin: 15px 0;
+}
+
+.primary-button {
+  margin: 0 !important;
 }

@@ -1,4 +1,4 @@
-import { BaseResponse } from "@models/responses/types";
+import { BaseResponse } from "@models/http/types";
 import { UserRole } from "@models/users/enums";
 
 interface BaseUserInfo {

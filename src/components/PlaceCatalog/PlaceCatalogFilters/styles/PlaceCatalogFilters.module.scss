@@ -1,0 +1,14 @@
+@use 'src/styles/variables.module' as variables;
+@use '/src/styles/_mq' as *;
+
+.segment {
+  padding: 20px !important;
+
+  @include mq($from: mobile) {
+    width: 430px;
+  }
+
+  &-sidebar {
+    background: variables.$background-color !important;
+  }
+}

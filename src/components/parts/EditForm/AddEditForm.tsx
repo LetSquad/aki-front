@@ -56,6 +56,7 @@ export default function AddEditForm<Values>({
                         </UnderscoreButton>
                     )}
                     <PrimaryButton
+                        className={styles.primaryButton}
                         type="submit"
                         disabled={isSubmitDisabled || isLoading}
                         loading={isLoading}

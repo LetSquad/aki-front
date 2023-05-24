@@ -1,4 +1,4 @@
-import { getPriceTypeTitleFromEnum } from "@components/Place/utils/utils";
+import { getPriceTypeTitleFromEnum } from "@coreUtils/utils";
 import { PriceType } from "@models/places/enums";
 import { PlacePrice } from "@models/places/types";
 

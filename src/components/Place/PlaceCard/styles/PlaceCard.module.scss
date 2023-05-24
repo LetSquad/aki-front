@@ -1,0 +1,67 @@
+@use '/src/styles/mq' as *;
+@use '/src/styles/variables.module' as variables;
+
+.container {
+  display: flex;
+
+  @include mq($until: tablet) {
+    flex-direction: column;
+    row-gap: 20px;
+  }
+  @include mq($from: tablet) {
+    column-gap: 30px;
+  }
+}
+
+.link {
+  color: variables.$primary-text-color;
+
+  &:hover {
+    color: variables.$primary-text-color;
+    transform: scale(1.03);
+  }
+}
+
+.gallery-container {
+  @include mq($until: tablet) {
+    display: flex;
+    justify-content: center;
+  }
+  @include mq($from: tablet) {
+    flex: 0 0 40%;
+  }
+
+  div {
+    @include mq($until: tablet) {
+      max-width: 500px;
+    }
+  }
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+}
+
+.main-content-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+}
+
+.title {
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 50px;
+}
+
+.address {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: 700;
+}

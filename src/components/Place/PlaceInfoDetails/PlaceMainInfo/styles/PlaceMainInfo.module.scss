@@ -3,6 +3,12 @@
 @use 'src/styles/parts.module' as *;
 @use '../../styles/PlaceInfoDetails.module' as *;
 
+.container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+}
+
 .contacts {
   display: flex;
   flex-direction: column;
@@ -28,8 +34,6 @@
 }
 
 .description {
-  margin-bottom: 30px;
-
   &-title {
     @extend %secondary-place-segment-title;
   }

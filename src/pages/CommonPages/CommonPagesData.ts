@@ -13,5 +13,9 @@ export const CommonPagesData: PageData = {
     PLACE: {
         name: "Площадка",
         slug: BasePageSlugs.PLACE
+    },
+    PLACE_CATALOG: {
+        name: "Каталог площадок",
+        slug: BasePageSlugs.PLACE_CATALOG
     }
 };
