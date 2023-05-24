@@ -47,12 +47,12 @@ export default function UserCard() {
         );
     }
 
-    if (data?.dataBlock) {
+    if (data) {
         return (
             <div className={styles.container}>
                 <UserInfoDetails
-                    user={data.dataBlock}
-                    editable={user?.id === data.dataBlock.id}
+                    user={data}
+                    editable={user?.id === data.id}
                 />
             </div>
         );

@@ -1,4 +1,4 @@
-import { BasePageResponse, BaseResponse } from "@models/http/types";
+import { BasePageResponse } from "@models/http/types";
 import {
     PlaceConfirmationStatus,
     PlacesFiltersFieldsName,
@@ -58,12 +58,10 @@ export interface PlaceFacilities {
     count?: number;
 }
 
-export interface PlaceResponse extends BaseResponse {
-    dataBlock: Place;
-}
+export type PlaceResponse = Place;
 
 export interface PlacesResponse extends BasePageResponse {
-    dataBlock: Place[];
+    places: Place[];
 }
 
 export type PlaceUpdateFormValues = Omit<Place, "user" | "status" | "rating">;

@@ -6,6 +6,7 @@ import { WithSuspense } from "@coreUtils/WithSuspense";
 import { FormFieldType } from "@models/forms/enums";
 import { FormFieldProps } from "@models/forms/types";
 import ButtonGroupField from "@parts/FormField/ButtonGroupField";
+// eslint-disable-next-line import/no-cycle
 import FormFieldsRange from "@parts/FormField/FormFieldsRange";
 import FormFieldPlaceholder from "@parts/FormField/Placeholders/FormFieldPlaceholder";
 import RatingField from "@parts/FormField/RatingField";

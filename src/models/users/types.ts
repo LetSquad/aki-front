@@ -1,4 +1,3 @@
-import { BaseResponse } from "@models/http/types";
 import { UserRole } from "@models/users/enums";
 
 interface BaseUserInfo {
@@ -35,6 +34,4 @@ type AdminFormFields = Omit<AdminInfo, "id" | "userRole">;
 
 export type UserFormFields = RenterFormFields | LandlordFormFields | AdminFormFields;
 
-export type UserResponse = {
-    dataBlock: User;
-} & BaseResponse;
+export type UserResponse = User;
