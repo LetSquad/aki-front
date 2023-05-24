@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+  width: 100%;
+}
+
+.loader {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 30px 0;
+  position: relative;
+  width: 100%;
+}
+
+.empty {
+  font-size: 16px;
+  font-weight: bold;
+}

@@ -1,5 +1,7 @@
 import { DateTime } from "luxon";
 
+import { PriceType } from "@models/places/enums";
+
 export function getFullName(firstName?: string, middleName?: string, lastName?: string): string {
     return `${lastName || ""}${lastName && (firstName || middleName) ? " " : ""}${firstName || ""}${
         firstName && middleName ? " " : ""
@@ -78,4 +80,33 @@ export function getFormatTimeInterval(firstDate: string | DateTime, secondDate: 
     const formatSecondDate = typeof secondDate === "string" ? DateTime.fromISO(secondDate) : secondDate;
 
     return `${formatFirstDate.toFormat("T")}-${formatSecondDate.toFormat("T")}`;
+}
+
+export function getPriceTypeTitleFromEnum(priceType: PriceType): string {
+    switch (priceType) {
+        case PriceType.DAY: {
+            return "/день";
+        }
+        case PriceType.HOUR: {
+            return "/час";
+        }
+        case PriceType.RENT: {
+            return "/аренду";
+        }
+        case PriceType.FREE: {
+            return "Бесплатно";
+        }
+        // skip default
+    }
+}
+
+export function getCapacityTitleFromNumbers(minCapacity?: number, maxCapacity?: number): string {
+    const minCapacityTitle = minCapacity
+        ? `от ${minCapacity}`
+        : "";
+    const maxCapacityTitle = maxCapacity
+        ? `до ${maxCapacity}`
+        : "";
+
+    return `${minCapacityTitle}${minCapacityTitle && maxCapacityTitle ? " " : ""}${maxCapacityTitle} человек`;
 }

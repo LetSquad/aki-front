@@ -5,6 +5,7 @@ import { PageComponents } from "@models/pages/types";
 const UserCard = lazy(/* webpackChunkName: "UserCard" */ () => import("@components/Profile/UserCard"));
 const CurrentUserProfile = lazy(/* webpackChunkName: "CurrentUserProfile" */ () => import("@components/Profile/CurrentUserProfile"));
 const Place = lazy(/* webpackChunkName: "Place" */ () => import("@components/Place"));
+const PlaceCatalog = lazy(/* webpackChunkName: "PlaceCatalog" */ () => import("@components/PlaceCatalog"));
 
 export const CommonPagesComponents: PageComponents = {
     USER: {
@@ -15,5 +16,8 @@ export const CommonPagesComponents: PageComponents = {
     },
     PLACE: {
         component: Place
+    },
+    PLACE_CATALOG: {
+        component: PlaceCatalog
     }
 };

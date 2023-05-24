@@ -51,7 +51,7 @@ const PRICE_INVALID_MESSAGE = "Стоимость должна быть боль
 const MAX_CAPACITY_LOWER_THEN_MIN_MESSAGE = "Максимальная вместимость человек должно быть больше или равно минимальной";
 const MAX_CAPACITY_INVALID_MESSAGE = "Максимальная вместимость должна быть больше 0";
 
-const MIN_CAPACITY_INVALID_MESSAGE = "Минимальная вместимость человек должно быть больше 0";
+const MIN_CAPACITY_INVALID_MESSAGE = "Минимальная вместимость должно быть больше 0";
 
 const FREE_SQUARE_BIGGER_THEN_FULL_MESSAGE = "Свободная площадь должна быть меньше или равна полной";
 const FREE_SQUARE_INVALID_MESSAGE = "Свободная площадь должна быть больше 0";

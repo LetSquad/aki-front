@@ -32,6 +32,7 @@ export const MainInfoFields: FormFieldProps[] = [
         label: "Специализация",
         required: true,
         type: FormFieldType.DROPDOWN,
+        multiple: true,
         placeholder: "Выберите специализацию площадки из списка"
     }, {
         name: PlaceFieldsName.ADDRESS,
@@ -99,7 +100,7 @@ export const MainInfoFields: FormFieldProps[] = [
         placeholder: "80"
     }, {
         name: PlaceFieldsName.LEVEL_NUMBER,
-        label: "Этажность",
+        label: "Этаж размещения",
         type: FormFieldType.INPUT,
         inputType: "number",
         step: 1,

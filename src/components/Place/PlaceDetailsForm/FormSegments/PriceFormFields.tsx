@@ -1,7 +1,7 @@
 import { useFormikContext } from "formik";
 import get from "lodash.get";
 
-import { getPriceTypeTitleFromEnum } from "@components/Place/utils/utils";
+import { getPriceTypeTitleFromEnum } from "@coreUtils/utils";
 import { WithSuspense } from "@coreUtils/WithSuspense";
 import { FormFieldType } from "@models/forms/enums";
 import { DropdownOption, FormFieldProps } from "@models/forms/types";

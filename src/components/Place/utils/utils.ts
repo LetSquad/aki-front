@@ -1,4 +1,4 @@
-import { PlaceConfirmationStatus, PriceType, Specialization } from "@models/places/enums";
+import { PlaceConfirmationStatus, Specialization } from "@models/places/enums";
 
 export function getSpecializationTitleFromEnum(specialization: Specialization): string {
     switch (specialization) {
@@ -46,29 +46,4 @@ export function getPlaceConfirmationStatusTitleFromEnum(placeConfirmationStatus:
         }
         // skip default
     }
-}
-
-export function getPriceTypeTitleFromEnum(priceType: PriceType): string {
-    switch (priceType) {
-        case PriceType.DAY: {
-            return "/день";
-        }
-        case PriceType.HOUR: {
-            return "/час";
-        }
-        case PriceType.RENT: {
-            return "/аренду";
-        }
-        case PriceType.FREE: {
-            return "Бесплатно";
-        }
-        // skip default
-    }
-}
-
-export function getCapacityTitleFromNumbers(minCapacity?: number, maxCapacity?: number): string {
-    const minCapacityTitle = minCapacity ? `от ${minCapacity}` : undefined;
-    const maxCapacityTitle = maxCapacity ? `до ${maxCapacity}` : undefined;
-
-    return `${minCapacityTitle} ${maxCapacityTitle} человек`;
 }

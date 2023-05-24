@@ -6,7 +6,9 @@ import { WithSuspense } from "@coreUtils/WithSuspense";
 import { FormFieldType } from "@models/forms/enums";
 import { FormFieldProps } from "@models/forms/types";
 import ButtonGroupField from "@parts/FormField/ButtonGroupField";
+import FormFieldsRange from "@parts/FormField/FormFieldsRange";
 import FormFieldPlaceholder from "@parts/FormField/Placeholders/FormFieldPlaceholder";
+import RatingField from "@parts/FormField/RatingField";
 
 import styles from "./styles/FormField.module.scss";
 
@@ -77,11 +79,17 @@ export default function FormField({
             case FormFieldType.IMAGE_SELECTOR: {
                 return <ImageSelectorField {...props} />;
             }
+            case FormFieldType.FORM_FIELDS_RANGE: {
+                return <FormFieldsRange {...props} />;
+            }
+            case FormFieldType.RATING: {
+                return <RatingField {...props} />;
+            }
             // skip default
         }
     }, [props]);
 
-    if (defaultValue || isLoading || errorText) {
+    if ((defaultValue || isLoading || errorText) && props.type !== FormFieldType.FORM_FIELDS_RANGE) {
         return (
             <Form.Field className={props.className}>
                 <label

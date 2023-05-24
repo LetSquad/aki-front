@@ -1,5 +1,4 @@
-import AdditionalInfoItem from "@components/Place/PlaceInfoDetails/PlaceMainInfo/AdditionalInfoItem";
-import { getCapacityTitleFromNumbers } from "@components/Place/utils/utils";
+import { getCapacityTitleFromNumbers } from "@coreUtils/utils";
 import { Place } from "@models/places/types";
 import freeSquareIcon from "@static/images/freeSquare.svg";
 import fullSquareIcon from "@static/images/fullSquare.svg";
@@ -8,52 +7,53 @@ import parkingIcon from "@static/images/parking.svg";
 import capacityIcon from "@static/images/peoples.svg";
 import numberOfStoreysIcon from "@static/images/stairs.svg";
 
-import styles from "./styles/AdditionalInfo.module.scss";
+import PlaceAdditionalInfoItem from "./PlaceAdditionalInfoItem";
+import styles from "./styles/PlaceAdditionalInfo.module.scss";
 
 interface AdditionalInfoProps {
     currentPlace: Place;
 }
 
-export default function AdditionalInfo({ currentPlace }: AdditionalInfoProps) {
+export default function PlaceAdditionalInfo({ currentPlace }: AdditionalInfoProps) {
     return (
         <div className={styles.container}>
             {currentPlace.fullSquare && (
-                <AdditionalInfoItem
+                <PlaceAdditionalInfoItem
                     icon={fullSquareIcon}
                     alt="Общая площадь"
                     data={`${currentPlace.fullSquare} м²`}
                 />
             )}
             {currentPlace.fullSquare && (
-                <AdditionalInfoItem
+                <PlaceAdditionalInfoItem
                     icon={freeSquareIcon}
                     alt="Доступная площадь"
                     data={`${currentPlace.freeSquare} м²`}
                 />
             )}
             {(currentPlace.minCapacity || currentPlace.maxCapacity) && (
-                <AdditionalInfoItem
+                <PlaceAdditionalInfoItem
                     icon={capacityIcon}
                     alt="Вместимость"
                     data={getCapacityTitleFromNumbers(currentPlace.minCapacity, currentPlace.maxCapacity)}
                 />
             )}
             {(currentPlace.levelNumber) && (
-                <AdditionalInfoItem
+                <PlaceAdditionalInfoItem
                     icon={numberOfStoreysIcon}
-                    alt="Этажность"
+                    alt="Этаж размещения"
                     data={`${currentPlace.levelNumber} этаж`}
                 />
             )}
             {currentPlace.parking && (
-                <AdditionalInfoItem
+                <PlaceAdditionalInfoItem
                     icon={parkingIcon}
                     alt="Парковка"
                     data="Есть парковка"
                 />
             )}
             {!currentPlace.parking && (
-                <AdditionalInfoItem
+                <PlaceAdditionalInfoItem
                     icon={notParkingIcon}
                     alt="Парковка"
                     data="Парковка отсутствует"

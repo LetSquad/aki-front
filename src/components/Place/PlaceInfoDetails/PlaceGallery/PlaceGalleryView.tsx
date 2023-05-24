@@ -31,6 +31,7 @@ export default function PlaceGalleryView({ placeImages }: PlaceGalleryViewProps)
             <div className={styles.galleryContainer}>
                 <ImageGallery
                     showThumbnails={!isMobile}
+                    showBullets={isMobile}
                     items={galleryImages}
                     lazyLoad
                     showPlayButton={false}

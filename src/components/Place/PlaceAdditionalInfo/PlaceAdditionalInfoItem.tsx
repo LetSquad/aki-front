@@ -1,4 +1,4 @@
-import styles from "./styles/AdditionalInfoItem.module.scss";
+import styles from "./styles/PlaceAdditionalInfoItem.module.scss";
 
 interface AdditionalInfoItemProps {
     icon: string;
@@ -6,7 +6,7 @@ interface AdditionalInfoItemProps {
     data: string;
 }
 
-export default function AdditionalInfoItem({ icon, alt, data }: AdditionalInfoItemProps) {
+export default function PlaceAdditionalInfoItem({ icon, alt, data }: AdditionalInfoItemProps) {
     return (
         <div className={styles.item}>
             <img

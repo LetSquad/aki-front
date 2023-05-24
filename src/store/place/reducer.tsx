@@ -6,15 +6,16 @@ import { Toast, toast } from "react-hot-toast";
 
 import apiUrls from "@api/apiUrls";
 import AddPlaceSuccessToast from "@components/Place/AddPlace/AddPlaceSuccessToast";
+import { BasePageRequest, BaseResponse } from "@models/http/types";
 import {
     Place,
     PlaceAddFormValues,
     PlaceDetailsFormRef,
     PlaceResponse,
+    PlacesFiltersFormValues,
     PlacesResponse,
     PlaceUpdateFormValues
 } from "@models/places/types";
-import { BaseResponse } from "@models/responses/types";
 
 const ADD_PLACE_TOAST_NAME = (placeName: string) => `add-place-${placeName}`;
 const DELETE_PLACE_TOAST_ID = (placeId: number) => `delete-place-${placeId}`;
@@ -22,8 +23,15 @@ const UPDATE_PLACE_TOAST_ID = (placeId: number) => `update-place-${placeId}`;
 
 interface PlaceState {
     places: Place[];
+    placesCurrentPage: number;
+    placesTotalPages?: number,
     isPlacesLoading: boolean;
     isPlacesLoadingFailed: boolean;
+    userPlaces: Place[];
+    userPlacesCurrentPage: number;
+    userPlacesTotalPages?: number,
+    isUserPlacesLoading: boolean;
+    isUserPlacesLoadingFailed: boolean;
     currentPlace?: Place;
     isPlaceAdding: boolean;
     isCurrentPlaceLoading: boolean;
@@ -34,8 +42,15 @@ interface PlaceState {
 
 const initialState: PlaceState = {
     places: [],
+    placesCurrentPage: 1,
+    placesTotalPages: undefined,
     isPlacesLoading: true,
     isPlacesLoadingFailed: false,
+    userPlaces: [],
+    userPlacesCurrentPage: 1,
+    userPlacesTotalPages: undefined,
+    isUserPlacesLoading: true,
+    isUserPlacesLoadingFailed: false,
     currentPlace: undefined,
     isPlaceAdding: false,
     isCurrentPlaceLoading: true,
@@ -44,8 +59,13 @@ const initialState: PlaceState = {
     deletingCurrentPlaceId: undefined
 };
 
-export const getPlacesRequest = createAsyncThunk("getPlacesRequest", async () => {
-    const { data } = await axios.get<PlacesResponse>(apiUrls.place());
+export const getPlacesRequest = createAsyncThunk("getPlacesRequest", async (params: BasePageRequest & PlacesFiltersFormValues) => {
+    const { data } = await axios.get<PlacesResponse>(apiUrls.place(), { params });
+    return data;
+});
+
+export const getUserPlacesRequest = createAsyncThunk("getUserPlacesRequest", async (params: BasePageRequest) => {
+    const { data } = await axios.get<PlacesResponse>(apiUrls.myPlace(), { params });
     return data;
 });
 
@@ -116,18 +136,38 @@ export const placeSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(getPlacesRequest.pending, (state) => {
-            state.places = [];
+        builder.addCase(getPlacesRequest.pending, (state, action) => {
+            if (action.meta.arg.pageNumber === 1) {
+                state.places = [];
+            }
             state.isPlacesLoading = true;
             state.isPlacesLoadingFailed = false;
         });
         builder.addCase(getPlacesRequest.fulfilled, (state, action) => {
-            state.places = action.payload.dataBlock;
+            state.places = action.meta.arg.pageNumber === state.placesCurrentPage || action.meta.arg.pageNumber === 1
+                ? action.payload.dataBlock
+                : [...state.places, ...action.payload.dataBlock];
+            state.placesTotalPages = action.payload.total;
             state.isPlacesLoading = false;
         });
         builder.addCase(getPlacesRequest.rejected, (state) => {
             state.isPlacesLoading = false;
             state.isPlacesLoadingFailed = true;
+        });
+        builder.addCase(getUserPlacesRequest.pending, (state) => {
+            state.isUserPlacesLoading = true;
+            state.isUserPlacesLoadingFailed = false;
+        });
+        builder.addCase(getUserPlacesRequest.fulfilled, (state, action) => {
+            state.userPlaces = action.meta.arg.pageNumber === state.userPlacesCurrentPage
+                ? action.payload.dataBlock
+                : [...state.userPlaces, ...action.payload.dataBlock];
+            state.userPlacesTotalPages = action.payload.total;
+            state.isUserPlacesLoading = false;
+        });
+        builder.addCase(getUserPlacesRequest.rejected, (state) => {
+            state.isUserPlacesLoading = false;
+            state.isUserPlacesLoadingFailed = true;
         });
         builder.addCase(addPlaceRequest.pending, (state, action) => {
             state.isPlaceAdding = true;

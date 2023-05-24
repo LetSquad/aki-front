@@ -64,3 +64,19 @@ export enum PlaceEquipmentFieldsName {
     PRICE = "price",
     COUNT = "count"
 }
+
+export enum PlacesFiltersFieldsName {
+    SPECIALIZATION = "specialization",
+    RATING = "rating",
+    PRICE_MIN = "priceMin",
+    PRICE_MAX = "priceMax",
+    CAPACITY_MIN = "capacityMin",
+    CAPACITY_MAX = "capacityMax",
+    SQUARE_MIN = "squareMin",
+    SQUARE_MAX = "squareMax",
+    LEVEL_NUMBER_MIN = "levelNumberMin",
+    LEVEL_NUMBER_MAX = "levelNumberMax",
+    WITH_PARKING = "withParking",
+    DATE_FROM = "dateFrom",
+    DATE_TO = "dateTo"
+}

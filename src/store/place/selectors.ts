@@ -5,9 +5,19 @@ import { RootState } from "@store/index";
 
 export const selectPlaces = (state: RootState) => state.place.places;
 
+export const selectPlacesTotalPages = (state: RootState) => state.place.placesTotalPages;
+
 export const selectIsPlacesLoading = (state: RootState) => state.place.isPlacesLoading;
 
 export const selectIsPlacesLoadingFailed = (state: RootState) => state.place.isPlacesLoadingFailed;
+
+export const selectUserPlaces = (state: RootState) => state.place.userPlaces;
+
+export const selectUserPlacesTotalPages = (state: RootState) => state.place.userPlacesTotalPages;
+
+export const selectIsUserPlacesLoading = (state: RootState) => state.place.isUserPlacesLoading;
+
+export const selectIsUserPlacesLoadingFailed = (state: RootState) => state.place.isUserPlacesLoadingFailed;
 
 export const selectCurrentPlace = (state: RootState) => state.place.currentPlace;
 

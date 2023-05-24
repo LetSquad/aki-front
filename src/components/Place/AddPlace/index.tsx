@@ -1,12 +1,7 @@
 import { lazy, useCallback, useRef } from "react";
 
 import { WithSuspense } from "@coreUtils/WithSuspense";
-import {
-    PlaceFieldsName,
-    PlacePriceFieldsName,
-    PriceType,
-    Specialization
-} from "@models/places/enums";
+import { PlaceFieldsName, PlacePriceFieldsName, PriceType } from "@models/places/enums";
 import { PlaceAddFormValues, PlaceDetailsFormRef } from "@models/places/types";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { addPlaceRequest } from "@store/place/reducer";
@@ -41,7 +36,7 @@ export default function AddPlace() {
                         [PlaceFieldsName.ADDRESS]: "",
                         [PlaceFieldsName.EMAIL]: "",
                         [PlaceFieldsName.SITE]: "",
-                        [PlaceFieldsName.SPECIALIZATION]: Specialization.GALLERY,
+                        [PlaceFieldsName.SPECIALIZATION]: [],
                         [PlaceFieldsName.PHONE]: "",
                         [PlaceFieldsName.FULL_SQUARE]: undefined,
                         [PlaceFieldsName.FREE_SQUARE]: undefined,
