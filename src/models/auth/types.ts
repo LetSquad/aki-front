@@ -4,7 +4,6 @@ import {
     ResetPasswordFieldName,
     SignInFieldName
 } from "@models/auth/enums";
-import { BaseResponse } from "@models/http/types";
 import { BaseUserRole, UserRole } from "@models/users/enums";
 import { User } from "@models/users/types";
 
@@ -34,10 +33,6 @@ interface RolesResponse {
     role: UserRole;
 }
 
-export type SignInResponse = {
-    dataBlock: RolesResponse;
-} & BaseResponse;
+export type SignInResponse = RolesResponse;
 
-export type SignUpResponse = {
-    dataBlock: User;
-} & BaseResponse;
+export type SignUpResponse = User;

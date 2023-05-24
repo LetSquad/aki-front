@@ -1,11 +1,4 @@
-export interface BaseResponse {
-    meta: {
-        code: number;
-        description: string;
-    };
-}
-
-export interface BasePageResponse extends BaseResponse {
+export interface BasePageResponse {
     total: number;
 }
 

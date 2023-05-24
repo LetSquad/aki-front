@@ -6,7 +6,7 @@ import { Toast, toast } from "react-hot-toast";
 
 import apiUrls from "@api/apiUrls";
 import AddPlaceSuccessToast from "@components/Place/AddPlace/AddPlaceSuccessToast";
-import { BasePageRequest, BaseResponse } from "@models/http/types";
+import { BasePageRequest } from "@models/http/types";
 import {
     Place,
     PlaceAddFormValues,
@@ -127,7 +127,7 @@ export const updatePlaceRequest = createAsyncThunk("updatePlaceRequest", async (
 });
 
 export const deletePlaceRequest = createAsyncThunk("deletePlaceRequest", async ({ placeId }: { placeId: number; placeName: string }) => {
-    const { data } = await axios.delete<BaseResponse>(apiUrls.placeId(placeId));
+    const { data } = await axios.delete(apiUrls.placeId(placeId));
     return data;
 });
 
@@ -145,8 +145,8 @@ export const placeSlice = createSlice({
         });
         builder.addCase(getPlacesRequest.fulfilled, (state, action) => {
             state.places = action.meta.arg.pageNumber === state.placesCurrentPage || action.meta.arg.pageNumber === 1
-                ? action.payload.dataBlock
-                : [...state.places, ...action.payload.dataBlock];
+                ? action.payload.places
+                : [...state.places, ...action.payload.places];
             state.placesTotalPages = action.payload.total;
             state.isPlacesLoading = false;
         });
@@ -160,8 +160,8 @@ export const placeSlice = createSlice({
         });
         builder.addCase(getUserPlacesRequest.fulfilled, (state, action) => {
             state.userPlaces = action.meta.arg.pageNumber === state.userPlacesCurrentPage
-                ? action.payload.dataBlock
-                : [...state.userPlaces, ...action.payload.dataBlock];
+                ? action.payload.places
+                : [...state.userPlaces, ...action.payload.places];
             state.userPlacesTotalPages = action.payload.total;
             state.isUserPlacesLoading = false;
         });
@@ -186,11 +186,11 @@ export const placeSlice = createSlice({
                 (t: Toast) => (
                     <AddPlaceSuccessToast
                         toast={t}
-                        createdPlaceId={action.payload.dataBlock.id}
-                        createdPlaceName={action.payload.dataBlock.name}
+                        createdPlaceId={action.payload.id}
+                        createdPlaceName={action.payload.name}
                     />
                 ),
-                { id: ADD_PLACE_TOAST_NAME(action.payload.dataBlock.name), duration: 120_000 }
+                { id: ADD_PLACE_TOAST_NAME(action.payload.name), duration: 120_000 }
             );
         });
         builder.addCase(deletePlaceRequest.pending, (state, action) => {
@@ -224,7 +224,7 @@ export const placeSlice = createSlice({
         });
         builder.addCase(getPlaceRequest.fulfilled, (state, action) => {
             state.isCurrentPlaceLoading = false;
-            state.currentPlace = action.payload.dataBlock;
+            state.currentPlace = action.payload;
         });
         builder.addCase(updatePlaceRequest.pending, (state, action) => {
             toast.loading(`Информация о площадке ${action.meta.arg.name} обновляется`, {
@@ -240,7 +240,7 @@ export const placeSlice = createSlice({
         });
         builder.addCase(updatePlaceRequest.fulfilled, (state, action) => {
             state.isUpdatingCurrentPlace = false;
-            state.currentPlace = action.payload.dataBlock;
+            state.currentPlace = action.payload;
             toast.success(`Информация о площадке ${action.meta.arg.name} обновлена успешно. Обновление передано на проверку модератору и очень скоро ее проверят`, {
                 id: UPDATE_PLACE_TOAST_ID(action.meta.arg.id)
             });

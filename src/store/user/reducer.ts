@@ -58,7 +58,7 @@ export const userSlice = createSlice({
         });
         builder.addCase(getUserRequest.fulfilled, (state, action) => {
             state.isCurrentUserLoading = false;
-            state.currentUser = action.payload.dataBlock;
+            state.currentUser = action.payload;
         });
         builder.addCase(updateUserRequest.pending, (state, action) => {
             toast.loading("Информация о вашем профиле обновляется", { id: UPDATE_USER_TOAST(action.meta.arg.id) });
@@ -72,7 +72,7 @@ export const userSlice = createSlice({
         });
         builder.addCase(updateUserRequest.fulfilled, (state, action) => {
             state.isUpdatingCurrentUser = false;
-            state.currentUser = action.payload.dataBlock;
+            state.currentUser = action.payload;
             toast.success("Информация о вашем профиле обновлена успешно", { id: UPDATE_USER_TOAST(action.meta.arg.id) });
         });
     }

@@ -93,8 +93,8 @@ export default function SignInForm({ setIsLoginLoading, setForgotPassword }: Sig
             })
                 .then((response) => {
                     if (response.status === 200) {
-                        localStorage.setItem("aki_role", JSON.stringify(response.data.dataBlock.role));
-                        dispatch(setRole(response.data.dataBlock.role));
+                        localStorage.setItem("aki_role", JSON.stringify(response.data.role));
+                        dispatch(setRole(response.data.role));
                         dispatch(setAuth(true));
                         dispatch(setIsLoginOpen(false));
                     } else {

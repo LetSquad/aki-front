@@ -26,8 +26,8 @@ export default function App() {
         () => axios.post<SignInResponse>(apiUrls.refreshToken(), undefined, { validateStatus: () => true })
             .then((response) => {
                 if (response.status === 200) {
-                    localStorage.setItem("aki_role", JSON.stringify(response.data.dataBlock.role));
-                    dispatch(setRole(response.data.dataBlock.role));
+                    localStorage.setItem("aki_role", JSON.stringify(response.data.role));
+                    dispatch(setRole(response.data.role));
                     return;
                 }
 
