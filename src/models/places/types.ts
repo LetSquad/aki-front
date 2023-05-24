@@ -13,7 +13,7 @@ export interface Place {
     address: string;
     email: string;
     site: string;
-    specialization: Specialization;
+    specialization: Specialization[];
     rating?: PlaceRating;
     placeImages?: (string | File)[];
     phone: string;
@@ -74,7 +74,8 @@ export interface PlaceDetailsFormRef {
 }
 
 export interface PlacesFiltersFormValues {
-    [PlacesFiltersFieldsName.SPECIALIZATION]?: Specialization;
+    [PlacesFiltersFieldsName.SPECIALIZATION]?: Specialization[];
+    [PlacesFiltersFieldsName.RATING]?: number,
     [PlacesFiltersFieldsName.PRICE_MIN]?: number;
     [PlacesFiltersFieldsName.PRICE_MAX]?: number;
     [PlacesFiltersFieldsName.CAPACITY_MIN]?: number;

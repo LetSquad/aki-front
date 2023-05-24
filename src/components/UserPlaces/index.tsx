@@ -31,6 +31,10 @@ export default function UserPlaces() {
         getPlaces(currentPageNumber + 1);
     }, [currentPageNumber, getPlaces]);
 
+    const onErrorReload = useCallback(() => {
+        getPlaces(currentPageNumber);
+    }, [currentPageNumber, getPlaces]);
+
     useEffect(() => {
         getPlaces(currentPageNumber);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -45,6 +49,7 @@ export default function UserPlaces() {
                 placesTotalPages={placesTotalPages}
                 currentPageNumber={currentPageNumber}
                 onNextPage={onNextPage}
+                onErrorReload={onErrorReload}
             />
         </div>
     );

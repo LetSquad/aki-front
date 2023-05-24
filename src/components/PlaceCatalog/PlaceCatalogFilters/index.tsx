@@ -1,35 +1,19 @@
 import React from "react";
 
 import classNames from "classnames";
-import { useFormik } from "formik";
+import { useFormikContext } from "formik";
 import { DateTime } from "luxon";
 import { useMediaQuery } from "react-responsive";
 import { Segment } from "semantic-ui-react";
 
 import { getSpecializationTitleFromEnum } from "@components/Place/utils/utils";
-import { validationSchema } from "@components/PlaceCatalog/PlaceCatalogFilters/validation";
 import { FormFieldType } from "@models/forms/enums";
 import { DropdownOption, FormFieldProps } from "@models/forms/types";
-import { PlaceFieldsName, PlacesFiltersFieldsName, Specialization } from "@models/places/enums";
+import { PlacesFiltersFieldsName, Specialization } from "@models/places/enums";
 import { PlacesFiltersFormValues } from "@models/places/types";
 import BaseAddEditForm from "@parts/EditForm/BaseAddEditForm";
 
 import styles from "./styles/PlaceCatalogFilters.module.scss";
-
-export const initialValues: PlacesFiltersFormValues = {
-    [PlacesFiltersFieldsName.SPECIALIZATION]: undefined,
-    [PlacesFiltersFieldsName.PRICE_MIN]: undefined,
-    [PlacesFiltersFieldsName.PRICE_MAX]: undefined,
-    [PlacesFiltersFieldsName.CAPACITY_MIN]: undefined,
-    [PlacesFiltersFieldsName.CAPACITY_MAX]: undefined,
-    [PlacesFiltersFieldsName.SQUARE_MIN]: undefined,
-    [PlacesFiltersFieldsName.SQUARE_MAX]: undefined,
-    [PlacesFiltersFieldsName.LEVEL_NUMBER_MIN]: undefined,
-    [PlacesFiltersFieldsName.LEVEL_NUMBER_MAX]: undefined,
-    [PlacesFiltersFieldsName.WITH_PARKING]: false,
-    [PlacesFiltersFieldsName.DATE_FROM]: undefined,
-    [PlacesFiltersFieldsName.DATE_TO]: undefined
-};
 
 const PlaceSpecializationsOptions: DropdownOption[] = Object.values(Specialization).map((specialization) => ({
     value: specialization,
@@ -42,7 +26,14 @@ const fields: (fromDate?: string) => FormFieldProps[] = (fromDate) => [
         options: PlaceSpecializationsOptions,
         label: "Специализация",
         type: FormFieldType.DROPDOWN,
-        placeholder: "Выберите специализацию площадки из списка"
+        multiple: true,
+        placeholder: "Выберите специализации площадок из списка"
+    }, {
+        name: PlacesFiltersFieldsName.RATING,
+        label: "Рейтинг",
+        type: FormFieldType.RATING,
+        clearable: true,
+        size: "huge"
     }, {
         name: "price",
         label: "Стоимость (₽/день)",
@@ -96,7 +87,7 @@ const fields: (fromDate?: string) => FormFieldProps[] = (fromDate) => [
             placeholder: "От"
         },
         to: {
-            name: PlacesFiltersFieldsName.CAPACITY_MIN,
+            name: PlacesFiltersFieldsName.CAPACITY_MAX,
             type: FormFieldType.INPUT,
             inputType: "number",
             min: 0,
@@ -124,7 +115,7 @@ const fields: (fromDate?: string) => FormFieldProps[] = (fromDate) => [
             placeholder: "До"
         }
     }, {
-        name: PlaceFieldsName.PARKING,
+        name: PlacesFiltersFieldsName.WITH_PARKING,
         label: "Наличие парковки",
         type: FormFieldType.CHECKBOX
     }, {
@@ -135,31 +126,27 @@ const fields: (fromDate?: string) => FormFieldProps[] = (fromDate) => [
             name: PlacesFiltersFieldsName.DATE_FROM,
             type: FormFieldType.DATEPICKER,
             placeholder: "C",
-            minDate: DateTime.now().toJSDate()
+            minDate: DateTime.now().toJSDate(),
+            maxDate: DateTime.now().plus({ month: 3 }).toJSDate()
         },
         to: {
             name: PlacesFiltersFieldsName.DATE_TO,
             type: FormFieldType.DATEPICKER,
             placeholder: "По",
-            minDate: fromDate ? DateTime.fromISO(fromDate).toJSDate() : DateTime.now().toJSDate()
+            minDate: fromDate ? DateTime.fromISO(fromDate).toJSDate() : DateTime.now().toJSDate(),
+            maxDate: DateTime.now().plus({ month: 3 }).toJSDate()
         }
     }
 ];
 
 interface PlaceCatalogFiltersProps {
-    onSubmit: (values: PlacesFiltersFormValues) => void;
     isLoading: boolean;
 }
 
-export default function PlaceCatalogFilters({ onSubmit, isLoading }: PlaceCatalogFiltersProps) {
+export default function PlaceCatalogFilters({ isLoading }: PlaceCatalogFiltersProps) {
     const withSidebar = useMediaQuery({ maxWidth: 1250 });
 
-    const formik = useFormik<PlacesFiltersFormValues>({
-        onSubmit,
-        initialValues,
-        validationSchema,
-        validateOnMount: true
-    });
+    const formik = useFormikContext<PlacesFiltersFormValues>();
 
     return (
         <Segment className={classNames(styles.segment, { [styles.segmentSidebar]: withSidebar })}>

@@ -15,6 +15,7 @@ interface PlacesListProps {
     isPlacesLoadingFailed: boolean;
     currentPageNumber: number;
     onNextPage: () => void;
+    onErrorReload: () => void;
 }
 
 export default function PlacesList({
@@ -23,7 +24,8 @@ export default function PlacesList({
     isPlacesLoading,
     isPlacesLoadingFailed,
     currentPageNumber,
-    onNextPage
+    onNextPage,
+    onErrorReload
 }: PlacesListProps) {
     const observer = useRef<IntersectionObserver>(null);
 
@@ -66,8 +68,16 @@ export default function PlacesList({
                     </PlaceCard>
                 );
             })}
-            {isPlacesLoadingFailed && <LoadingErrorBlock isLoadingErrorObjectText="площадок" />}
+            {isPlacesLoadingFailed && (
+                <LoadingErrorBlock
+                    isLoadingErrorObjectText="площадок"
+                    reload={onErrorReload}
+                />
+            )}
             {isPlacesLoading && <div className={styles.loader}><Loader active /></div>}
+            {!isPlacesLoading && !isPlacesLoadingFailed && places.length === 0 && (
+                <span className={styles.empty}>По заданным параметрам площадки не найдены</span>
+            )}
         </div>
     );
 }

@@ -112,6 +112,12 @@ export interface FormFieldsRangeProps extends BaseFieldProps {
     to: FormFieldProps;
 }
 
+export interface RatingFieldProps extends BaseFieldProps {
+    clearable?: boolean;
+    maxRating?: number;
+    size?: "mini" | "tiny" | "small" | "large" | "huge" | "massive";
+}
+
 export type FormFieldProps =
     (PhoneNumberInputFieldProps & { type: FormFieldType.PHONE_NUMBER_INPUT }) |
     (PasswordInputFieldProps & { type: FormFieldType.PASSWORD_INPUT }) |
@@ -125,7 +131,8 @@ export type FormFieldProps =
     (ButtonGroupFieldProps & { type: FormFieldType.BUTTON_GROUP }) |
     (BaseFieldProps & { type: FormFieldType.CHECKBOX }) |
     (ImageSelectorFieldProps & { type: FormFieldType.IMAGE_SELECTOR }) |
-    (FormFieldsRangeProps & { type: FormFieldType.FORM_FIELDS_RANGE });
+    (FormFieldsRangeProps & { type: FormFieldType.FORM_FIELDS_RANGE }) |
+    (RatingFieldProps & { type: FormFieldType.RATING });
 
 export interface AccordionsFormFieldProps {
     id: string;

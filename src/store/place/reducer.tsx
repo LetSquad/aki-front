@@ -136,12 +136,15 @@ export const placeSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(getPlacesRequest.pending, (state) => {
+        builder.addCase(getPlacesRequest.pending, (state, action) => {
+            if (action.meta.arg.pageNumber === 1) {
+                state.places = [];
+            }
             state.isPlacesLoading = true;
             state.isPlacesLoadingFailed = false;
         });
         builder.addCase(getPlacesRequest.fulfilled, (state, action) => {
-            state.places = action.meta.arg.pageNumber === state.placesCurrentPage
+            state.places = action.meta.arg.pageNumber === state.placesCurrentPage || action.meta.arg.pageNumber === 1
                 ? action.payload.dataBlock
                 : [...state.places, ...action.payload.dataBlock];
             state.placesTotalPages = action.payload.total;

@@ -67,6 +67,7 @@ export enum PlaceEquipmentFieldsName {
 
 export enum PlacesFiltersFieldsName {
     SPECIALIZATION = "specialization",
+    RATING = "rating",
     PRICE_MIN = "priceMin",
     PRICE_MAX = "priceMax",
     CAPACITY_MIN = "capacityMin",

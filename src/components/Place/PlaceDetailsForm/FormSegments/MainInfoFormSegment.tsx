@@ -32,6 +32,7 @@ export const MainInfoFields: FormFieldProps[] = [
         label: "Специализация",
         required: true,
         type: FormFieldType.DROPDOWN,
+        multiple: true,
         placeholder: "Выберите специализацию площадки из списка"
     }, {
         name: PlaceFieldsName.ADDRESS,
