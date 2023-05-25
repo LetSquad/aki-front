@@ -40,9 +40,9 @@ const ORGANIZATION_REQUIRED_MESSAGE = "Необходимо ввести наз�
 
 const AMOUNT_OF_JOB_TITLE_CHARACTERS = {
     min: 1,
-    max: 30
+    max: 50
 };
-const JOB_TITLE_INVALID_MESSAGE = "Должность должна состоять не более чем из 30 символов и содержать буквы, цифры или символы - , / . \"";
+const JOB_TITLE_INVALID_MESSAGE = "Должность должна состоять не более чем из 50 символов";
 const JOB_TITLE_REQUIRED_MESSAGE = "Необходимо ввести должность";
 
 const USER_IMAGE_MAX_SIZE_INVALID_MESSAGE = "Размер обрезанного аватара не должен превышать 1 МБ";
@@ -91,6 +91,27 @@ export const userProfileValidationSchema = baseUserValidationSchema
                     ? true
                     : value.size <= AVATAR_IMAGE_MAX_SIZE
             ))
+    });
+
+export const landlordBaseValidationSchema = baseUserValidationSchema
+    .shape({
+        [LandlordRegistrationFieldName.INN]: yup.string()
+            .trim()
+            .matches(/^\d{12}$/, INN_INVALID_MESSAGE)
+            .required(INN_REQUIRED_MESSAGE)
+    })
+    .shape({
+        [LandlordRegistrationFieldName.JOB_TITLE]: yup.string()
+            .trim()
+            .min(AMOUNT_OF_JOB_TITLE_CHARACTERS.min, JOB_TITLE_REQUIRED_MESSAGE)
+            .max(AMOUNT_OF_JOB_TITLE_CHARACTERS.max, JOB_TITLE_INVALID_MESSAGE)
+            .required(JOB_TITLE_REQUIRED_MESSAGE)
+    })
+    .shape({
+        [LandlordRegistrationFieldName.ORGANIZATION]: yup.string()
+            .trim()
+            .min(AMOUNT_OF_ORGANIZATION_CHARACTERS.min, ORGANIZATION_REQUIRED_MESSAGE)
+            .required(ORGANIZATION_REQUIRED_MESSAGE)
     });
 
 export const landlordProfileValidationSchema = userProfileValidationSchema

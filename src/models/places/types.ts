@@ -2,6 +2,8 @@ import { BasePageResponse } from "@models/http/types";
 import {
     PlaceConfirmationStatus,
     PlacesFiltersFieldsName,
+    PlacesSortDirection,
+    PlacesSortType,
     PriceType,
     Specialization
 } from "@models/places/enums";
@@ -85,4 +87,9 @@ export interface PlacesFiltersFormValues {
     [PlacesFiltersFieldsName.WITH_PARKING]: boolean;
     [PlacesFiltersFieldsName.DATE_FROM]?: string;
     [PlacesFiltersFieldsName.DATE_TO]?: string;
+}
+
+export interface PlacesSortRequest {
+    sortType: PlacesSortType;
+    sortDirection: PlacesSortDirection;
 }

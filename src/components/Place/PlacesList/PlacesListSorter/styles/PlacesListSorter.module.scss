@@ -1,0 +1,40 @@
+@use "src/styles/variables.module" as variables;
+
+.container {
+  column-gap: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 10px;
+}
+
+.segment {
+  padding: 15px 25px !important;
+}
+
+.item {
+  &-active {
+    color: variables.$primary-button-main-color;
+    cursor: pointer;
+
+    &:hover {
+      color: variables.$primary-text-color;
+      cursor: pointer;
+    }
+  }
+
+  &-selected-active {
+    color: variables.$primary-text-color;
+    cursor: pointer;
+
+    &:hover {
+      color: variables.$primary-button-main-color;
+      cursor: pointer;
+    }
+  }
+}
+
+.price-container {
+  align-items: baseline;
+  column-gap: 5px;
+  display: flex;
+}

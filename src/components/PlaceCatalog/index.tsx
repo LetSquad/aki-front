@@ -10,10 +10,11 @@ import { FormikProvider, useFormik } from "formik";
 import { useMediaQuery } from "react-responsive";
 
 import PlacesList from "@components/Place/PlacesList";
+import PlacesListSorter from "@components/Place/PlacesList/PlacesListSorter";
 import PlaceCatalogFilters from "@components/PlaceCatalog/PlaceCatalogFilters";
 import { validationSchema } from "@components/PlaceCatalog/PlaceCatalogFilters/validation";
 import { useToggle } from "@hooks/useToogle";
-import { PlacesFiltersFieldsName } from "@models/places/enums";
+import { PlacesFiltersFieldsName, PlacesSortDirection, PlacesSortType } from "@models/places/enums";
 import { PlacesFiltersFormValues } from "@models/places/types";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { getPlacesRequest } from "@store/place/reducer";
@@ -50,22 +51,29 @@ export default function PlaceCatalog() {
     const [currentPageNumber, setCurrentPageNumber] = useState<number>(1);
     const [isSidebarOpen, toggleSidebar, , closeSidebar] = useToggle();
     const [filterValues, setFilterValues] = useState(initialValues);
+    const [sort, setSort] = useState<[PlacesSortType, PlacesSortDirection]>([PlacesSortType.POPULAR, PlacesSortDirection.DESC]);
 
     const places = useAppSelector(selectPlaces);
     const placesTotalPages = useAppSelector(selectPlacesTotalPages);
     const isPlacesLoading = useAppSelector(selectIsPlacesLoading);
     const isPlacesLoadingFailed = useAppSelector(selectIsPlacesLoadingFailed);
 
-    const getPlaces = useCallback((pageNumber: number, values: PlacesFiltersFormValues = initialValues) => {
-        dispatch(getPlacesRequest({ pageNumber, limit: 5, ...values }));
+    const getPlaces = useCallback((pageNumber: number, values: PlacesFiltersFormValues, sorting: [PlacesSortType, PlacesSortDirection]) => {
+        dispatch(getPlacesRequest({
+            pageNumber,
+            limit: 5,
+            sortType: sorting[0],
+            sortDirection: sorting[1],
+            ...values
+        }));
     }, [dispatch]);
 
     const onFiltersSubmit = useCallback((values: PlacesFiltersFormValues) => {
         setCurrentPageNumber(1);
         setFilterValues(values);
-        getPlaces(1, values);
+        getPlaces(1, values, sort);
         closeSidebar();
-    }, [closeSidebar, getPlaces]);
+    }, [closeSidebar, getPlaces, sort]);
 
     const formik = useFormik<PlacesFiltersFormValues>({
         onSubmit: onFiltersSubmit,
@@ -76,31 +84,53 @@ export default function PlaceCatalog() {
 
     const onNextPage = useCallback(() => {
         setCurrentPageNumber(currentPageNumber + 1);
-        getPlaces(currentPageNumber + 1, filterValues);
-    }, [currentPageNumber, getPlaces, filterValues]);
+        getPlaces(currentPageNumber + 1, filterValues, sort);
+    }, [currentPageNumber, getPlaces, filterValues, sort]);
 
     const onErrorReload = useCallback(() => {
-        getPlaces(currentPageNumber, filterValues);
+        getPlaces(currentPageNumber, filterValues, sort);
+    }, [currentPageNumber, filterValues, getPlaces, sort]);
+
+    const onSortChanged = useCallback((sorting: [PlacesSortType, PlacesSortDirection]) => {
+        setSort(sorting);
+        getPlaces(currentPageNumber, filterValues, sorting);
     }, [currentPageNumber, filterValues, getPlaces]);
 
     const placesList = useMemo(() => (
-        <PlacesList
-            places={places}
-            isPlacesLoading={isPlacesLoading}
-            isPlacesLoadingFailed={isPlacesLoadingFailed}
-            placesTotalPages={placesTotalPages}
-            currentPageNumber={currentPageNumber}
-            onNextPage={onNextPage}
-            onErrorReload={onErrorReload}
-        />
-    ), [currentPageNumber, isPlacesLoading, isPlacesLoadingFailed, onErrorReload, onNextPage, places, placesTotalPages]);
+        <div className={styles.placesContainer}>
+            <PlacesListSorter
+                sort={sort}
+                onSortChanged={onSortChanged}
+                disabled={isPlacesLoading}
+            />
+            <PlacesList
+                places={places}
+                isPlacesLoading={isPlacesLoading}
+                isPlacesLoadingFailed={isPlacesLoadingFailed}
+                placesTotalPages={placesTotalPages}
+                currentPageNumber={currentPageNumber}
+                onNextPage={onNextPage}
+                onErrorReload={onErrorReload}
+            />
+        </div>
+    ), [
+        currentPageNumber,
+        isPlacesLoading,
+        isPlacesLoadingFailed,
+        onErrorReload,
+        onNextPage,
+        onSortChanged,
+        places,
+        placesTotalPages,
+        sort
+    ]);
 
     const filters = useMemo(() => (
         <PlaceCatalogFilters isLoading={isPlacesLoading} />
     ), [isPlacesLoading]);
 
     useEffect(() => {
-        getPlaces(currentPageNumber);
+        getPlaces(currentPageNumber, filterValues, sort);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

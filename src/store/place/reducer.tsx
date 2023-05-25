@@ -14,6 +14,7 @@ import {
     PlaceResponse,
     PlacesFiltersFormValues,
     PlacesResponse,
+    PlacesSortRequest,
     PlaceUpdateFormValues
 } from "@models/places/types";
 
@@ -59,7 +60,7 @@ const initialState: PlaceState = {
     deletingCurrentPlaceId: undefined
 };
 
-export const getPlacesRequest = createAsyncThunk("getPlacesRequest", async (params: BasePageRequest & PlacesFiltersFormValues) => {
+export const getPlacesRequest = createAsyncThunk("getPlacesRequest", async (params: BasePageRequest & PlacesFiltersFormValues & PlacesSortRequest) => {
     const { data } = await axios.get<PlacesResponse>(apiUrls.place(), { params });
     return data;
 });
