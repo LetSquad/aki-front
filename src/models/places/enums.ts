@@ -80,3 +80,14 @@ export enum PlacesFiltersFieldsName {
     DATE_FROM = "dateFrom",
     DATE_TO = "dateTo"
 }
+
+export enum PlacesSortType {
+    POPULAR = "popular",
+    RATING = "rating",
+    PRICE = "price"
+}
+
+export enum PlacesSortDirection {
+    ASC = "ASC",
+    DESC = "DESC"
+}

@@ -18,7 +18,12 @@
 
   &:hover {
     color: variables.$primary-text-color;
-    transform: scale(1.03);
+    @include mq($until: tablet) {
+      transform: scale(1.015);
+    }
+    @include mq($from: tablet) {
+      transform: scale(1.03);
+    }
   }
 }
 

@@ -1,6 +1,7 @@
 import {
     lazy,
     useCallback,
+    useEffect,
     useMemo,
     useState
 } from "react";
@@ -23,6 +24,7 @@ import {
     useSetPassword,
     useSetSignIn
 } from "@components/Auth/AuthContext";
+import { landLordValidationSchema, validationSchema as renterValidationSchema } from "@components/Auth/SignUp/signUpValidation";
 import { userRoleToLabel } from "@components/Profile/utils/utils";
 import { MOBILE_MAX_WIDTH } from "@coreUtils/constants";
 import { WithSuspense } from "@coreUtils/WithSuspense";
@@ -37,7 +39,6 @@ import UnderscoreButton from "@parts/Buttons/UnderscoreButton";
 import FormFieldPlaceholder from "@parts/FormField/Placeholders/FormFieldPlaceholder";
 
 import authStyles from "../styles/AuthForm.module.scss";
-import { validationSchema } from "./signUpValidation";
 import styles from "./styles/SignUpCard.module.scss";
 
 const FormField = lazy(/* webpackChunkName: "FormField" */ () => import("@parts/FormField/FormField"));
@@ -147,6 +148,8 @@ export default function SignUpCard() {
     const setEmail = useSetEmail();
     const setPassword = useSetPassword();
 
+    const [userRole, setUserRole] = useState<BaseUserRole>(initialValues(loginData)[BaseRegistrationFieldName.ROLE]);
+
     const active = useMemo(() => !isSignIn, [isSignIn]);
 
     const isMobile = useMediaQuery({ maxWidth: MOBILE_MAX_WIDTH });
@@ -177,6 +180,13 @@ export default function SignUpCard() {
         ]
     );
 
+    const validationSchema = useMemo(() => {
+        if (userRole === BaseUserRole.LANDLORD) {
+            return landLordValidationSchema;
+        }
+        return renterValidationSchema;
+    }, [userRole]);
+
     const formik = useFormik<SignUpFormValues>({
         onSubmit: signUp,
         initialValues: initialValues(loginData),
@@ -192,6 +202,10 @@ export default function SignUpCard() {
 
         return active ? styles.signUpActive : styles.signUp;
     }, [active, isMobile]);
+
+    useEffect(() => {
+        setUserRole(formik.values[BaseRegistrationFieldName.ROLE]);
+    }, [formik.values]);
 
     return (
         <div className={containerStyles}>

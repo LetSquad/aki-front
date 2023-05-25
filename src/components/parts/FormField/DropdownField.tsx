@@ -17,7 +17,7 @@ export default function DropdownField({
     clearable = false,
     multiple = false
 }: DropdownFieldProps) {
-    const [{ value }, { error, touched }, { setValue, setTouched }] = useField<string | undefined>({ name, type: "select" });
+    const [{ value: fieldValue }, { error, touched }, { setValue, setTouched }] = useField<string | undefined>({ name, type: "select" });
 
     const [addedItem, setAddedItem] = useState<string>();
 
@@ -26,12 +26,20 @@ export default function DropdownField({
         [addedItem, options]
     );
 
-    const isErrorDisplay = useMemo(() => Boolean(error && (touched || (!touched && value))), [error, touched, value]);
+    const isErrorDisplay = useMemo(() => Boolean(error && (touched || (!touched && fieldValue))), [error, touched, fieldValue]);
+
+    const value = useMemo(() => {
+        if (fieldValue === undefined || fieldValue === null) {
+            return multiple ? [] : "";
+        }
+
+        return fieldValue;
+    }, [fieldValue, multiple]);
 
     return (
         <Form.Dropdown
             label={label}
-            value={value === undefined || value === null ? "" : value}
+            value={value}
             options={fullOptions}
             onChange={(_event, data) => setValue(data.value as string)}
             onBlur={(_event, data) => {
