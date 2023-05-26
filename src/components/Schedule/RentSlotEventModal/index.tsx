@@ -6,6 +6,7 @@ import { Modal } from "semantic-ui-react";
 import { SemanticWIDTHSNUMBER } from "semantic-ui-react/src/generic";
 
 import { Place } from "@models/places/types";
+import { RentSlotStatus } from "@models/rentSlots/enums";
 import { RentSlot } from "@models/rentSlots/types";
 import PrimaryButton from "@parts/Buttons/PrimaryButton";
 import CardGrid from "@parts/CardParts/CardGrid";
@@ -97,24 +98,26 @@ function RentSlotEventModalView({ currentPlace, event, onClose }: Required<RentS
             size="mini"
         >
             <Modal.Header className={modalStyles.modalHeader}>
-                Свободный слот аренды
+                {event.additionalInfo?.status === RentSlotStatus.OPEN ? "Свободный слот аренды" : "Забронированный слот аренды"}
             </Modal.Header>
             <Modal.Content className={modalStyles.modalContent}>
                 <CardGrid>
                     {rows}
                 </CardGrid>
             </Modal.Content>
-            <Modal.Actions className={modalStyles.modalActions}>
-                <PrimaryButton
-                    className={modalStyles.modalButton}
-                    color="negative"
-                    loading={isRentSlotCancelling}
-                    disabled={isRentSlotCancelling}
-                    onClick={onCancelHandle}
-                >
-                    Удалить слот
-                </PrimaryButton>
-            </Modal.Actions>
+            {event.additionalInfo?.status === RentSlotStatus.OPEN && (
+                <Modal.Actions className={modalStyles.modalActions}>
+                    <PrimaryButton
+                        className={modalStyles.modalButton}
+                        color="negative"
+                        loading={isRentSlotCancelling}
+                        disabled={isRentSlotCancelling}
+                        onClick={onCancelHandle}
+                    >
+                        Удалить слот
+                    </PrimaryButton>
+                </Modal.Actions>
+            )}
         </Modal>
     );
 }

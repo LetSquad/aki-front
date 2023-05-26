@@ -1,3 +1,5 @@
+import React from "react";
+
 import { Link, To } from "react-router-dom";
 import { Icon } from "semantic-ui-react";
 
@@ -25,6 +27,7 @@ type BlockIconsProps = {
     deleteConfirmationText?: string;
     deleteAction?: () => void;
     deleteIconName?: "trash" | "cancel" | "ban";
+    additionalIcon?: (iconClassName: string) => React.JSX.Element
 } & ({
     onEditClick?: () => void;
 } | {
@@ -38,6 +41,7 @@ export default function BlockIcons({
     deleteAction,
     deleteConfirmationText,
     deleteIconName = "trash",
+    additionalIcon,
     ...props
 }: BlockIconsProps) {
     const [isConfirmationOpen,, openConfirmation, closeConfirmation] = useToggle();
@@ -53,10 +57,11 @@ export default function BlockIcons({
                 />
             )}
             <div className={styles[`iconContainer${indent?.toUpperCase()}`]}>
+                {!!additionalIcon && additionalIcon(styles[`icon${size?.toUpperCase()}`])}
                 {"editLink" in props && props.editLink && (
                     <Link to={props.editLink}>
                         <Icon
-                            className={styles.icon}
+                            className={styles[`icon${size?.toUpperCase()}`]}
                             name="edit"
                             link
                         />

@@ -1,4 +1,4 @@
-import {
+import React, {
     lazy,
     useCallback,
     useEffect,
@@ -8,6 +8,7 @@ import {
 import { useParams } from "react-router-dom";
 import { Dimmer, Loader } from "semantic-ui-react";
 
+import partsStyles from "@coreStyles/baseParts.module.scss";
 import ErrorBlock from "@parts/ErrorBlock/ErrorBlock";
 import LoadingErrorBlock from "@parts/LoadingErrorBlock/LoadingErrorBlock";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
@@ -20,7 +21,6 @@ import {
 } from "@store/place/selectors";
 import { selectCurrentUser } from "@store/user/selectors";
 
-import PlaceInfoDetailPlaceholder from "./Placeholders/PlaceInfoDetailPlaceholder";
 import styles from "./styles/Place.module.scss";
 
 const PlaceInfoDetails = lazy(/* webpackChunkName: "PlaceInfoDetails" */ () => import("@components/Place/PlaceInfoDetails"));
@@ -53,7 +53,12 @@ export default function PlaceInfo() {
     if (isCurrentPlaceLoading) {
         return (
             <div className={styles.container}>
-                <PlaceInfoDetailPlaceholder />
+                <div className={partsStyles.flexBaseCenterContainer}>
+                    <Loader
+                        active
+                        inline="centered"
+                    />
+                </div>
             </div>
         );
     }

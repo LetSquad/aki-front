@@ -14,10 +14,3 @@
     padding: 0 90px;
   }
 }
-
-.pass-container {
-  display: flex;
-  @include mq($until: tablet) {
-    flex-direction: column;
-  }
-}
