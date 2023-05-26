@@ -1,0 +1,53 @@
+@use 'src/styles/_mq' as *;
+
+.event-block-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 25px);
+  padding: 5px;
+}
+
+.events-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  height: 100%;
+  row-gap: 3px;
+  width: 100%;
+
+  @include mq($until: mobile) {
+    min-height: 60px;
+  }
+  @include mq($from: mobile) {
+    min-height: 90px;
+  }
+}
+
+.event {
+  font-size: 14px !important;
+  margin: 0 !important;
+  max-height: 20px;
+  padding: 2.5px !important;
+  width: 100%;
+
+  @include mq($until: mobile) {
+    font-size: 10px !important;
+  }
+
+  &-link {
+    @include mq($from: mobile) {
+      width: 49%;
+    }
+  }
+}
+
+.more {
+  align-items: flex-end;
+  display: flex !important;
+  flex: 1;
+  justify-content: center;
+  margin: 0 !important;
+  padding: 0 !important;
+}

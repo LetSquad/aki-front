@@ -1,0 +1,52 @@
+@use "src/styles/variables.module" as variables;
+@use "sass:color" as color;
+
+.title,
+%month-day-title {
+  align-items: center;
+  border-radius: 50%;
+  display: flex;
+  height: 25px;
+  justify-content: center;
+  width: 25px;
+
+  &-other-month {
+    color: #b7b7b7;
+  }
+
+  &-current {
+    background-color: variables.$primary-button-main-color;
+    color: variables.$primary-text-color;
+  }
+
+  &-hovered {
+    background-color: color.adjust(variables.$primary-button-main-color, $lightness: 10%);
+    color: variables.$primary-text-color;
+  }
+}
+
+.title-container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+
+  &-full-busy {
+    background-color: #ff00002b;
+  }
+
+  &-some-busy {
+    background-color: #ffd1003b;
+  }
+
+  &-full-free {
+    background-color: #00c3003b;
+  }
+
+  &-empty {
+    background-color: #b3b2b221;
+  }
+
+  &-hovered {
+    cursor: pointer;
+  }
+}

@@ -8,5 +8,6 @@ export enum BasePageSlugs {
 
 export enum LandLordPageSlugs {
     NEW_PLACE = "/places/create",
-    MY_PLACES = "/profile/places"
+    MY_PLACES = "/profile/places",
+    PLACE_SCHEDULE = "/places/:placeId/schedule"
 }

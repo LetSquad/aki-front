@@ -1,0 +1,7 @@
+@use 'src/styles/baseParts.module' as *;
+
+.container {
+  @extend %flex-base-center-container;
+  flex-direction: column;
+  width: 100%;
+}

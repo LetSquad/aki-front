@@ -37,7 +37,6 @@ export enum PlaceFieldsName {
     MIN_CAPACITY = "minCapacity",
     LEVEL_NUMBER = "levelNumber",
     PARKING = "parking",
-    PRICE = "price",
     SERVICES = "services",
     EQUIPMENTS = "equipments",
     FACILITIES = "facilities",

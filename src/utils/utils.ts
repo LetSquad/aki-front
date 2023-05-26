@@ -1,6 +1,7 @@
 import { DateTime } from "luxon";
 
 import { PriceType } from "@models/places/enums";
+import { RentSlotDuration } from "@models/rentSlots/enums";
 
 export function getFullName(firstName?: string, middleName?: string, lastName?: string): string {
     return `${lastName || ""}${lastName && (firstName || middleName) ? " " : ""}${firstName || ""}${
@@ -109,4 +110,16 @@ export function getCapacityTitleFromNumbers(minCapacity?: number, maxCapacity?: 
         : "";
 
     return `${minCapacityTitle}${minCapacityTitle && maxCapacityTitle ? " " : ""}${maxCapacityTitle} человек`;
+}
+
+export function getRentSlotDurationTitleFromEnum(rentSlotDuration: RentSlotDuration): string {
+    switch (rentSlotDuration) {
+        case RentSlotDuration.DAY: {
+            return "День";
+        }
+        case RentSlotDuration.HOUR: {
+            return "Час";
+        }
+        // skip default
+    }
 }

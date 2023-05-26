@@ -9,5 +9,9 @@ export const LandlordPagesData: PageData = {
     MY_PLACES: {
         name: "Мои площадки",
         slug: LandLordPageSlugs.MY_PLACES
+    },
+    PLACE_SCHEDULE: {
+        name: "Расписание площадки",
+        slug: LandLordPageSlugs.PLACE_SCHEDULE
     }
 };

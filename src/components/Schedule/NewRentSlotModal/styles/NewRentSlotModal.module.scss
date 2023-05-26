@@ -1,0 +1,9 @@
+@use 'src/styles/baseParts.module' as *;
+
+.form {
+  @extend %flex-center-container;
+  flex-direction: column;
+  padding-top: 0 !important;
+  row-gap: 15px;
+  width: 100%;
+}

@@ -13,8 +13,6 @@ import { SignInResponse } from "@models/auth/types";
 import { useAppDispatch } from "@store/hooks";
 import { setRole } from "@store/info/reducer";
 
-import "./Mock";
-
 import styles from "./styles/App.module.scss";
 
 export default function App() {

@@ -3,6 +3,7 @@ const baseUrl = `${externalUrl}/api`;
 const userUrl = `${baseUrl}/user`;
 const adminUrl = `${baseUrl}/admin`;
 const placesUrl = `${baseUrl}/places`;
+const rentSlotsUrl = `${baseUrl}/rentSlots`;
 
 const apiUrls = {
     user: () => userUrl,
@@ -14,7 +15,8 @@ const apiUrls = {
     signIn: () => `${baseUrl}/auth`,
     refreshToken: () => `${baseUrl}/auth/refresh`,
     register: () => `${userUrl}/register`,
-    resetPassword: () => `${userUrl}/reset-password`
+    resetPassword: () => `${userUrl}/reset-password`,
+    rentSlots: () => `${rentSlotsUrl}`
 };
 
 export default apiUrls;

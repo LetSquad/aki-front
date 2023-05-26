@@ -25,7 +25,9 @@ export default function DatePickerField({
     maxDate,
     minDate,
     dateFormat = "dd.MM.yyyy",
-    onChange: additionalOnChange
+    onChange: additionalOnChange,
+    popperPlacement,
+    disabled = false
 }: DatePickerFieldProps) {
     const [{ value }, { error, touched }, { setValue, setTouched }] = useField<string | undefined>({ name, type: "select" });
 
@@ -69,6 +71,7 @@ export default function DatePickerField({
                 onSelect={changeDateValue}
                 onChange={changeDateValue}
                 maxDate={maxDate}
+                disabled={disabled}
                 minDate={minDate}
                 showMonthDropdown
                 showYearDropdown
@@ -77,6 +80,7 @@ export default function DatePickerField({
                 dateFormat={dateFormat}
                 required={required}
                 onBlur={setTouchedTrue}
+                popperPlacement={popperPlacement}
             />
             {isErrorDisplay && (
                 <Label

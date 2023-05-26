@@ -1,0 +1,32 @@
+.day,
+%month-day {
+  border: 0.5px solid #eee;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: calc(100% / 7);
+
+  &-pointer {
+    cursor: pointer;
+  }
+
+  &-title {
+    border-radius: 10px;
+    padding: 3px;
+
+    &-other {
+      color: #b7b7b7;
+    }
+
+    &-current {
+      @extend %month-day-title;
+      background-color: #edb506;
+    }
+
+    &-hovered {
+      @extend %month-day-title;
+      background-color: #2185d0;
+      color: #fff;
+    }
+  }
+}

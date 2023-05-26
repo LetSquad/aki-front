@@ -30,7 +30,7 @@ export const PriceFields: (groupName: string) => FormFieldProps[] = (groupName) 
         type: FormFieldType.INPUT,
         inputType: "number",
         min: 0,
-        step: 100,
+        step: 1,
         labelPosition: "right",
         inputLabel: "₽",
         placeholder: "5000"

@@ -27,7 +27,9 @@ export default function TimePickerField({
     timeFormat = "HH:mm",
     maxTime,
     minTime,
-    onChange: additionalOnChange
+    onChange: additionalOnChange,
+    popperPlacement,
+    disabled = false
 }: TimePickerFieldProps) {
     const [{ value }, { error, touched }, { setValue, setTouched }] = useField<string | undefined>({ name, type: "select" });
 
@@ -68,6 +70,7 @@ export default function TimePickerField({
             )}
             <DatePicker
                 name={name}
+                disabled={disabled}
                 selected={value ? DateTime.fromISO(value).toJSDate() : undefined}
                 onSelect={changeTimeValue}
                 onChange={changeTimeValue}
@@ -83,6 +86,7 @@ export default function TimePickerField({
                 required={required}
                 showTimeSelectOnly
                 onBlur={setTouchedTrue}
+                popperPlacement={popperPlacement}
             />
             {isErrorDisplay && (
                 <Label

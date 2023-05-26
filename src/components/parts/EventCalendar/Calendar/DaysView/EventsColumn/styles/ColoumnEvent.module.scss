@@ -1,0 +1,13 @@
+@use 'src/styles/_mq' as *;
+
+.event {
+  @include mq($until: mobile) {
+    font-size: 10px !important;
+  }
+  @include mq($until: 449px) {
+    padding: 0 2px !important;
+  }
+  @include mq($from: 450px) {
+    padding: 0 10px !important;
+  }
+}

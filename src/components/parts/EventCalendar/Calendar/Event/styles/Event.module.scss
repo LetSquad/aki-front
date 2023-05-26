@@ -1,0 +1,31 @@
+.link {
+  max-width: 100%;
+  overflow: hidden;
+
+  &-wide {
+    width: 100%;
+  }
+}
+
+.event {
+  margin: 0 !important;
+  max-width: 100%;
+  min-height: 0 !important;
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap !important;
+  }
+
+  &-wide {
+    width: 100%;
+  }
+
+  &-disabled {
+    background-image: none !important;
+    box-shadow: none !important;
+    cursor: default;
+    pointer-events: none !important;
+  }
+}

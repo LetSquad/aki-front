@@ -167,7 +167,6 @@ export const validationSchema = yup.object()
         [PlaceFieldsName.FULL_SQUARE]: yup.number()
             .min(0, FULL_SQUARE_INVALID_MESSAGE)
             .optional(),
-        [PlaceFieldsName.PRICE]: priceValidationSchema,
         [PlaceFieldsName.FACILITIES]: yup.array()
             .of(
                 yup.object().shape({

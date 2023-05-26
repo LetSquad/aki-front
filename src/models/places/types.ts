@@ -7,6 +7,7 @@ import {
     PriceType,
     Specialization
 } from "@models/places/enums";
+import { RentSlot } from "@models/rentSlots/types";
 import { LandlordInfo } from "@models/users/types";
 
 export interface Place {
@@ -31,6 +32,7 @@ export interface Place {
     services?: PlaceService[];
     equipments?: PlaceEquipment[];
     facilities?: PlaceFacilities[];
+    rentSlots?: RentSlot[];
     user: LandlordInfo
 }
 
@@ -66,7 +68,7 @@ export interface PlacesResponse extends BasePageResponse {
     places: Place[];
 }
 
-export type PlaceUpdateFormValues = Omit<Place, "user" | "status" | "rating">;
+export type PlaceUpdateFormValues = Omit<Place, "user" | "status" | "rating" | "price">;
 export type PlaceAddFormValues = Omit<PlaceUpdateFormValues, "id">;
 
 export interface PlaceDetailsFormRef {

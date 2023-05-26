@@ -3,6 +3,8 @@ import React from "react";
 import { LabelProps } from "semantic-ui-react/dist/commonjs/elements/Label";
 import { SemanticCOLORS, SemanticShorthandItem } from "semantic-ui-react/dist/commonjs/generic";
 
+import * as Popper from "@popperjs/core";
+
 import { FormFieldType, ImageEditorPreviewType } from "./enums";
 
 export interface BaseFieldProps {
@@ -72,6 +74,8 @@ export interface DatePickerFieldProps extends BaseFieldProps {
     maxDate?: Date;
     minDate?: Date;
     dateFormat?: string;
+    popperPlacement?: Popper.Placement;
+    disabled?: boolean;
 }
 
 export interface TimePickerFieldProps extends BaseFieldProps {
@@ -81,6 +85,8 @@ export interface TimePickerFieldProps extends BaseFieldProps {
     maxTime?: Date;
     minTime?: Date;
     timeIntervals?: number;
+    popperPlacement?: Popper.Placement;
+    disabled?: boolean;
 }
 
 export type DateTimePickerFieldProps = BaseFieldProps & DatePickerFieldProps & TimePickerFieldProps & {

@@ -1,0 +1,12 @@
+@use "src/styles/variables.module" as variables;
+
+.today-button {
+  background: transparent !important;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.15) !important;
+  color: variables.$primary-text-color !important;
+  font-size: 16px;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.05) !important;
+  }
+}

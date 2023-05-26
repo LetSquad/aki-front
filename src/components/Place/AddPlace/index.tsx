@@ -1,7 +1,7 @@
 import { lazy, useCallback, useRef } from "react";
 
 import { WithSuspense } from "@coreUtils/WithSuspense";
-import { PlaceFieldsName, PlacePriceFieldsName, PriceType } from "@models/places/enums";
+import { PlaceFieldsName } from "@models/places/enums";
 import { PlaceAddFormValues, PlaceDetailsFormRef } from "@models/places/types";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { addPlaceRequest } from "@store/place/reducer";
@@ -43,11 +43,7 @@ export default function AddPlace() {
                         [PlaceFieldsName.MAX_CAPACITY]: undefined,
                         [PlaceFieldsName.MIN_CAPACITY]: undefined,
                         [PlaceFieldsName.LEVEL_NUMBER]: undefined,
-                        [PlaceFieldsName.PARKING]: false,
-                        [PlaceFieldsName.PRICE]: {
-                            [PlacePriceFieldsName.PRICE]: 0,
-                            [PlacePriceFieldsName.PRICE_TYPE]: PriceType.FREE
-                        }
+                        [PlaceFieldsName.PARKING]: false
                     }}
                     ref={addPlaceFormRef}
                     onSubmit={addPet}
