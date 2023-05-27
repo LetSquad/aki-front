@@ -1,0 +1,33 @@
+@use "src/styles/variables.module" as variables;
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.title,
+%day-title {
+  align-content: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.weekday {
+  @extend %day-title;
+  color: #b7b7b7;
+  margin-bottom: 5px;
+}
+
+.day {
+  align-items: center;
+  border-radius: 50%;
+  display: flex;
+  height: 25px;
+  justify-content: center;
+  width: 25px;
+}
+
+.today {
+  background-color: variables.$primary-button-main-color;
+}

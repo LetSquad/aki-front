@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+}
+
+.dumb {
+  width: 45px;
+}
+
+.date-title {
+  width: calc(100% / 7);
+}
+
+.date-titles-container {
+  display: flex;
+  width: 100%;
+}

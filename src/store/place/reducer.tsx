@@ -1,6 +1,6 @@
 import { RefObject } from "react";
 
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Toast, toast } from "react-hot-toast";
 
@@ -17,6 +17,7 @@ import {
     PlacesSortRequest,
     PlaceUpdateFormValues
 } from "@models/places/types";
+import { cancelRentSlotRequest, createRentSlotsRequest } from "@store/rentSlot/reducer";
 
 const ADD_PLACE_TOAST_NAME = (placeName: string) => `add-place-${placeName}`;
 const DELETE_PLACE_TOAST_ID = (placeId: number) => `delete-place-${placeId}`;
@@ -245,6 +246,9 @@ export const placeSlice = createSlice({
             toast.success(`Информация о площадке ${action.meta.arg.name} обновлена успешно. Обновление передано на проверку модератору и очень скоро ее проверят`, {
                 id: UPDATE_PLACE_TOAST_ID(action.meta.arg.id)
             });
+        });
+        builder.addMatcher(isAnyOf(createRentSlotsRequest.fulfilled, cancelRentSlotRequest.fulfilled), (state, action) => {
+            state.currentPlace = action.payload;
         });
     }
 });

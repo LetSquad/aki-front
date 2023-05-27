@@ -1,6 +1,5 @@
 import { Segment } from "semantic-ui-react";
 
-import PriceFormFields from "@components/Place/PlaceDetailsForm/FormSegments/PriceFormFields";
 import basePlaceStyles from "@components/Place/PlaceInfoDetails/styles/PlaceInfoDetails.module.scss";
 import { getSpecializationTitleFromEnum } from "@components/Place/utils/utils";
 import { FormFieldType } from "@models/forms/enums";
@@ -118,9 +117,7 @@ export default function MainInfoFormSegment() {
     return (
         <Segment>
             <span className={basePlaceStyles.secondaryTitle}>Основная информация</span>
-            <BaseFormFields fields={MainInfoFields}>
-                <PriceFormFields groupName={PlaceFieldsName.PRICE} />
-            </BaseFormFields>
+            <BaseFormFields fields={MainInfoFields} />
         </Segment>
     );
 }

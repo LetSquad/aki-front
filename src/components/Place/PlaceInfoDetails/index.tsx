@@ -6,7 +6,13 @@ import React, {
 } from "react";
 
 import classNames from "classnames";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import {
+    generatePath,
+    Link,
+    useNavigate,
+    useSearchParams
+} from "react-router-dom";
+import { Icon } from "semantic-ui-react";
 
 import PlaceEquipments from "@components/Place/PlaceInfoDetails/PlaceEquipments";
 import PlaceFacilities from "@components/Place/PlaceInfoDetails/PlaceFacilities";
@@ -74,6 +80,16 @@ export default function PlaceInfoDetails({ currentPlace, isUserPlaceOwner }: Pla
         [currentPlace]
     );
 
+    const scheduleIcon = useCallback((iconClassName: string) => (
+        <Link to={generatePath(LandLordPageSlugs.PLACE_SCHEDULE, { placeId: currentPlace.id.toString() })}>
+            <Icon
+                className={iconClassName}
+                name="calendar check outline"
+                link
+            />
+        </Link>
+    ), [currentPlace.id]);
+
     return (
         <PlaceInfoContext.Provider value={contextValue}>
             <div
@@ -104,6 +120,7 @@ export default function PlaceInfoDetails({ currentPlace, isUserPlaceOwner }: Pla
                                             onEditClick={() => changeEditState(true)}
                                             deleteAction={() => deletePlace(currentPlace.id, currentPlace.name)}
                                             deleteConfirmationText={`Удалить площадку "${currentPlace.name}"?`}
+                                            additionalIcon={scheduleIcon}
                                         />
                                     )}
                                     <span className={styles.title}>{currentPlace.name}</span>

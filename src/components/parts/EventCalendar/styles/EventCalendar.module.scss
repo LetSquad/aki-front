@@ -1,0 +1,8 @@
+@use 'src/styles/baseParts.module' as *;
+
+.container {
+  @extend %base-container;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}

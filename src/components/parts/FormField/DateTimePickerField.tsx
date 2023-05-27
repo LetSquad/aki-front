@@ -31,7 +31,9 @@ export default function DateTimePickerField({
     timeIntervals = 15,
     includeTimes,
     includeDates,
-    onChange: additionalOnChange
+    onChange: additionalOnChange,
+    popperPlacement,
+    disabled = false
 }: DateTimePickerFieldProps) {
     const [{ value }, { error, touched }, { setValue, setTouched }] = useField<string | undefined>({ name, type: "select" });
 
@@ -97,6 +99,7 @@ export default function DateTimePickerField({
             <DatePicker
                 disabledKeyboardNavigation
                 name={name}
+                disabled={disabled}
                 selected={value ? DateTime.fromISO(value).toJSDate() : undefined}
                 onSelect={changeDateTimeValue}
                 onChange={changeDateTimeValue}
@@ -116,6 +119,7 @@ export default function DateTimePickerField({
                 includeDates={includeDates}
                 onClickOutside={resetDateValue}
                 onBlur={setTouchedTrue}
+                popperPlacement={popperPlacement}
             />
             {isErrorDisplay && (
                 <Label

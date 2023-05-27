@@ -133,7 +133,7 @@ const fields: (fromDate?: string) => FormFieldProps[] = (fromDate) => [
             name: PlacesFiltersFieldsName.DATE_TO,
             type: FormFieldType.DATEPICKER,
             placeholder: "По",
-            minDate: fromDate ? DateTime.fromISO(fromDate).toJSDate() : DateTime.now().toJSDate(),
+            minDate: fromDate ? DateTime.now().toJSDate() : DateTime.now().toJSDate(),
             maxDate: DateTime.now().plus({ month: 3 }).toJSDate()
         }
     }
