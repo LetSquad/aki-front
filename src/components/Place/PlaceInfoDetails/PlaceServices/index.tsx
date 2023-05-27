@@ -5,7 +5,7 @@ import PlaceServicesView from "./PlaceServicesView";
 export default function PlaceServices() {
     const placeServices = useCurrentPlace().services;
 
-    if (placeServices === undefined || placeServices.length === 0) {
+    if (!placeServices || placeServices.length === 0) {
         return null;
     }
 

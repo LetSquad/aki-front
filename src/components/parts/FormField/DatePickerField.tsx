@@ -27,7 +27,8 @@ export default function DatePickerField({
     dateFormat = "dd.MM.yyyy",
     onChange: additionalOnChange,
     popperPlacement,
-    disabled = false
+    disabled = false,
+    includeDates
 }: DatePickerFieldProps) {
     const [{ value }, { error, touched }, { setValue, setTouched }] = useField<string | undefined>({ name, type: "select" });
 
@@ -81,6 +82,7 @@ export default function DatePickerField({
                 required={required}
                 onBlur={setTouchedTrue}
                 popperPlacement={popperPlacement}
+                includeDates={includeDates}
             />
             {isErrorDisplay && (
                 <Label

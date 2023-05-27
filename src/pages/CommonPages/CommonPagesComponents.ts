@@ -17,7 +17,7 @@ export const CommonPagesComponents: PageComponents = {
     PLACE: {
         component: Place
     },
-    PLACE_CATALOG: {
+    DASHBOARD: {
         component: PlaceCatalog
     }
 };

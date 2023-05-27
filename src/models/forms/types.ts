@@ -27,6 +27,7 @@ export interface BaseInputFieldProps extends BaseFieldProps {
     clearable?: boolean;
     inputLabel?: SemanticShorthandItem<LabelProps>;
     labelPosition?: "left" | "right" | "left corner" | "right corner";
+    maxLength?: number;
 }
 
 export interface NumberInputFieldProps extends BaseInputFieldProps {
@@ -76,6 +77,7 @@ export interface DatePickerFieldProps extends BaseFieldProps {
     dateFormat?: string;
     popperPlacement?: Popper.Placement;
     disabled?: boolean;
+    includeDates?: Date[];
 }
 
 export interface TimePickerFieldProps extends BaseFieldProps {
@@ -87,6 +89,7 @@ export interface TimePickerFieldProps extends BaseFieldProps {
     timeIntervals?: number;
     popperPlacement?: Popper.Placement;
     disabled?: boolean;
+    includeTimes?: Date[];
 }
 
 export type DateTimePickerFieldProps = BaseFieldProps & DatePickerFieldProps & TimePickerFieldProps & {

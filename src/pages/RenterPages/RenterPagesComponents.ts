@@ -1,3 +1,11 @@
+import { lazy } from "react";
+
 import { PageComponents } from "@models/pages/types";
 
-export const RenterPagesComponents: PageComponents = {};
+const UserRents = lazy(/* webpackChunkName: "UserRents" */ () => import("@components/Rent/UserRents"));
+
+export const RenterPagesComponents: PageComponents = {
+    MY_RENTS: {
+        component: UserRents
+    }
+};

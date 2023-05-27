@@ -4,6 +4,7 @@ const userUrl = `${baseUrl}/user`;
 const adminUrl = `${baseUrl}/admin`;
 const placesUrl = `${baseUrl}/places`;
 const rentSlotsUrl = `${baseUrl}/rentSlots`;
+const rentsUrl = `${baseUrl}/rents`;
 
 const apiUrls = {
     user: () => userUrl,
@@ -11,6 +12,9 @@ const apiUrls = {
     userId: (userId: number | string) => `${userUrl}/${userId}`,
     place: () => placesUrl,
     myPlace: () => `${placesUrl}/my`,
+    rents: () => rentsUrl,
+    rentId: (rentId: number | string) => `${rentsUrl}/${rentId}`,
+    rentRate: () => `${rentsUrl}/rate`,
     placeId: (placeId: number | string) => `${placesUrl}/${placeId}`,
     signIn: () => `${baseUrl}/auth`,
     refreshToken: () => `${baseUrl}/auth/refresh`,

@@ -1,7 +1,7 @@
-export enum PlaceConfirmationStatus {
-    CONFIRMED = "CONFIRMED",
-    PENDING = "PENDING",
-    REJECTED = "REJECTED"
+export enum PlaceStatus {
+    VERIFIED = "VERIFIED",
+    UNVERIFIED = "UNVERIFIED",
+    BANNED = "BANNED"
 }
 
 export enum PriceType {
@@ -11,7 +11,7 @@ export enum PriceType {
     FREE = "FREE"
 }
 
-export enum Specialization {
+export enum PlaceSpecialization {
     FILM_STUDIO = "FILM_STUDIO",
     GALLERY = "GALLERY",
     PUBLISHING_HOUSE = "PUBLISHING_HOUSE",
@@ -20,7 +20,22 @@ export enum Specialization {
     CREATIVE_SPACE = "CREATIVE_SPACE",
     CINEMA = "CINEMA",
     SOUND_RECORDING_STUDIO = "SOUND_RECORDING_STUDIO",
-    AR_VR_STUDIOS = "AR_VR_STUDIOS"
+    AR_VR_STUDIOS = "AR_VR_STUDIOS",
+    SHOWROOM = "SHOWROOM",
+    ART_WORKSHOP = "ART_WORKSHOP",
+    PROTOTYPING_CENTER = "PROTOTYPING_CENTER",
+    LAYOUT_WORKSHOP = "LAYOUT_WORKSHOP",
+    RENDERING_STUDIO = "RENDERING_STUDIO",
+    PHOTO_VIDEO_STUDIO = "PHOTO_VIDEO_STUDIO",
+    REHEARSAL_ROOM = "REHEARSAL_ROOM",
+    DANCE_HALL = "DANCE_HALL",
+    STAGE_SPACE = "STAGE_SPACE",
+    VIDEO_EDITING_STUDIO = "VIDEO_EDITING_STUDIO",
+    MOKAP_STUDIO = "MOKAP_STUDIO",
+    SEWING_SHOP = "SEWING_SHOP",
+    SHOW_SPACE = "SHOW_SPACE",
+    MUSIC_REHEARSAL_STUDIO = "MUSIC_REHEARSAL_STUDIO",
+    CONCERT_HALL = "CONCERT_HALL"
 }
 
 export enum PlaceFieldsName {
@@ -83,7 +98,8 @@ export enum PlacesFiltersFieldsName {
 export enum PlacesSortType {
     POPULAR = "popular",
     RATING = "rating",
-    PRICE = "price"
+    PRICE = "price",
+    PERSONAL = "personal"
 }
 
 export enum PlacesSortDirection {

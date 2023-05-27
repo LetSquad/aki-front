@@ -1,6 +1,6 @@
 @use '../../styles/AuthForm.module' as *;
 @use 'src/styles/variables.module' as variables;
-@use 'src/styles/mq' as *;
+@use 'src/styles/_mq' as *;
 
 @keyframes show {
   0%,

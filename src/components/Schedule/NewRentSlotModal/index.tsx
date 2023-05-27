@@ -4,6 +4,7 @@ import { FormikProvider, useFormik } from "formik";
 import { DateTime } from "luxon";
 import { Form, Modal } from "semantic-ui-react";
 
+import modalStyles from "@coreStyles/modals.module.scss";
 import { Place } from "@models/places/types";
 import { NewRentSlotsDatePeriodsFieldName, NewRentSlotsFieldName, RentSlotDuration } from "@models/rentSlots/enums";
 import { NewRentSlotFormValues, OptionalNewRentSlotFormValues } from "@models/rentSlots/types";
@@ -13,8 +14,7 @@ import { createRentSlotsRequest } from "@store/rentSlot/reducer";
 import { selectIsNewRentSlotsAdding } from "@store/rentSlot/selectors";
 import { selectCurrentUser } from "@store/user/selectors";
 
-import modalStyles from "../styles/CalendarModal.module.scss";
-import { validationSchema } from "./newAppointmentSlotsValidation";
+import { validationSchema } from "./newRentSlotsValidation";
 import PeriodsFields from "./PeriodsFields";
 import styles from "./styles/NewRentSlotModal.module.scss";
 
@@ -64,6 +64,9 @@ function NewRentSlotModalView({ currentPlace, date, onClose }: Required<NewRentS
         onSubmit: addRentSlots,
         initialValues: initialValues(date),
         validationSchema,
+        initialTouched: {
+            [NewRentSlotsFieldName.DATE_PERIOD]: true
+        },
         validateOnBlur: false
     });
 
@@ -75,12 +78,11 @@ function NewRentSlotModalView({ currentPlace, date, onClose }: Required<NewRentS
     return (
         <Modal
             open
-            className={modalStyles.modal}
             onClose={onClose}
             closeIcon
             size="small"
         >
-            <Modal.Header className={modalStyles.modalHeader}>
+            <Modal.Header>
                 Создание новых слотов аренды
             </Modal.Header>
             <Modal.Content className={modalStyles.modalContent}>
@@ -95,7 +97,6 @@ function NewRentSlotModalView({ currentPlace, date, onClose }: Required<NewRentS
             </Modal.Content>
             <Modal.Actions className={modalStyles.modalActions}>
                 <PrimaryButton
-                    className={modalStyles.modalButton}
                     onClick={formik.submitForm}
                     disabled={isSubmitDisabled}
                     loading={isNewRentSlotsAdding}

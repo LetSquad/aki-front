@@ -1,48 +1,93 @@
-import { PlaceConfirmationStatus, Specialization } from "@models/places/enums";
+import { PlaceSpecialization, PlaceStatus } from "@models/places/enums";
 
-export function getSpecializationTitleFromEnum(specialization: Specialization): string {
+export function getPlaceSpecializationTitleFromEnum(specialization: PlaceSpecialization): string {
     switch (specialization) {
-        case Specialization.AR_VR_STUDIOS: {
+        case PlaceSpecialization.AR_VR_STUDIOS: {
             return "AR/VR студия";
         }
-        case Specialization.BOOKSTORE: {
+        case PlaceSpecialization.BOOKSTORE: {
             return "Книжный магазин";
         }
-        case Specialization.CINEMA: {
+        case PlaceSpecialization.CINEMA: {
             return "Кинотеатр";
         }
-        case Specialization.CREATIVE_SPACE: {
+        case PlaceSpecialization.CREATIVE_SPACE: {
             return "Креативное пространство";
         }
-        case Specialization.DESIGN_STUDIO: {
+        case PlaceSpecialization.DESIGN_STUDIO: {
             return "Дизайн студия";
         }
-        case Specialization.FILM_STUDIO: {
+        case PlaceSpecialization.FILM_STUDIO: {
             return "Киностудия";
         }
-        case Specialization.GALLERY: {
+        case PlaceSpecialization.GALLERY: {
             return "Галерея";
         }
-        case Specialization.PUBLISHING_HOUSE: {
+        case PlaceSpecialization.PUBLISHING_HOUSE: {
             return "Издательство";
         }
-        case Specialization.SOUND_RECORDING_STUDIO: {
+        case PlaceSpecialization.SOUND_RECORDING_STUDIO: {
             return "Звукозаписывающая студия";
+        }
+        case PlaceSpecialization.SHOWROOM: {
+            return "Выставочный зал";
+        }
+        case PlaceSpecialization.ART_WORKSHOP: {
+            return "Художественная мастерская";
+        }
+        case PlaceSpecialization.PROTOTYPING_CENTER: {
+            return "Центр прототипирования";
+        }
+        case PlaceSpecialization.LAYOUT_WORKSHOP: {
+            return "Мастерская макетирования";
+        }
+        case PlaceSpecialization.RENDERING_STUDIO: {
+            return "Рендеринг студия";
+        }
+        case PlaceSpecialization.PHOTO_VIDEO_STUDIO: {
+            return "Фото-видеостудия";
+        }
+        case PlaceSpecialization.REHEARSAL_ROOM: {
+            return "Репетиционный зал";
+        }
+        case PlaceSpecialization.DANCE_HALL: {
+            return "Танцевальный зал";
+        }
+        case PlaceSpecialization.STAGE_SPACE: {
+            return "Сценическое пространство";
+        }
+        case PlaceSpecialization.VIDEO_EDITING_STUDIO: {
+            return "Студия видеомонтажа (кинопроизводства)";
+        }
+        case PlaceSpecialization.MOKAP_STUDIO: {
+            return "МОКАП студия";
+        }
+        case PlaceSpecialization.SEWING_SHOP: {
+            return "Пошивочный цех";
+        }
+        case PlaceSpecialization.SHOW_SPACE: {
+            return "Пространство для показа";
+        }
+        case PlaceSpecialization.MUSIC_REHEARSAL_STUDIO: {
+            return "Музыкальная репетиционная студия";
+        }
+        case PlaceSpecialization.CONCERT_HALL: {
+            return "Концертная площадка";
         }
         // skip default
     }
 }
 
-export function getPlaceConfirmationStatusTitleFromEnum(placeConfirmationStatus: PlaceConfirmationStatus): string {
+export function getPlaceStatusTitleFromEnum(placeConfirmationStatus: PlaceStatus): string {
     switch (placeConfirmationStatus) {
-        case PlaceConfirmationStatus.CONFIRMED: {
+        case PlaceStatus.VERIFIED: {
             return "Опубликована";
         }
-        case PlaceConfirmationStatus.PENDING: {
+        case PlaceStatus.UNVERIFIED: {
             return "На рассмотрении";
         }
-        case PlaceConfirmationStatus.REJECTED: {
-            return "Отклонена";
+        case PlaceStatus.BANNED: {
+            return "Забанена";
         }
         // skip default
     }

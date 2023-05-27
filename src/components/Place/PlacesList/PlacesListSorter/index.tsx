@@ -14,6 +14,10 @@ interface PlacesListSorterProps {
 }
 
 export default function PlacesListSorter({ sort, onSortChanged, disabled }: PlacesListSorterProps) {
+    const onClickPersonalSort = useCallback(() => {
+        onSortChanged([PlacesSortType.PERSONAL, PlacesSortDirection.DESC]);
+    }, [onSortChanged]);
+
     const onClickPopularSort = useCallback(() => {
         onSortChanged([PlacesSortType.POPULAR, PlacesSortDirection.DESC]);
     }, [onSortChanged]);
@@ -33,6 +37,17 @@ export default function PlacesListSorter({ sort, onSortChanged, disabled }: Plac
     return (
         <Segment className={styles.segment}>
             <div className={styles.container}>
+                <span
+                    className={
+                        classNames({
+                            [styles.itemActive]: sort[0] !== PlacesSortType.PERSONAL
+                        })
+                    }
+                    aria-hidden
+                    onClick={sort[0] === PlacesSortType.PERSONAL || disabled ? undefined : onClickPersonalSort}
+                >
+                    Персональная подборка
+                </span>
                 <span
                     className={
                         classNames({

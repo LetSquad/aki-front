@@ -1,0 +1,14 @@
+.container {
+  padding: 0 20px !important;
+  width: 100%;
+}
+
+.field {
+  :global {
+    .react-datepicker-popper {
+      inset: auto !important;
+      position: fixed !important;
+      transform: none !important;
+    }
+  }
+}

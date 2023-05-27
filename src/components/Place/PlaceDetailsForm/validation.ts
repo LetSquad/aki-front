@@ -46,7 +46,6 @@ const PLACE_ADDRESS_INVALID_MESSAGE = "Адрес площадки должен 
 const PLACE_ADDRESS_REQUIRED_MESSAGE = "Адрес площадки должен быть указан";
 
 const PRICE_REQUIRED_MESSAGE = "Необходимо указать стоимость больше 0, если выбран тип цены не \"Бесплатно\"";
-const PRICE_INVALID_MESSAGE = "Стоимость должна быть больше 0";
 
 const MAX_CAPACITY_LOWER_THEN_MIN_MESSAGE = "Максимальная вместимость человек должно быть больше или равно минимальной";
 const MAX_CAPACITY_INVALID_MESSAGE = "Максимальная вместимость должна быть больше 0";
@@ -86,7 +85,6 @@ const AREA_PLACE_IMAGES_INVALID_COUNT_MESSAGE = "Количество изобр
 const priceValidationSchema = yup.object()
     .shape({
         [PlacePriceFieldsName.PRICE]: yup.number()
-            .min(1, PRICE_INVALID_MESSAGE)
             .test(
                 "isPriceRequired",
                 PRICE_REQUIRED_MESSAGE,
@@ -97,9 +95,10 @@ const priceValidationSchema = yup.object()
                         return true;
                     }
 
-                    return !!price;
+                    return !!price && price > 0;
                 }
             )
+            .nullable()
     });
 
 export const validationSchema = yup.object()
@@ -144,9 +143,11 @@ export const validationSchema = yup.object()
                     return minCapacity <= maxCapacity;
                 }
             )
+            .nullable()
             .optional(),
         [PlaceFieldsName.MIN_CAPACITY]: yup.number()
             .min(0, MIN_CAPACITY_INVALID_MESSAGE)
+            .nullable()
             .optional(),
         [PlaceFieldsName.FREE_SQUARE]: yup.number()
             .min(0, FREE_SQUARE_INVALID_MESSAGE)
@@ -163,9 +164,11 @@ export const validationSchema = yup.object()
                     return freeSquare <= fullSquare;
                 }
             )
+            .nullable()
             .optional(),
         [PlaceFieldsName.FULL_SQUARE]: yup.number()
             .min(0, FULL_SQUARE_INVALID_MESSAGE)
+            .nullable()
             .optional(),
         [PlaceFieldsName.FACILITIES]: yup.array()
             .of(
@@ -179,6 +182,7 @@ export const validationSchema = yup.object()
                         .optional()
                 })
             )
+            .nullable()
             .optional(),
         [PlaceFieldsName.SERVICES]: yup.array()
             .of(
@@ -190,6 +194,7 @@ export const validationSchema = yup.object()
                     [PlaceServiceFieldsName.PRICE]: priceValidationSchema
                 })
             )
+            .nullable()
             .optional(),
         [PlaceFieldsName.EQUIPMENTS]: yup.array()
             .of(
@@ -204,6 +209,7 @@ export const validationSchema = yup.object()
                     [PlaceServiceFieldsName.PRICE]: priceValidationSchema
                 })
             )
+            .nullable()
             .optional(),
         [PlaceFieldsName.PLACE_IMAGES]: yup.array()
             .of(
@@ -215,5 +221,6 @@ export const validationSchema = yup.object()
                     ))
             )
             .max(AMOUNT_OF_AREA_PLACE_IMAGES_CHARACTERS.max, AREA_PLACE_IMAGES_INVALID_COUNT_MESSAGE)
+            .nullable()
             .optional()
     });

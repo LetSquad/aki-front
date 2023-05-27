@@ -1,0 +1,102 @@
+@use '/src/styles/mq' as *;
+@use '/src/styles/variables.module' as variables;
+@use 'src/styles/parts.module' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.content-container {
+  display: flex;
+  width: 100%;
+
+  @include mq($until: tablet) {
+    flex-direction: column;
+    row-gap: 20px;
+  }
+  @include mq($from: tablet) {
+    justify-content: space-between;
+  }
+}
+
+.main-content-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+}
+
+.title {
+  color: variables.$primary-text-color;
+  cursor: pointer;
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 50px;
+  position: relative;
+  transition: .2s linear;
+
+  &:hover {
+    color: variables.$primary-text-color;
+    opacity: .5;
+  }
+
+  &:focus {
+    color: variables.$primary-text-color;
+  }
+}
+
+.contacts {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  row-gap: 10px;
+
+  &-links {
+    column-gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &-item {
+    @extend %base-item;
+  }
+
+  &-link {
+    @extend %base-item-link;
+  }
+}
+
+.rent-info {
+  &-price {
+    @extend %base-item;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  &-dates {
+    @extend %base-item;
+    font-size: 20px;
+  }
+
+  &-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+  }
+}
+
+.status,
+%rent-status {
+  font-weight: 700;
+  justify-self: flex-end;
+  text-transform: uppercase;
+  width: fit-content;
+
+  &-container {
+    align-items: flex-start;
+    column-gap: 7px;
+    display: flex;
+  }
+}

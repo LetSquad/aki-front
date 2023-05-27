@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { updateUserRequest } from "@store/user/reducer";
 import { selectIsUpdatingCurrentUser } from "@store/user/selectors";
 
-import { BaseFields, LandlordFields } from "./constants";
+import { BaseFields, LandlordFields, RenterFields } from "./constants";
 import { landlordProfileValidationSchema, userProfileValidationSchema } from "./validation";
 
 const BaseAddEditForm = lazy(
@@ -59,6 +59,9 @@ export default function UserDetailForm({
     const additionalFields = useMemo(() => {
         if (user.userRole === UserRole.LANDLORD) {
             return LandlordFields;
+        }
+        if (user.userRole === UserRole.RENTER) {
+            return RenterFields;
         }
         return [];
     }, [user]);

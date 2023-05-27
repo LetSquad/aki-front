@@ -5,7 +5,7 @@ import PlaceEquipmentsView from "./PlaceEquipmentsView";
 export default function PlaceEquipments() {
     const placeEquipments = useCurrentPlace().equipments;
 
-    if (placeEquipments === undefined || placeEquipments.length === 0) {
+    if (!placeEquipments || placeEquipments.length === 0) {
         return null;
     }
 

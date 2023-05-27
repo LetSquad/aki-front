@@ -25,15 +25,15 @@ import {
     useSetSignIn
 } from "@components/Auth/AuthContext";
 import { landLordValidationSchema, validationSchema as renterValidationSchema } from "@components/Auth/SignUp/signUpValidation";
-import { userRoleToLabel } from "@components/Profile/utils/utils";
+import { getUserSpecializationTitleFromEnum, userRoleToLabel } from "@components/Profile/utils/utils";
 import { MOBILE_MAX_WIDTH } from "@coreUtils/constants";
 import { WithSuspense } from "@coreUtils/WithSuspense";
 import { useToggle } from "@hooks/useToogle";
 import { BaseRegistrationFieldName, LandlordRegistrationFieldName, SignInFieldName } from "@models/auth/enums";
 import { SignInFormValues, SignUpFormValues, SignUpResponse } from "@models/auth/types";
 import { FormFieldType } from "@models/forms/enums";
-import { FormFieldProps } from "@models/forms/types";
-import { BaseUserRole } from "@models/users/enums";
+import { DropdownOption, FormFieldProps } from "@models/forms/types";
+import { BaseUserRole, UserSpecialization } from "@models/users/enums";
 import PrimaryButton from "@parts/Buttons/PrimaryButton";
 import UnderscoreButton from "@parts/Buttons/UnderscoreButton";
 import FormFieldPlaceholder from "@parts/FormField/Placeholders/FormFieldPlaceholder";
@@ -42,6 +42,11 @@ import authStyles from "../styles/AuthForm.module.scss";
 import styles from "./styles/SignUpCard.module.scss";
 
 const FormField = lazy(/* webpackChunkName: "FormField" */ () => import("@parts/FormField/FormField"));
+
+const UserSpecializationsOptions: DropdownOption[] = Object.values(UserSpecialization).map((specialization) => ({
+    value: specialization,
+    text: getUserSpecializationTitleFromEnum(specialization)
+}));
 
 const BaseInputs: (setEmail: (email: string) => void, setPassword: (password: string) => void) => FormFieldProps[] =
     (setEmail, setPassword) => [
@@ -82,6 +87,13 @@ const BaseInputs: (setEmail: (email: string) => void, setPassword: (password: st
             type: FormFieldType.INPUT,
             placeholder: "Введите ваше отчество (если имеется)"
         }, {
+            name: BaseRegistrationFieldName.SPECIALIZATIONS,
+            options: UserSpecializationsOptions,
+            label: "Род занятий",
+            type: FormFieldType.DROPDOWN,
+            multiple: true,
+            placeholder: "Выберите ваш род занятий"
+        }, {
             name: BaseRegistrationFieldName.PASSWORD,
             label: "Пароль",
             required: true,
@@ -105,7 +117,8 @@ const LandlordAdditionalInputs: FormFieldProps[] =
             label: "ИНН",
             required: true,
             type: FormFieldType.INPUT,
-            placeholder: "Введите ИНН"
+            placeholder: "Введите ИНН",
+            maxLength: 12
         }, {
             name: LandlordRegistrationFieldName.ORGANIZATION,
             label: "Название юр. лица",

@@ -14,6 +14,7 @@ export enum BaseRegistrationFieldName {
     FIRST_NAME = "firstName",
     LAST_NAME = "lastName",
     MIDDLE_NAME = "middleName",
+    SPECIALIZATIONS = "specializations",
     PASSWORD = "password",
     PASSWORD_CONFIRM = "confirmPassword"
 }

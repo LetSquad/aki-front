@@ -5,7 +5,7 @@ import PlaceFacilitiesView from "./PlaceFacilitiesView";
 export default function PlaceFacilities() {
     const placeFacilities = useCurrentPlace().facilities;
 
-    if (placeFacilities === undefined || placeFacilities.length === 0) {
+    if (!placeFacilities || placeFacilities.length === 0) {
         return null;
     }
 

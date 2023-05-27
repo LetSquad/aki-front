@@ -5,7 +5,7 @@ import { PlaceRating as PlaceRatingType } from "@models/places/types";
 import styles from "./styles/PlaceRating.module.scss";
 
 interface PlaceRatingProps {
-    rating?: PlaceRatingType
+    rating?: PlaceRatingType | null
 }
 
 export default function PlaceRating({ rating }: PlaceRatingProps) {

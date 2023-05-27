@@ -13,6 +13,7 @@ import PlacesList from "@components/Place/PlacesList";
 import PlacesListSorter from "@components/Place/PlacesList/PlacesListSorter";
 import PlaceCatalogFilters from "@components/PlaceCatalog/PlaceCatalogFilters";
 import { validationSchema } from "@components/PlaceCatalog/PlaceCatalogFilters/validation";
+import NewRentModal from "@components/Rent/NewRentModal";
 import { useToggle } from "@hooks/useToogle";
 import { PlacesFiltersFieldsName, PlacesSortDirection, PlacesSortType } from "@models/places/enums";
 import { PlacesFiltersFormValues } from "@models/places/types";
@@ -51,7 +52,7 @@ export default function PlaceCatalog() {
     const [currentPageNumber, setCurrentPageNumber] = useState<number>(1);
     const [isSidebarOpen, toggleSidebar, , closeSidebar] = useToggle();
     const [filterValues, setFilterValues] = useState(initialValues);
-    const [sort, setSort] = useState<[PlacesSortType, PlacesSortDirection]>([PlacesSortType.POPULAR, PlacesSortDirection.DESC]);
+    const [sort, setSort] = useState<[PlacesSortType, PlacesSortDirection]>([PlacesSortType.PERSONAL, PlacesSortDirection.DESC]);
 
     const places = useAppSelector(selectPlaces);
     const placesTotalPages = useAppSelector(selectPlacesTotalPages);
@@ -93,11 +94,13 @@ export default function PlaceCatalog() {
 
     const onSortChanged = useCallback((sorting: [PlacesSortType, PlacesSortDirection]) => {
         setSort(sorting);
+        setCurrentPageNumber(1);
         getPlaces(currentPageNumber, filterValues, sorting);
     }, [currentPageNumber, filterValues, getPlaces]);
 
     const placesList = useMemo(() => (
         <div className={styles.placesContainer}>
+            <NewRentModal />
             <PlacesListSorter
                 sort={sort}
                 onSortChanged={onSortChanged}

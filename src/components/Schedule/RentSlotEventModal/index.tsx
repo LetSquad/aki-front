@@ -5,6 +5,7 @@ import { useMediaQuery } from "react-responsive";
 import { Modal } from "semantic-ui-react";
 import { SemanticWIDTHSNUMBER } from "semantic-ui-react/src/generic";
 
+import modalStyles from "@coreStyles/modals.module.scss";
 import { Place } from "@models/places/types";
 import { RentSlotStatus } from "@models/rentSlots/enums";
 import { RentSlot } from "@models/rentSlots/types";
@@ -13,10 +14,8 @@ import CardGrid from "@parts/CardParts/CardGrid";
 import CardRow from "@parts/CardParts/CardRow";
 import { CalendarEvent } from "@parts/EventCalendar/types/types";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
-import { cancelRentSlotRequest } from "@store/rentSlot/reducer";
-import { selectIsAppointmentSlotCancelling } from "@store/rentSlot/selectors";
-
-import modalStyles from "../styles/CalendarModal.module.scss";
+import { cancelRentSlotsRequest } from "@store/rentSlot/reducer";
+import { selectIsRentSlotCancelling } from "@store/rentSlot/selectors";
 
 interface RentSlotEventModalViewProps {
     currentPlace: Place;
@@ -30,18 +29,18 @@ const MOBILE_COLUMN_WIDTH: [SemanticWIDTHSNUMBER, SemanticWIDTHSNUMBER] = [8, 8]
 function RentSlotEventModalView({ currentPlace, event, onClose }: Required<RentSlotEventModalViewProps>) {
     const dispatch = useAppDispatch();
 
-    const isRentSlotCancelling = useAppSelector((state) => selectIsAppointmentSlotCancelling(state, event.id));
+    const isRentSlotCancelling = useAppSelector((state) => selectIsRentSlotCancelling(state, event.id));
 
     const isMobile = useMediaQuery({ maxWidth: 767 });
 
     const columnsWidth = useMemo(() => (isMobile ? MOBILE_COLUMN_WIDTH : DESKTOP_COLUMN_WIDTH), [isMobile]);
 
     const onCancelHandle = useCallback(() => (
-        dispatch(cancelRentSlotRequest({
+        dispatch(cancelRentSlotsRequest({
             rentSlotIds: [event.id],
             placeName: currentPlace.name
         })).then((response) => {
-            if (response.type === cancelRentSlotRequest.fulfilled.type) {
+            if (response.type === cancelRentSlotsRequest.fulfilled.type) {
                 onClose();
             }
         })
@@ -91,13 +90,12 @@ function RentSlotEventModalView({ currentPlace, event, onClose }: Required<RentS
 
     return (
         <Modal
-            className={modalStyles.modal}
             open
             onClose={onClose}
             closeIcon
             size="mini"
         >
-            <Modal.Header className={modalStyles.modalHeader}>
+            <Modal.Header>
                 {event.additionalInfo?.status === RentSlotStatus.OPEN ? "Свободный слот аренды" : "Забронированный слот аренды"}
             </Modal.Header>
             <Modal.Content className={modalStyles.modalContent}>
@@ -108,7 +106,6 @@ function RentSlotEventModalView({ currentPlace, event, onClose }: Required<RentS
             {event.additionalInfo?.status === RentSlotStatus.OPEN && (
                 <Modal.Actions className={modalStyles.modalActions}>
                     <PrimaryButton
-                        className={modalStyles.modalButton}
                         color="negative"
                         loading={isRentSlotCancelling}
                         disabled={isRentSlotCancelling}

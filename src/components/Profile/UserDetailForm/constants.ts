@@ -1,6 +1,12 @@
+import { getUserSpecializationTitleFromEnum } from "@components/Profile/utils/utils";
 import { FormFieldType, ImageEditorPreviewType } from "@models/forms/enums";
-import { FormFieldProps } from "@models/forms/types";
-import { BaseUserFieldsName, LandlordBaseUserFieldsName } from "@models/users/enums";
+import { DropdownOption, FormFieldProps } from "@models/forms/types";
+import {
+    BaseUserFieldsName,
+    LandlordBaseUserFieldsName,
+    RenterBaseUserFieldsName,
+    UserSpecialization
+} from "@models/users/enums";
 import nullUserAvatar from "@static/images/nullUserAvatar.png";
 
 export const BaseFields: FormFieldProps[] = [
@@ -48,7 +54,8 @@ export const LandlordFields: FormFieldProps[] = [
         label: "ИНН",
         required: true,
         type: FormFieldType.INPUT,
-        placeholder: "Введите ИНН"
+        placeholder: "Введите ИНН",
+        maxLength: 12
     }, {
         name: LandlordBaseUserFieldsName.ORGANIZATION,
         label: "Название юр. лица",
@@ -61,5 +68,21 @@ export const LandlordFields: FormFieldProps[] = [
         required: true,
         type: FormFieldType.INPUT,
         placeholder: "Введите ваше должность"
+    }
+];
+
+const UserSpecializationsOptions: DropdownOption[] = Object.values(UserSpecialization).map((specialization) => ({
+    value: specialization,
+    text: getUserSpecializationTitleFromEnum(specialization)
+}));
+
+export const RenterFields: FormFieldProps[] = [
+    {
+        name: RenterBaseUserFieldsName.SPECIALIZATIONS,
+        options: UserSpecializationsOptions,
+        label: "Род занятий",
+        type: FormFieldType.DROPDOWN,
+        multiple: true,
+        placeholder: "Выберите ваш род занятий"
     }
 ];

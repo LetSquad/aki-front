@@ -33,3 +33,17 @@
     color: variables.$primary-text-color;
   }
 }
+
+.status {
+  &-in-progress {
+    color: #186eb9;
+  }
+
+  &-success {
+    color: variables.$positive-button-main-color;
+  }
+
+  &-error {
+    color: variables.$negative-button-main-color;
+  }
+}

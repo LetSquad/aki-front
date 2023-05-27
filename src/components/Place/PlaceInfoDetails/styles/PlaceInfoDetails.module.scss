@@ -1,15 +1,43 @@
 @use 'src/styles/variables.module' as variables;
 @use 'src/styles/parts.module' as *;
+@use 'src/styles/_mq' as *;
+
+.head {
+  align-items: center;
+  column-gap: 30px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  position: relative;
+  z-index: 0;
+
+  @include mq($until: mobile) {
+    flex-direction: column;
+    row-gap: 15px;
+  }
+
+  &-rent-button {
+    @include mq($until: mobile) {
+      width: 100%;
+    }
+    @include mq($from: mobile) {
+      min-width: 180px;
+    }
+  }
+}
 
 .title {
   display: block;
   font-size: 36px;
   font-weight: 700;
   line-height: 45px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   &-container {
-    margin-bottom: 30px;
-    position: relative;
+    max-width: 100%;
+    padding-right: 100px;
   }
 }
 

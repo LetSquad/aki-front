@@ -1,7 +1,9 @@
 import React, { useCallback } from "react";
 
+import classNames from "classnames";
 import { useFormikContext } from "formik";
 import { DateTime } from "luxon";
+import { Label } from "semantic-ui-react";
 
 import { getRentSlotDurationTitleFromEnum } from "@coreUtils/utils";
 import { FormFieldType } from "@models/forms/enums";
@@ -19,7 +21,7 @@ const RentSlotDurationOptions: DropdownOption[] = Object.values(RentSlotDuration
 }));
 
 export default function PeriodsFields() {
-    const { values } = useFormikContext<OptionalNewRentSlotFormValues>();
+    const { values, errors } = useFormikContext<OptionalNewRentSlotFormValues>();
 
     const lastPeriodEndDateIso = useCallback(() => values[NewRentSlotsFieldName.DATE_PERIOD]?.at(-1)?.dateEnd, [values]);
 
@@ -111,6 +113,11 @@ export default function PeriodsFields() {
                     }]}
                     addButtonTitle="Добавить слот"
                 />
+                {errors[NewRentSlotsFieldName.DATE_PERIOD] && (
+                    <Label className={classNames("pointing", styles.promptLabel)}>
+                        {errors[NewRentSlotsFieldName.DATE_PERIOD]}
+                    </Label>
+                )}
             </BaseFormFields>
         </div>
     );

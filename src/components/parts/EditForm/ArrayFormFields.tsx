@@ -1,8 +1,8 @@
 import React, { ReactNode } from "react";
 
 import classNames from "classnames";
-import { ErrorMessage, FieldArray } from "formik";
-import { Icon, Label } from "semantic-ui-react";
+import { FieldArray } from "formik";
+import { Icon } from "semantic-ui-react";
 
 import { WithSuspense } from "@coreUtils/WithSuspense";
 import { FormFieldProps } from "@models/forms/types";
@@ -80,11 +80,6 @@ export default function ArrayFormFields<T, V>({
                     >
                         {addButtonTitle}
                     </SecondaryButton>
-                    <ErrorMessage
-                        name={arrayFieldName as string}
-                        component={Label}
-                        className={classNames("pointing", styles.promptLabel)}
-                    />
                 </div>
             )}
         </FieldArray>
