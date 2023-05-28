@@ -76,7 +76,7 @@ export default function ImageSelectorField({
                         accept="image/png, image/jpeg"
                         multiple
                     />
-                    <span className={styles.inputButton}>{multiple ? "Выберете файлы" : "Выберете файл"}</span>
+                    <span className={styles.inputButton}>{multiple ? "Выберите файлы" : "Выберете файл"}</span>
                     <span className={styles.inputFilesTitle}>{valueForView}</span>
                 </label>
                 {placeholder && <span className={styles.placeholder}>{placeholder}</span>}
