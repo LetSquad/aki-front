@@ -5,7 +5,23 @@
 
 Адрес приложения, развёрнутого в Cloud:
 
-TBD
+https://let-squad.ru/
+
+## Учетные записи для тестирования
+### Администратор
+Email: ushakov@mos.ru
+
+Password: string
+
+### Арендатор
+Email: banshikov@gmail.com
+
+Password: string
+
+### Арендодатель
+Email: sadykov@hlebozavod9.ru
+
+Password: string
 
 ## Предустановки
 1. Нужно предустановить node@16.16.0 или выше
