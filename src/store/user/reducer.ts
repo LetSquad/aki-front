@@ -55,7 +55,11 @@ export const banUserRequest = createAsyncThunk("banUserRequest", async (
 export const userSlice = createSlice({
     name: "user",
     initialState,
-    reducers: {},
+    reducers: {
+        resetCurrentUser: (state) => {
+            state.currentUser = undefined;
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(getUserRequest.pending, (state) => {
             state.isCurrentUserLoading = true;
@@ -108,3 +112,5 @@ export const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
+
+export const { resetCurrentUser } = userSlice.actions;
