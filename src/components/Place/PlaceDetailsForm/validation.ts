@@ -47,15 +47,46 @@ const PLACE_ADDRESS_REQUIRED_MESSAGE = "Адрес площадки должен
 
 const PRICE_REQUIRED_MESSAGE = "Необходимо указать стоимость больше 0, если выбран тип цены не \"Бесплатно\"";
 
+const AMOUNT_OF_MAX_CAPACITY_CHARACTERS = {
+    min: 1,
+    max: 10_000
+};
+
 const MAX_CAPACITY_LOWER_THEN_MIN_MESSAGE = "Максимальная вместимость человек должно быть больше или равно минимальной";
 const MAX_CAPACITY_INVALID_MESSAGE = "Максимальная вместимость должна быть больше 0";
+const MAX_CAPACITY_INVALID_MAX_MESSAGE = "Максимальная вместимость должна быть не более 10000 человек";
+
+const AMOUNT_OF_MIN_CAPACITY_CHARACTERS = {
+    min: 1,
+    max: 10_000
+};
 
 const MIN_CAPACITY_INVALID_MESSAGE = "Минимальная вместимость должно быть больше 0";
+const MIN_CAPACITY_INVALID_MAX_MESSAGE = "Максимальная вместимость должна быть не более 10000 человек";
+
+const AMOUNT_OF_FREE_SQUARE_CHARACTERS = {
+    min: 1,
+    max: 1_000_000
+};
 
 const FREE_SQUARE_BIGGER_THEN_FULL_MESSAGE = "Свободная площадь должна быть меньше или равна полной";
-const FREE_SQUARE_INVALID_MESSAGE = "Свободная площадь должна быть больше 0";
+const FREE_SQUARE_REQUIRE_MESSAGE = "Свободная площадь должна быть больше 0";
+const FREE_SQUARE_INVALID_MAX_MESSAGE = "Свободная площадь должна быть не более 1000000 м²";
 
-const FULL_SQUARE_INVALID_MESSAGE = "Свободная площадь должна быть больше 0";
+const AMOUNT_OF_FULL_SQUARE_CHARACTERS = {
+    min: 1,
+    max: 1_000_000
+};
+
+const FULL_SQUARE_REQUIRE_MESSAGE = "Общая площадь должна быть больше 0";
+const FULL_SQUARE_INVALID_MAX_MESSAGE = "Общая площадь должна быть не более  1000000 м²";
+
+const AMOUNT_OF_LEVEL_NUMBER_CHARACTERS = {
+    min: -20,
+    max: 120
+};
+
+const LEVEL_NUMBER_INVALID_MESSAGE = "Этаж размещения должен быть не меньше -20 и не больше 120";
 
 const AMOUNT_OF_PLACE_FACILITY_NAME_CHARACTERS = {
     min: 1
@@ -129,7 +160,8 @@ export const validationSchema = yup.object()
             .matches(BASE_CYRILLIC_REG_EXP, PLACE_ADDRESS_INVALID_MESSAGE)
             .required(PLACE_ADDRESS_REQUIRED_MESSAGE),
         [PlaceFieldsName.MAX_CAPACITY]: yup.number()
-            .min(0, MAX_CAPACITY_INVALID_MESSAGE)
+            .min(AMOUNT_OF_MAX_CAPACITY_CHARACTERS.min, MAX_CAPACITY_INVALID_MESSAGE)
+            .max(AMOUNT_OF_MAX_CAPACITY_CHARACTERS.max, MAX_CAPACITY_INVALID_MAX_MESSAGE)
             .test(
                 "isMaxCapacityCorrect",
                 MAX_CAPACITY_LOWER_THEN_MIN_MESSAGE,
@@ -146,11 +178,14 @@ export const validationSchema = yup.object()
             .nullable()
             .optional(),
         [PlaceFieldsName.MIN_CAPACITY]: yup.number()
-            .min(0, MIN_CAPACITY_INVALID_MESSAGE)
+            .min(AMOUNT_OF_MIN_CAPACITY_CHARACTERS.min, MIN_CAPACITY_INVALID_MESSAGE)
+            .max(AMOUNT_OF_MIN_CAPACITY_CHARACTERS.max, MIN_CAPACITY_INVALID_MAX_MESSAGE)
             .nullable()
             .optional(),
         [PlaceFieldsName.FREE_SQUARE]: yup.number()
-            .min(0, FREE_SQUARE_INVALID_MESSAGE)
+            .required(FREE_SQUARE_REQUIRE_MESSAGE)
+            .min(AMOUNT_OF_FREE_SQUARE_CHARACTERS.min, FREE_SQUARE_REQUIRE_MESSAGE)
+            .min(AMOUNT_OF_FREE_SQUARE_CHARACTERS.max, FREE_SQUARE_INVALID_MAX_MESSAGE)
             .test(
                 "isFreeSquareCorrect",
                 FREE_SQUARE_BIGGER_THEN_FULL_MESSAGE,
@@ -163,13 +198,16 @@ export const validationSchema = yup.object()
 
                     return freeSquare <= fullSquare;
                 }
-            )
-            .nullable()
-            .optional(),
+            ),
         [PlaceFieldsName.FULL_SQUARE]: yup.number()
-            .min(0, FULL_SQUARE_INVALID_MESSAGE)
-            .nullable()
-            .optional(),
+            .required(FULL_SQUARE_REQUIRE_MESSAGE)
+            .min(AMOUNT_OF_FULL_SQUARE_CHARACTERS.min, FULL_SQUARE_REQUIRE_MESSAGE)
+            .min(AMOUNT_OF_FULL_SQUARE_CHARACTERS.max, FULL_SQUARE_INVALID_MAX_MESSAGE),
+        [PlaceFieldsName.LEVEL_NUMBER]: yup.number()
+            .min(AMOUNT_OF_LEVEL_NUMBER_CHARACTERS.min, LEVEL_NUMBER_INVALID_MESSAGE)
+            .min(AMOUNT_OF_LEVEL_NUMBER_CHARACTERS.max, LEVEL_NUMBER_INVALID_MESSAGE)
+            .optional()
+            .nullable(),
         [PlaceFieldsName.FACILITIES]: yup.array()
             .of(
                 yup.object().shape({

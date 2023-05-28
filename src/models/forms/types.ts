@@ -23,6 +23,7 @@ export interface BaseFieldProps {
 }
 
 export interface BaseInputFieldProps extends BaseFieldProps {
+    disabled?: boolean;
     onChange?: (value: string) => void;
     clearable?: boolean;
     inputLabel?: SemanticShorthandItem<LabelProps>;

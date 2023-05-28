@@ -21,6 +21,7 @@ export default function InputField({
     labelPosition,
     clearable = true,
     maxLength,
+    disabled = false,
     onChange: additionalOnChange,
     ...props
 }: InputFieldProps) {
@@ -50,6 +51,7 @@ export default function InputField({
                 label={inputLabel}
                 labelPosition={labelPosition}
                 name={name}
+                disabled={disabled}
                 value={value === undefined || value === null ? "" : value}
                 onChange={onChangeValue}
                 onBlur={onBlur}

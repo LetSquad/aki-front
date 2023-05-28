@@ -24,6 +24,9 @@
 
   &-action {
     background-color: color.adjust(variables.$background-color, $lightness: 10%) !important;
+    column-gap: 15px;
+    display: flex;
+    justify-content: flex-end;
     text-align: right;
   }
 }

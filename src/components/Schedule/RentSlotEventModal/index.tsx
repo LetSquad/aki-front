@@ -73,7 +73,7 @@ function RentSlotEventModalView({ currentPlace, event, onClose }: Required<RentS
                 />
             ),
             <CardRow
-                key="clinicName"
+                key="placeName"
                 title="Площадка"
                 value={currentPlace.name}
                 columnsWidth={columnsWidth}

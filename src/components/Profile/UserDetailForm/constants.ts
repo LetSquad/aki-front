@@ -38,6 +38,8 @@ export const BaseFields: FormFieldProps[] = [
         required: true,
         label: "Электронная почта",
         type: FormFieldType.INPUT,
+        disabled: true,
+        clearable: false,
         placeholder: "Введите адрес электронной почты"
     }, {
         name: BaseUserFieldsName.PHONE,
