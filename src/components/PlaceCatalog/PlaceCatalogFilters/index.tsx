@@ -36,7 +36,7 @@ const fields: (fromDate?: string) => FormFieldProps[] = (fromDate) => [
         size: "huge"
     }, {
         name: "price",
-        label: "Стоимость (₽/день)",
+        label: "Стоимость (₽)",
         type: FormFieldType.FORM_FIELDS_RANGE,
         from: {
             name: PlacesFiltersFieldsName.PRICE_MIN,

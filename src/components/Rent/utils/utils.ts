@@ -4,13 +4,13 @@ import { RentStatus } from "@models/rent/enums";
 export function getRentStatusTitleFromEnum(rentConfirmationStatus: RentStatus): string {
     switch (rentConfirmationStatus) {
         case RentStatus.OPEN: {
-            return "Открыта";
+            return "Открыто";
         }
         case RentStatus.CLOSED: {
-            return "Закрыта";
+            return "Закрыто";
         }
         case RentStatus.CANCELED: {
-            return "Отменена";
+            return "Отменено";
         }
         // skip default
     }
