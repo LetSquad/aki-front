@@ -57,71 +57,77 @@ export default function PlaceCard({ place, children }: PlaceCardProps) {
         place.rentSlots?.filter((rentSlot) => rentSlot.status === RentSlotStatus.OPEN).length > 0
     ), [place.rentSlots]);
 
-    return (
-        <Link
-            to={generatePath(BasePageSlugs.PLACE, { placeId: place.id.toString() })}
-            className={styles.link}
-        >
-            <Segment>
-                {children && children}
-                <div className={styles.container}>
-                    <div className={styles.galleryContainer}>
-                        <ImageGallery
-                            stopPropagation
-                            useBrowserFullscreen
-                            renderRightNav={(onClick: MouseEventHandler<HTMLElement>, disabled: boolean) => (
-                                <RightNavIcon
-                                    onClick={onClick}
-                                    disabled={disabled}
-                                />
-                            )}
-                            renderLeftNav={(onClick: MouseEventHandler<HTMLElement>, disabled: boolean) => (
-                                <LeftNavIcon
-                                    onClick={onClick}
-                                    disabled={disabled}
-                                />
-                            )}
-                            renderFullscreenButton={(onClick: MouseEventHandler<HTMLElement>, disabled: boolean) => (
-                                <FullScreenIcon
-                                    onClick={onClick}
-                                    disabled={disabled}
-                                />
-                            )}
-                            showBullets
-                            showThumbnails={false}
-                            items={galleryImages}
-                            lazyLoad
-                            showPlayButton={false}
-                        />
-                    </div>
-                    <div className={styles.contentContainer}>
-                        <div className={styles.mainContentContainer}>
-                            <div>
-                                <span className={styles.title}>{place.name}</span>
-                                <PlaceRating rating={place.rating} />
-                            </div>
-                            <span className={styles.address}>{place.address}</span>
-                            {currentUser && (
-                                place.price.priceType === PriceType.FREE
-                                    ? (
-                                        <span className={styles.price}>
-                                            {getPriceTypeTitleFromEnum(place.price.priceType)}
-                                        </span>
-                                    )
-                                    : (
-                                        <span className={styles.price}>
-                                            {`от ${place.price.price}₽${getPriceTypeTitleFromEnum(place.price.priceType)}`}
-                                        </span>
-                                    )
-                            )}
+    const placeCardContent = useMemo(() => (
+        <Segment>
+            {children && children}
+            <div className={styles.container}>
+                <div className={styles.galleryContainer}>
+                    <ImageGallery
+                        stopPropagation
+                        useBrowserFullscreen
+                        renderRightNav={(onClick: MouseEventHandler<HTMLElement>, disabled: boolean) => (
+                            <RightNavIcon
+                                onClick={onClick}
+                                disabled={disabled}
+                            />
+                        )}
+                        renderLeftNav={(onClick: MouseEventHandler<HTMLElement>, disabled: boolean) => (
+                            <LeftNavIcon
+                                onClick={onClick}
+                                disabled={disabled}
+                            />
+                        )}
+                        renderFullscreenButton={(onClick: MouseEventHandler<HTMLElement>, disabled: boolean) => (
+                            <FullScreenIcon
+                                onClick={onClick}
+                                disabled={disabled}
+                            />
+                        )}
+                        showBullets
+                        showThumbnails={false}
+                        items={galleryImages}
+                        lazyLoad
+                        showPlayButton={false}
+                    />
+                </div>
+                <div className={styles.contentContainer}>
+                    <div className={styles.mainContentContainer}>
+                        <div>
+                            <span className={styles.title}>{place.name}</span>
+                            <PlaceRating rating={place.rating} />
                         </div>
-                        <PlaceAdditionalInfo currentPlace={place} />
-                        {currentUser?.userRole === UserRole.RENTER && isPlaceHaveOpenSlots && (
-                            <PrimaryButton onClick={onRentModalOpen}>Забронировать</PrimaryButton>
+                        <span className={styles.address}>{place.address}</span>
+                        {currentUser && (
+                            place.price.priceType === PriceType.FREE
+                                ? (
+                                    <span className={styles.price}>
+                                        {getPriceTypeTitleFromEnum(place.price.priceType)}
+                                    </span>
+                                )
+                                : (
+                                    <span className={styles.price}>
+                                        {`от ${place.price.price}₽${getPriceTypeTitleFromEnum(place.price.priceType)}`}
+                                    </span>
+                                )
                         )}
                     </div>
+                    <PlaceAdditionalInfo currentPlace={place} />
+                    {currentUser?.userRole === UserRole.RENTER && isPlaceHaveOpenSlots && (
+                        <PrimaryButton onClick={onRentModalOpen}>Забронировать</PrimaryButton>
+                    )}
                 </div>
-            </Segment>
-        </Link>
-    );
+            </div>
+        </Segment>
+    ), [children, currentUser, galleryImages, isPlaceHaveOpenSlots, onRentModalOpen, place]);
+
+    return currentUser
+        ? (
+            <Link
+                to={generatePath(BasePageSlugs.PLACE, { placeId: place.id.toString() })}
+                className={styles.link}
+            >
+                {placeCardContent}
+            </Link>
+        )
+        : placeCardContent;
 }
