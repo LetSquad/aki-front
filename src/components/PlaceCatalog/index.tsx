@@ -25,6 +25,7 @@ import {
     selectPlaces,
     selectPlacesTotalPages
 } from "@store/place/selectors";
+import { selectCurrentUser } from "@store/user/selectors";
 
 import styles from "./styles/PlaceCatalog.module.scss";
 
@@ -49,15 +50,21 @@ export default function PlaceCatalog() {
 
     const withSidebar = useMediaQuery({ maxWidth: 1250 });
 
-    const [currentPageNumber, setCurrentPageNumber] = useState<number>(1);
-    const [isSidebarOpen, toggleSidebar, , closeSidebar] = useToggle();
-    const [filterValues, setFilterValues] = useState(initialValues);
-    const [sort, setSort] = useState<[PlacesSortType, PlacesSortDirection]>([PlacesSortType.PERSONAL, PlacesSortDirection.DESC]);
-
+    const currentUser = useAppSelector(selectCurrentUser);
     const places = useAppSelector(selectPlaces);
     const placesTotalPages = useAppSelector(selectPlacesTotalPages);
     const isPlacesLoading = useAppSelector(selectIsPlacesLoading);
     const isPlacesLoadingFailed = useAppSelector(selectIsPlacesLoadingFailed);
+
+    const [currentPageNumber, setCurrentPageNumber] = useState<number>(1);
+    const [isSidebarOpen, toggleSidebar, , closeSidebar] = useToggle();
+    const [filterValues, setFilterValues] = useState(initialValues);
+    const [sort, setSort] = useState<[PlacesSortType, PlacesSortDirection]>([
+        currentUser
+            ? PlacesSortType.PERSONAL
+            : PlacesSortType.POPULAR,
+        PlacesSortDirection.DESC
+    ]);
 
     const getPlaces = useCallback((pageNumber: number, values: PlacesFiltersFormValues, sorting: [PlacesSortType, PlacesSortDirection]) => {
         dispatch(getPlacesRequest({

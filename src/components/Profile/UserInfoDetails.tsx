@@ -10,14 +10,20 @@ import classNames from "classnames";
 import { useSearchParams } from "react-router-dom";
 import { Dimmer, Loader, Segment } from "semantic-ui-react";
 
+import { getUserSpecializationTitleFromEnum } from "@components/Profile/utils/utils";
 import flipEditCardPartsStyles from "@coreStyles/flipEditCardParts.module.scss";
 import { getFullName } from "@coreUtils/utils";
 import { WithSuspense } from "@coreUtils/WithSuspense";
 import { useChangeEditSearchParam } from "@hooks/useChangeEditSearchParam";
 import { useEditFlipCardAdditionalColumnsWidth } from "@hooks/useEditFlipCardAdditionalColumnsWidth";
 import { useEditFlipCardBaseColumnsWidth } from "@hooks/useEditFlipCardBaseColumnsWidth";
-import { BaseUserFieldsName, LandlordBaseUserFieldsName, UserRole } from "@models/users/enums";
-import { LandlordInfo, User } from "@models/users/types";
+import {
+    BaseUserFieldsName,
+    LandlordBaseUserFieldsName,
+    RenterBaseUserFieldsName,
+    UserRole
+} from "@models/users/enums";
+import { LandlordInfo, RenterInfo, User } from "@models/users/types";
 import AdminBlockIcons, { AdminBlockIconsFormRef } from "@parts/AdminBlockIcons/AdminBlockIcons";
 import BlockIcons, { BlockIconsIndent } from "@parts/BlockIcons/BlockIcons";
 import ImageWithLoading from "@parts/ImageWithLoading/ImageWithLoading";
@@ -120,12 +126,35 @@ export default function UserInfoDetails({ user, editable = false }: UserInfoDeta
         [additionalColumnsWidth]
     );
 
+    const renterRows = useCallback(
+        ({ specializations }: RenterInfo) => (specializations && specializations.length > 0
+            ? [
+                <CardRow
+                    key={RenterBaseUserFieldsName.SPECIALIZATIONS}
+                    title="Род занятий"
+                    value={
+                        Object
+                            .values(specializations)
+                            .map((specialization) => (getUserSpecializationTitleFromEnum(specialization)))
+                            .join(", ")
+                    }
+                    columnsWidth={additionalColumnsWidth}
+                />
+            ]
+            : []),
+        [additionalColumnsWidth]
+    );
+
     const additionalRows = useMemo(() => {
         if (user.userRole === UserRole.LANDLORD) {
             return landlordRows(user);
         }
+        if (user.userRole === UserRole.RENTER) {
+            return renterRows(user);
+        }
+
         return [];
-    }, [landlordRows, user]);
+    }, [landlordRows, renterRows, user]);
 
     const userContent = useMemo(() => {
         const {
