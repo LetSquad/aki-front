@@ -3,6 +3,7 @@ import React, {
     MouseEvent,
     useCallback,
     useMemo,
+    useRef,
     useState
 } from "react";
 
@@ -35,7 +36,7 @@ import { LandlordPageSlugs } from "@models/pages/enums";
 import { Place, PlaceAddFormValues } from "@models/places/types";
 import { RentSlotStatus } from "@models/rentSlots/enums";
 import { UserRole } from "@models/users/enums";
-import AdminBlockIcons from "@parts/AdminBlockIcons/AdminBlockIcons";
+import AdminBlockIcons, { AdminBlockIconsFormRef } from "@parts/AdminBlockIcons/AdminBlockIcons";
 import BlockIcons, { BlockIconsIndent } from "@parts/BlockIcons/BlockIcons";
 import PrimaryButton from "@parts/Buttons/PrimaryButton";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
@@ -78,6 +79,8 @@ export default function PlaceInfoDetails({ currentPlace, isUserPlaceOwner, userR
 
     const isLoading = isCurrentPlaceDeleting || isCurrentPlaceBanning || isCurrentPlaceApproving;
 
+    const adminBlockIconsRef = useRef<AdminBlockIconsFormRef>(null);
+
     const deletePlace = useCallback(
         (placeId: number, placeName: string) => {
             dispatch(deletePlaceRequest({ placeId, placeName })).then(() => navigate(LandlordPageSlugs.MY_PLACES));
@@ -95,7 +98,7 @@ export default function PlaceInfoDetails({ currentPlace, isUserPlaceOwner, userR
 
     const banPlace = useCallback(
         (placeId: number, placeName: string, banReason?: string) => {
-            dispatch(banPlaceRequest({ placeId, placeName, banReason }));
+            dispatch(banPlaceRequest({ placeId, placeName, banReason })).then(() => adminBlockIconsRef?.current?.closeModal());
         },
         [dispatch]
     );
@@ -188,6 +191,7 @@ export default function PlaceInfoDetails({ currentPlace, isUserPlaceOwner, userR
                                     )}
                                     {userRole === UserRole.ADMIN && (
                                         <AdminBlockIcons
+                                            ref={adminBlockIconsRef}
                                             indent={BlockIconsIndent.CENTER}
                                             approveAction={() => approvePlace(currentPlace.id, currentPlace.name)}
                                             banAction={(banReason) => banPlace(currentPlace.id, currentPlace.name, banReason)}
