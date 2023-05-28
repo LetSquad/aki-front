@@ -185,7 +185,7 @@ export const validationSchema = yup.object()
         [PlaceFieldsName.FREE_SQUARE]: yup.number()
             .required(FREE_SQUARE_REQUIRE_MESSAGE)
             .min(AMOUNT_OF_FREE_SQUARE_CHARACTERS.min, FREE_SQUARE_REQUIRE_MESSAGE)
-            .min(AMOUNT_OF_FREE_SQUARE_CHARACTERS.max, FREE_SQUARE_INVALID_MAX_MESSAGE)
+            .max(AMOUNT_OF_FREE_SQUARE_CHARACTERS.max, FREE_SQUARE_INVALID_MAX_MESSAGE)
             .test(
                 "isFreeSquareCorrect",
                 FREE_SQUARE_BIGGER_THEN_FULL_MESSAGE,
@@ -202,10 +202,10 @@ export const validationSchema = yup.object()
         [PlaceFieldsName.FULL_SQUARE]: yup.number()
             .required(FULL_SQUARE_REQUIRE_MESSAGE)
             .min(AMOUNT_OF_FULL_SQUARE_CHARACTERS.min, FULL_SQUARE_REQUIRE_MESSAGE)
-            .min(AMOUNT_OF_FULL_SQUARE_CHARACTERS.max, FULL_SQUARE_INVALID_MAX_MESSAGE),
+            .max(AMOUNT_OF_FULL_SQUARE_CHARACTERS.max, FULL_SQUARE_INVALID_MAX_MESSAGE),
         [PlaceFieldsName.LEVEL_NUMBER]: yup.number()
             .min(AMOUNT_OF_LEVEL_NUMBER_CHARACTERS.min, LEVEL_NUMBER_INVALID_MESSAGE)
-            .min(AMOUNT_OF_LEVEL_NUMBER_CHARACTERS.max, LEVEL_NUMBER_INVALID_MESSAGE)
+            .max(AMOUNT_OF_LEVEL_NUMBER_CHARACTERS.max, LEVEL_NUMBER_INVALID_MESSAGE)
             .optional()
             .nullable(),
         [PlaceFieldsName.FACILITIES]: yup.array()

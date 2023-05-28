@@ -33,6 +33,7 @@ import flipEditCardPartsStyles from "@coreStyles/flipEditCardParts.module.scss";
 import { useChangeEditSearchParam } from "@hooks/useChangeEditSearchParam";
 import { LandlordPageSlugs } from "@models/pages/enums";
 import { Place, PlaceAddFormValues } from "@models/places/types";
+import { RentSlotStatus } from "@models/rentSlots/enums";
 import { UserRole } from "@models/users/enums";
 import AdminBlockIcons from "@parts/AdminBlockIcons/AdminBlockIcons";
 import BlockIcons, { BlockIconsIndent } from "@parts/BlockIcons/BlockIcons";
@@ -138,6 +139,11 @@ export default function PlaceInfoDetails({ currentPlace, isUserPlaceOwner, userR
         </Link>
     ), [currentPlace.id]);
 
+    const isPlaceHaveOpenSlots = useMemo(() => (
+        currentPlace.rentSlots &&
+        currentPlace.rentSlots?.filter((rentSlot) => rentSlot.status === RentSlotStatus.OPEN).length > 0
+    ), [currentPlace.rentSlots]);
+
     return (
         <PlaceInfoContext.Provider value={contextValue}>
             <div
@@ -192,30 +198,32 @@ export default function PlaceInfoDetails({ currentPlace, isUserPlaceOwner, userR
                                     <div className={styles.titleContainer}>
                                         <span className={styles.title}>{currentPlace.name}</span>
                                         <PlaceRating rating={currentPlace.rating} />
-                                        <div className={styles.statusContainer}>
-                                            <span
-                                                className={classNames(
-                                                    styles.status,
-                                                    getPlaceStatusColorFromEnum(currentPlace.status)
-                                                )}
-                                            >
-                                                {getPlaceStatusTitleFromEnum(currentPlace.status)}
-                                            </span>
-                                            {currentPlace.banReason && (
-                                                <Popup
-                                                    content={currentPlace.banReason}
-                                                    position="top center"
-                                                    trigger={(
-                                                        <Icon
-                                                            className={getPlaceStatusColorFromEnum(currentPlace.status)}
-                                                            name="info circle"
-                                                        />
+                                        {(isUserPlaceOwner || userRole === UserRole.ADMIN) && (
+                                            <div className={styles.statusContainer}>
+                                                <span
+                                                    className={classNames(
+                                                        styles.status,
+                                                        getPlaceStatusColorFromEnum(currentPlace.status)
                                                     )}
-                                                />
-                                            )}
-                                        </div>
+                                                >
+                                                    {getPlaceStatusTitleFromEnum(currentPlace.status)}
+                                                </span>
+                                                {currentPlace.banReason && (
+                                                    <Popup
+                                                        content={currentPlace.banReason}
+                                                        position="top center"
+                                                        trigger={(
+                                                            <Icon
+                                                                className={getPlaceStatusColorFromEnum(currentPlace.status)}
+                                                                name="info circle"
+                                                            />
+                                                        )}
+                                                    />
+                                                )}
+                                            </div>
+                                        )}
                                     </div>
-                                    {userRole === UserRole.RENTER && (
+                                    {userRole === UserRole.RENTER && isPlaceHaveOpenSlots && (
                                         <PrimaryButton
                                             className={styles.headRentButton}
                                             onClick={onRentModalOpen}

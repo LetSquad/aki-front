@@ -9,6 +9,7 @@ interface BaseUserInfo {
     lastName: string;
     middleName?: string | null;
     userImage?: string | null;
+    isBanned?: boolean;
 }
 
 export interface RenterInfo extends BaseUserInfo {
@@ -29,9 +30,9 @@ export interface AdminInfo extends BaseUserInfo {
 
 export type User = RenterInfo | LandlordInfo | AdminInfo;
 
-type RenterFormFields = Omit<BaseUserInfo, "id" | "userRole">;
-type LandlordFormFields = Omit<LandlordInfo, "id" | "userRole">;
-type AdminFormFields = Omit<AdminInfo, "id" | "userRole">;
+type RenterFormFields = Omit<BaseUserInfo, "id" | "userRole" | "isBanned">;
+type LandlordFormFields = Omit<LandlordInfo, "id" | "userRole" | "isBanned">;
+type AdminFormFields = Omit<AdminInfo, "id" | "userRole" | "isBanned">;
 
 export type UserFormFields = RenterFormFields | LandlordFormFields | AdminFormFields;
 

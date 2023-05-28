@@ -150,7 +150,7 @@ export default function UserInfoDetails({ user, editable = false }: UserInfoDeta
                         onEditClick={() => changeEditState(!isEditUser)}
                     />
                 )}
-                {currentUser?.userRole === UserRole.ADMIN && currentUser.id !== id && (
+                {currentUser?.userRole === UserRole.ADMIN && currentUser.id !== id && !currentUser.isBanned && (
                     <AdminBlockIcons
                         indent={BlockIconsIndent.LARGE}
                         banAction={(reason) => banPlace(id, userFullName, reason)}
@@ -182,8 +182,7 @@ export default function UserInfoDetails({ user, editable = false }: UserInfoDeta
         user,
         isCurrentUserBanning,
         editable,
-        currentUser?.userRole,
-        currentUser?.id,
+        currentUser,
         baseRows,
         additionalRows,
         changeEditState,
