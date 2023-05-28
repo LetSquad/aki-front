@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef, useImperativeHandle } from "react";
 
 import { Icon } from "semantic-ui-react";
 
@@ -28,15 +28,23 @@ type BlockIconsProps = {
     approveAction?: () => void
 };
 
-export default function AdminBlockIcons({
+export interface AdminBlockIconsFormRef {
+    closeModal: () => void;
+}
+
+const AdminBlockIcons = forwardRef(({
     size = BlockIconsSize.LARGE,
     indent = BlockIconsIndent.MEDIUM,
     modalTitle,
     banAction,
     banConfirmationText,
     approveAction
-}: BlockIconsProps) {
+}: BlockIconsProps, ref: React.ForwardedRef<AdminBlockIconsFormRef>) => {
     const [isConfirmationOpen,, openConfirmation, closeConfirmation] = useToggle();
+
+    useImperativeHandle(ref, () => ({
+        closeModal: closeConfirmation
+    }), [closeConfirmation]);
 
     return (
         <>
@@ -71,4 +79,6 @@ export default function AdminBlockIcons({
             </div>
         </>
     );
-}
+});
+
+export default AdminBlockIcons;

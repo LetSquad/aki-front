@@ -2,6 +2,7 @@ import React, {
     lazy,
     useCallback,
     useMemo,
+    useRef,
     useState
 } from "react";
 
@@ -17,7 +18,7 @@ import { useEditFlipCardAdditionalColumnsWidth } from "@hooks/useEditFlipCardAdd
 import { useEditFlipCardBaseColumnsWidth } from "@hooks/useEditFlipCardBaseColumnsWidth";
 import { BaseUserFieldsName, LandlordBaseUserFieldsName, UserRole } from "@models/users/enums";
 import { LandlordInfo, User } from "@models/users/types";
-import AdminBlockIcons from "@parts/AdminBlockIcons/AdminBlockIcons";
+import AdminBlockIcons, { AdminBlockIconsFormRef } from "@parts/AdminBlockIcons/AdminBlockIcons";
 import BlockIcons, { BlockIconsIndent } from "@parts/BlockIcons/BlockIcons";
 import ImageWithLoading from "@parts/ImageWithLoading/ImageWithLoading";
 import nullUserAvatar from "@static/images/nullUserAvatar.png";
@@ -45,6 +46,8 @@ export default function UserInfoDetails({ user, editable = false }: UserInfoDeta
 
     const changeEditParam = useChangeEditSearchParam();
 
+    const adminBlockIconsRef = useRef<AdminBlockIconsFormRef>(null);
+
     const currentUser = useAppSelector(selectCurrentUser);
     const isCurrentUserBanning = useAppSelector(selectIsCurrentUserBanning);
 
@@ -55,7 +58,7 @@ export default function UserInfoDetails({ user, editable = false }: UserInfoDeta
 
     const banPlace = useCallback(
         (userId: number, userName: string, banReason?: string) => {
-            dispatch(banUserRequest({ userId, userName, banReason }));
+            dispatch(banUserRequest({ userId, userName, banReason })).then(() => adminBlockIconsRef?.current?.closeModal());
         },
         [dispatch]
     );
@@ -152,6 +155,7 @@ export default function UserInfoDetails({ user, editable = false }: UserInfoDeta
                 )}
                 {currentUser?.userRole === UserRole.ADMIN && currentUser.id !== id && !currentUser.isBanned && (
                     <AdminBlockIcons
+                        ref={adminBlockIconsRef}
                         indent={BlockIconsIndent.LARGE}
                         banAction={(reason) => banPlace(id, userFullName, reason)}
                         banConfirmationText={`Вы уверены, что хотите забанить пользователя "${userFullName}"?`}

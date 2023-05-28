@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef, useImperativeHandle } from "react";
 
 import { Link, To } from "react-router-dom";
 import { Icon } from "semantic-ui-react";
@@ -34,7 +34,11 @@ type BlockIconsProps = {
     editLink?: To;
 });
 
-export default function BlockIcons({
+export interface BlockIconsFormRef {
+    closeModal: () => void;
+}
+
+const BlockIcons = forwardRef(({
     size = BlockIconsSize.LARGE,
     indent = BlockIconsIndent.MEDIUM,
     modalTitle,
@@ -43,8 +47,12 @@ export default function BlockIcons({
     deleteIconName = "trash",
     additionalIcon,
     ...props
-}: BlockIconsProps) {
+}: BlockIconsProps, ref: React.ForwardedRef<BlockIconsFormRef>) => {
     const [isConfirmationOpen,, openConfirmation, closeConfirmation] = useToggle();
+
+    useImperativeHandle(ref, () => ({
+        closeModal: closeConfirmation
+    }), [closeConfirmation]);
 
     return (
         <>
@@ -87,4 +95,6 @@ export default function BlockIcons({
             </div>
         </>
     );
-}
+});
+
+export default BlockIcons;

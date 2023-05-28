@@ -1,4 +1,9 @@
-import React, { PropsWithChildren, useCallback, useMemo } from "react";
+import React, {
+    PropsWithChildren,
+    useCallback,
+    useMemo,
+    useRef
+} from "react";
 
 import classNames from "classnames";
 import { DateTime } from "luxon";
@@ -16,7 +21,7 @@ import { getRentStatusColorFromEnum, getRentStatusTitleFromEnum } from "@compone
 import { BasePageSlugs } from "@models/pages/enums";
 import { RentStatus } from "@models/rent/enums";
 import { Rent } from "@models/rent/types";
-import BlockIcons, { BlockIconsIndent } from "@parts/BlockIcons/BlockIcons";
+import BlockIcons, { BlockIconsFormRef, BlockIconsIndent } from "@parts/BlockIcons/BlockIcons";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { cancelRentRequest } from "@store/rent/reducer";
 import { selectIsRentCancelling } from "@store/rent/selectors";
@@ -29,6 +34,8 @@ interface RentCardProps extends PropsWithChildren {
 
 export default function RentCard({ rent, children }: RentCardProps) {
     const dispatch = useAppDispatch();
+
+    const blockIconsRef = useRef<BlockIconsFormRef>(null);
 
     const isRentCancelling = useAppSelector((state) => selectIsRentCancelling(state, rent.id));
 
@@ -45,7 +52,7 @@ export default function RentCard({ rent, children }: RentCardProps) {
         dispatch(cancelRentRequest({
             rentId: rent.id,
             placeName: rent.place.name
-        }))
+        })).then(() => blockIconsRef?.current?.closeModal())
     ), [dispatch, rent.id, rent.place.name]);
 
     return (
@@ -61,6 +68,7 @@ export default function RentCard({ rent, children }: RentCardProps) {
             {children && children}
             {rent.status === RentStatus.OPEN && (
                 <BlockIcons
+                    ref={blockIconsRef}
                     indent={BlockIconsIndent.LARGE}
                     deleteIconName="cancel"
                     deleteAction={onCancelHandle}
@@ -98,7 +106,10 @@ export default function RentCard({ rent, children }: RentCardProps) {
                         </Link>
                         <div className={styles.rentInfoContainer}>
                             <span className={styles.rentInfoDates}>
-                                {`C ${DateTime.fromISO(rent.rentSlots[0].timeStart).toFormat("F")} до ${DateTime.fromISO(rent.rentSlots.at(-1)?.timeEnd as string).toFormat("F")}`}
+                                {`с ${DateTime.fromISO(rent.rentSlots[0].timeStart).toFormat("yyyy.MM.dd, HH:mm")}`}
+                            </span>
+                            <span className={styles.rentInfoDates}>
+                                {`до ${DateTime.fromISO(rent.rentSlots.at(-1)?.timeEnd as string).toFormat("yyyy.MM.dd, HH:mm")}`}
                             </span>
                             <span className={styles.rentInfoPrice}>{`~${rentPrice} ₽`}</span>
                         </div>
