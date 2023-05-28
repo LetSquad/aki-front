@@ -60,10 +60,9 @@ const initialValue = (loginData: SignInFormValues) => ({
 
 interface SignInFormProps {
     setIsLoginLoading: (state: boolean) => void;
-    setForgotPassword: (state: boolean) => void;
 }
 
-export default function SignInForm({ setIsLoginLoading, setForgotPassword }: SignInFormProps) {
+export default function SignInForm({ setIsLoginLoading }: SignInFormProps) {
     const dispatch = useDispatch();
 
     const [searchParams, setSearchParams] = useSearchParams();
@@ -200,12 +199,6 @@ export default function SignInForm({ setIsLoginLoading, setForgotPassword }: Sig
                         >
                             Войти
                         </PrimaryButton>
-                        <UnderscoreButton
-                            onClick={() => setForgotPassword(true)}
-                            type="button"
-                        >
-                            Забыли пароль?
-                        </UnderscoreButton>
                         <UnderscoreButton
                             onClick={setSignUp}
                             type="button"
