@@ -1,0 +1,50 @@
+@use "src/styles/variables.module" as variables;
+@use 'sass:color' as color;
+
+$primary-light: color.adjust(variables.$primary-button-main-color, $lightness: 15%);
+
+:global {
+  .ui.star.rating .active.icon {
+    color: variables.$primary-button-main-color !important;
+    text-shadow: 0 -1px 0 variables.$primary-button-main-color,
+      -1px 0 0 variables.$primary-button-main-color,
+      0 1px 0 variables.$primary-button-main-color,
+      1px 0 0 variables.$primary-button-main-color !important;
+  }
+
+  .ui.star.rating .icon.selected.active {
+    color: $primary-light !important;
+    text-shadow: 0 -1px 0 $primary-light, -1px 0 0 $primary-light, 0 1px 0 $primary-light, 1px 0 0 $primary-light !important;
+  }
+
+  .ui.star.rating .icon.selected {
+    color: $primary-light !important;
+    text-shadow: 0 -1px 0 $primary-light, -1px 0 0 $primary-light, 0 1px 0 $primary-light, 1px 0 0 $primary-light !important;
+  }
+}
+
+.container,
+%appointment-rating-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 30px;
+
+  &-active {
+    @extend %appointment-rating-container;
+    flex-direction: column;
+  }
+}
+
+.rating-container {
+  align-items: center;
+  column-gap: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+
+.rating {
+  width: fit-content;
+}

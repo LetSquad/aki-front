@@ -1,11 +1,11 @@
 import { BasePageResponse } from "@models/http/types";
 import {
-    PlaceConfirmationStatus,
     PlacesFiltersFieldsName,
+    PlaceSpecialization,
     PlacesSortDirection,
     PlacesSortType,
-    PriceType,
-    Specialization
+    PlaceStatus,
+    PriceType
 } from "@models/places/enums";
 import { RentSlot } from "@models/rentSlots/types";
 import { LandlordInfo } from "@models/users/types";
@@ -16,24 +16,25 @@ export interface Place {
     address: string;
     email: string;
     site: string;
-    specialization: Specialization[];
-    rating?: PlaceRating;
-    placeImages?: (string | File)[];
+    specialization: PlaceSpecialization[];
+    rating?: PlaceRating | null;
+    placeImages?: (string | File)[] | null;
     phone: string;
     description: string;
     price: PlacePrice;
-    status: PlaceConfirmationStatus;
-    fullSquare?: number;
-    freeSquare?: number;
-    maxCapacity?: number;
-    minCapacity?: number;
-    levelNumber?: number;
-    parking?: boolean;
-    services?: PlaceService[];
-    equipments?: PlaceEquipment[];
-    facilities?: PlaceFacilities[];
-    rentSlots?: RentSlot[];
-    user: LandlordInfo
+    status: PlaceStatus;
+    banReason?: string | null;
+    fullSquare?: number | null;
+    freeSquare?: number | null;
+    maxCapacity?: number | null;
+    minCapacity?: number | null;
+    levelNumber?: number | null;
+    parking?: boolean | null;
+    services?: PlaceService[] | null;
+    equipments?: PlaceEquipment[] | null;
+    facilities?: PlaceFacilities[] | null;
+    rentSlots?: RentSlot[] | null;
+    user: LandlordInfo;
 }
 
 export interface PlaceRating {
@@ -54,12 +55,12 @@ export interface PlaceService {
 export interface PlaceEquipment {
     name: string;
     price: PlacePrice;
-    count?: number;
+    count?: number | null;
 }
 
 export interface PlaceFacilities {
     name: string;
-    count?: number;
+    count?: number | null;
 }
 
 export type PlaceResponse = Place;
@@ -76,7 +77,7 @@ export interface PlaceDetailsFormRef {
 }
 
 export interface PlacesFiltersFormValues {
-    [PlacesFiltersFieldsName.SPECIALIZATION]?: Specialization[];
+    [PlacesFiltersFieldsName.SPECIALIZATION]?: PlaceSpecialization[];
     [PlacesFiltersFieldsName.RATING]?: number,
     [PlacesFiltersFieldsName.PRICE_MIN]?: number;
     [PlacesFiltersFieldsName.PRICE_MAX]?: number;

@@ -6,18 +6,18 @@ import { DateTime } from "luxon";
 import { useMediaQuery } from "react-responsive";
 import { Segment } from "semantic-ui-react";
 
-import { getSpecializationTitleFromEnum } from "@components/Place/utils/utils";
+import { getPlaceSpecializationTitleFromEnum } from "@components/Place/utils/utils";
 import { FormFieldType } from "@models/forms/enums";
 import { DropdownOption, FormFieldProps } from "@models/forms/types";
-import { PlacesFiltersFieldsName, Specialization } from "@models/places/enums";
+import { PlacesFiltersFieldsName, PlaceSpecialization } from "@models/places/enums";
 import { PlacesFiltersFormValues } from "@models/places/types";
 import BaseAddEditForm from "@parts/EditForm/BaseAddEditForm";
 
 import styles from "./styles/PlaceCatalogFilters.module.scss";
 
-const PlaceSpecializationsOptions: DropdownOption[] = Object.values(Specialization).map((specialization) => ({
+const PlaceSpecializationsOptions: DropdownOption[] = Object.values(PlaceSpecialization).map((specialization) => ({
     value: specialization,
-    text: getSpecializationTitleFromEnum(specialization)
+    text: getPlaceSpecializationTitleFromEnum(specialization)
 }));
 
 const fields: (fromDate?: string) => FormFieldProps[] = (fromDate) => [
@@ -154,6 +154,7 @@ export default function PlaceCatalogFilters({ isLoading }: PlaceCatalogFiltersPr
                 fields={fields(formik.values[PlacesFiltersFieldsName.DATE_FROM])}
                 isLoading={isLoading}
                 formik={formik}
+                submitButtonText="Фильтр"
             />
         </Segment>
     );

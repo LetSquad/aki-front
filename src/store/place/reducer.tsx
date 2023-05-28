@@ -17,7 +17,7 @@ import {
     PlacesSortRequest,
     PlaceUpdateFormValues
 } from "@models/places/types";
-import { cancelRentSlotRequest, createRentSlotsRequest } from "@store/rentSlot/reducer";
+import { cancelRentSlotsRequest, createRentSlotsRequest } from "@store/rentSlot/reducer";
 
 const ADD_PLACE_TOAST_NAME = (placeName: string) => `add-place-${placeName}`;
 const DELETE_PLACE_TOAST_ID = (placeId: number) => `delete-place-${placeId}`;
@@ -35,9 +35,9 @@ interface PlaceState {
     isUserPlacesLoading: boolean;
     isUserPlacesLoadingFailed: boolean;
     currentPlace?: Place;
-    isPlaceAdding: boolean;
     isCurrentPlaceLoading: boolean;
     isCurrentPlaceLoadingFailed: boolean;
+    isPlaceAdding: boolean;
     isUpdatingCurrentPlace: boolean;
     deletingCurrentPlaceId?: number;
 }
@@ -247,7 +247,7 @@ export const placeSlice = createSlice({
                 id: UPDATE_PLACE_TOAST_ID(action.meta.arg.id)
             });
         });
-        builder.addMatcher(isAnyOf(createRentSlotsRequest.fulfilled, cancelRentSlotRequest.fulfilled), (state, action) => {
+        builder.addMatcher(isAnyOf(createRentSlotsRequest.fulfilled, cancelRentSlotsRequest.fulfilled), (state, action) => {
             state.currentPlace = action.payload;
         });
     }

@@ -1,15 +1,15 @@
 import { Segment } from "semantic-ui-react";
 
 import basePlaceStyles from "@components/Place/PlaceInfoDetails/styles/PlaceInfoDetails.module.scss";
-import { getSpecializationTitleFromEnum } from "@components/Place/utils/utils";
+import { getPlaceSpecializationTitleFromEnum } from "@components/Place/utils/utils";
 import { FormFieldType } from "@models/forms/enums";
 import { DropdownOption, FormFieldProps } from "@models/forms/types";
-import { PlaceFieldsName, Specialization } from "@models/places/enums";
+import { PlaceFieldsName, PlaceSpecialization } from "@models/places/enums";
 import BaseFormFields from "@parts/EditForm/BaseFormFields";
 
-const PlaceSpecializationsOptions: DropdownOption[] = Object.values(Specialization).map((specialization) => ({
+const PlaceSpecializationsOptions: DropdownOption[] = Object.values(PlaceSpecialization).map((specialization) => ({
     value: specialization,
-    text: getSpecializationTitleFromEnum(specialization)
+    text: getPlaceSpecializationTitleFromEnum(specialization)
 }));
 
 export const MainInfoFields: FormFieldProps[] = [

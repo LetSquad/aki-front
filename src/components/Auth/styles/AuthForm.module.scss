@@ -1,4 +1,4 @@
-@use 'src/styles/mq' as *;
+@use 'src/styles/_mq' as *;
 @use 'src/styles/baseParts.module' as *;
 @use 'src/styles/variables.module' as variables;
 
@@ -22,7 +22,6 @@
   }
 
   i {
-    color: #fff !important;
     z-index: 1002 !important;
   }
 }

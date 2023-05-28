@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { DateTime, Interval } from "luxon";
 import { toast } from "react-hot-toast";
 
@@ -78,22 +78,22 @@ export const createRentSlotsRequest = createAsyncThunk("createRentSlotsRequest",
         } while (dayDate <= endDayDate);
     }
 
-    const response: AxiosResponse<PlaceResponse> = await axios.post<PlaceResponse>(
+    const { data } = await axios.post<PlaceResponse>(
         apiUrls.rentSlots(),
         { rentSlots }
     );
 
-    return response.data;
+    return data;
 });
 
-export const cancelRentSlotRequest = createAsyncThunk(
-    "cancelAppointmentSlotRequest",
+export const cancelRentSlotsRequest = createAsyncThunk(
+    "cancelRentSlotsRequest",
     async ({ rentSlotIds }: { rentSlotIds: number[], placeName: string }) => {
-        const response: AxiosResponse<PlaceResponse> = await axios.delete<PlaceResponse>(
+        const { data } = await axios.delete<PlaceResponse>(
             apiUrls.rentSlots(),
             { data: { rentSlotIds } }
         );
-        return response.data;
+        return data;
     }
 );
 
@@ -102,21 +102,21 @@ export const rentSlotSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(cancelRentSlotRequest.pending, (state, action) => {
+        builder.addCase(cancelRentSlotsRequest.pending, (state, action) => {
             toast.loading(
                 `Отменяем слоты аренды для площадки "${action.meta.arg.placeName}"`,
                 { id: CANCEL_RENT_SLOT_TOAST(action.meta.arg.rentSlotIds[0]) }
             );
             state.cancelRentSlotIds = action.meta.arg.rentSlotIds;
         });
-        builder.addCase(cancelRentSlotRequest.rejected, (state, action) => {
+        builder.addCase(cancelRentSlotsRequest.rejected, (state, action) => {
             toast.error(
                 `При отмене слотов аренды для площадки "${action.meta.arg.placeName}" произошла ошибка. Повторите отмену позже`,
                 { id: CANCEL_RENT_SLOT_TOAST(action.meta.arg.rentSlotIds[0]) }
             );
             state.cancelRentSlotIds = [];
         });
-        builder.addCase(cancelRentSlotRequest.fulfilled, (state, action) => {
+        builder.addCase(cancelRentSlotsRequest.fulfilled, (state, action) => {
             toast.success(
                 `Слоты аренды площадки "${action.meta.arg.placeName}" отменены`,
                 { id: CANCEL_RENT_SLOT_TOAST(action.meta.arg.rentSlotIds[0]) }

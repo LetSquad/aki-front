@@ -1,14 +1,18 @@
-import { BasePageSlugs, LandLordPageSlugs } from "@models/pages/enums";
+import { BasePageSlugs, LandLordPageSlugs, RenterPageSlugs } from "@models/pages/enums";
 
 export const CommonItems: { name: string, url: string }[] = [
     {
         name: "Каталог площадок",
-        url: BasePageSlugs.PLACE_CATALOG
+        url: BasePageSlugs.DASHBOARD
     }
 ];
 
 export const RenterItems: { name: string, url: string }[] = [
-    ...CommonItems
+    ...CommonItems,
+    {
+        name: "Мои бронирования",
+        url: RenterPageSlugs.MY_RENTS
+    }
 ];
 
 export const LandlordItems: { name: string, url: string }[] = [

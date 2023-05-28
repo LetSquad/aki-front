@@ -91,6 +91,8 @@ export const userProfileValidationSchema = baseUserValidationSchema
                     ? true
                     : value.size <= AVATAR_IMAGE_MAX_SIZE
             ))
+            .nullable()
+            .optional()
     });
 
 export const landlordBaseValidationSchema = baseUserValidationSchema
@@ -126,7 +128,6 @@ export const landlordProfileValidationSchema = userProfileValidationSchema
             .trim()
             .min(AMOUNT_OF_JOB_TITLE_CHARACTERS.min, JOB_TITLE_INVALID_MESSAGE)
             .max(AMOUNT_OF_JOB_TITLE_CHARACTERS.max, JOB_TITLE_INVALID_MESSAGE)
-            .matches(/^[ ",./А-я-]*$/, JOB_TITLE_INVALID_MESSAGE)
             .required(JOB_TITLE_REQUIRED_MESSAGE)
     })
     .shape({

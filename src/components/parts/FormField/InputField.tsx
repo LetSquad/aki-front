@@ -20,6 +20,7 @@ export default function InputField({
     inputLabel,
     labelPosition,
     clearable = true,
+    maxLength,
     onChange: additionalOnChange,
     ...props
 }: InputFieldProps) {
@@ -66,6 +67,7 @@ export default function InputField({
                         />
                     )
                     : undefined}
+                maxLength={maxLength}
             />
             {isErrorDisplay && (
                 <Label

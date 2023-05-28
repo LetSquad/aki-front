@@ -9,4 +9,8 @@
   .ui.rating .icon.selected {
     color: color.adjust(variables.$primary-button-main-color, $lightness: 15%) !important;
   }
+
+  .ui.rating .icon.selected.active {
+    color: color.adjust(variables.$primary-button-main-color, $lightness: 15%) !important;
+  }
 }

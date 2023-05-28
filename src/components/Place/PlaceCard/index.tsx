@@ -1,4 +1,9 @@
-import { PropsWithChildren, useMemo } from "react";
+import {
+    MouseEvent,
+    PropsWithChildren,
+    useCallback,
+    useMemo
+} from "react";
 
 import ImageGallery, { ReactImageGalleryItem } from "react-image-gallery";
 import { generatePath, Link } from "react-router-dom";
@@ -10,8 +15,11 @@ import { getPriceTypeTitleFromEnum } from "@coreUtils/utils";
 import { BasePageSlugs } from "@models/pages/enums";
 import { PriceType } from "@models/places/enums";
 import { Place } from "@models/places/types";
+import { UserRole } from "@models/users/enums";
+import PrimaryButton from "@parts/Buttons/PrimaryButton";
 import imagePlaceholder from "@static/images/imagePlaceholder.png";
-import { useAppSelector } from "@store/hooks";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
+import { setCurrentRentPlace } from "@store/rent/reducer";
 import { selectCurrentUser } from "@store/user/selectors";
 
 import styles from "./styles/PlaceCard.module.scss";
@@ -21,7 +29,15 @@ interface PlaceCardProps extends PropsWithChildren {
 }
 
 export default function PlaceCard({ place, children }: PlaceCardProps) {
+    const dispatch = useAppDispatch();
+
     const currentUser = useAppSelector(selectCurrentUser);
+
+    const onRentModalOpen = useCallback((event: MouseEvent<HTMLButtonElement>) => {
+        event.stopPropagation();
+        event.preventDefault();
+        dispatch(setCurrentRentPlace(place));
+    }, [dispatch, place]);
 
     const galleryImages = useMemo<ReactImageGalleryItem[]>(() => (
         (place.placeImages ?? [imagePlaceholder]).map((image) => ({
@@ -54,8 +70,7 @@ export default function PlaceCard({ place, children }: PlaceCardProps) {
                                 <PlaceRating rating={place.rating} />
                             </div>
                             <span className={styles.address}>{place.address}</span>
-                            {currentUser &&
-                            place.price.priceType === PriceType.FREE
+                            {currentUser && place.price.priceType === PriceType.FREE
                                 ? <span className={styles.price}>{getPriceTypeTitleFromEnum(place.price.priceType)}</span>
                                 : (
                                     <span className={styles.price}>
@@ -64,6 +79,9 @@ export default function PlaceCard({ place, children }: PlaceCardProps) {
                                 )}
                         </div>
                         <PlaceAdditionalInfo currentPlace={place} />
+                        {currentUser?.userRole === UserRole.RENTER && (
+                            <PrimaryButton onClick={onRentModalOpen}>Забронировать</PrimaryButton>
+                        )}
                     </div>
                 </div>
             </Segment>

@@ -7,7 +7,7 @@ export const selectCancelRentSlotIds = (state: RootState) => state.rentSlot.canc
 
 const selectRentSlotId = (_state: RootState, rentSlotId?: string | number) => rentSlotId;
 
-export const selectIsAppointmentSlotCancelling = createSelector(
+export const selectIsRentSlotCancelling = createSelector(
     [selectCancelRentSlotIds, selectRentSlotId],
     containsStringOrNumberInNumberArray
 );

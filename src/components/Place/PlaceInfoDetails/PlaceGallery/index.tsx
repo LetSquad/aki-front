@@ -5,7 +5,7 @@ import PlaceGalleryView from "./PlaceGalleryView";
 export default function PlaceGallery() {
     const { placeImages } = useCurrentPlace();
 
-    if (placeImages === undefined || placeImages.length === 0) {
+    if (!placeImages || placeImages.length === 0) {
         return null;
     }
 

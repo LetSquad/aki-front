@@ -1,5 +1,6 @@
 import React, {
     lazy,
+    MouseEvent,
     useCallback,
     useMemo,
     useState
@@ -21,14 +22,18 @@ import { PlaceInfoContext } from "@components/Place/PlaceInfoDetails/PlaceInfoCo
 import PlaceMainInfo from "@components/Place/PlaceInfoDetails/PlaceMainInfo";
 import PlaceServices from "@components/Place/PlaceInfoDetails/PlaceServices";
 import PlaceRating from "@components/Place/PlaceRating";
+import NewRentModal from "@components/Rent/NewRentModal";
 import flipEditCardPartsStyles from "@coreStyles/flipEditCardParts.module.scss";
 import { useChangeEditSearchParam } from "@hooks/useChangeEditSearchParam";
 import { LandLordPageSlugs } from "@models/pages/enums";
 import { Place, PlaceAddFormValues } from "@models/places/types";
+import { UserRole } from "@models/users/enums";
 import BlockIcons, { BlockIconsIndent } from "@parts/BlockIcons/BlockIcons";
+import PrimaryButton from "@parts/Buttons/PrimaryButton";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { deletePlaceRequest, updatePlaceRequest } from "@store/place/reducer";
 import { selectIsUpdatingCurrentPlace } from "@store/place/selectors";
+import { setCurrentRentPlace } from "@store/rent/reducer";
 
 import styles from "./styles/PlaceInfoDetails.module.scss";
 
@@ -37,9 +42,10 @@ const PlaceDetailsForm = lazy(/* webpackChunkName: "PlaceDetailsForm" */ () => i
 interface PlaceInfoDetailProps {
     currentPlace: Place;
     isUserPlaceOwner: boolean;
+    userRole?: UserRole;
 }
 
-export default function PlaceInfoDetails({ currentPlace, isUserPlaceOwner }: PlaceInfoDetailProps) {
+export default function PlaceInfoDetails({ currentPlace, isUserPlaceOwner, userRole }: PlaceInfoDetailProps) {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
@@ -74,6 +80,12 @@ export default function PlaceInfoDetails({ currentPlace, isUserPlaceOwner }: Pla
         },
         [changeEditState, dispatch]
     );
+
+    const onRentModalOpen = useCallback((event: MouseEvent<HTMLButtonElement>) => {
+        event.stopPropagation();
+        event.preventDefault();
+        dispatch(setCurrentRentPlace(currentPlace));
+    }, [currentPlace, dispatch]);
 
     const contextValue = useMemo(
         () => ({ currentPlace }),
@@ -113,18 +125,29 @@ export default function PlaceInfoDetails({ currentPlace, isUserPlaceOwner }: Pla
                         )
                         : (
                             <div className={flipEditCardPartsStyles.info}>
-                                <div className={styles.titleContainer}>
+                                <NewRentModal />
+                                <div className={styles.head}>
                                     {isUserPlaceOwner && (
                                         <BlockIcons
                                             indent={BlockIconsIndent.CENTER}
                                             onEditClick={() => changeEditState(true)}
                                             deleteAction={() => deletePlace(currentPlace.id, currentPlace.name)}
-                                            deleteConfirmationText={`Удалить площадку "${currentPlace.name}"?`}
+                                            deleteConfirmationText={`Вы уверены, что хотите удалить площадку "${currentPlace.name}"?`}
                                             additionalIcon={scheduleIcon}
                                         />
                                     )}
-                                    <span className={styles.title}>{currentPlace.name}</span>
-                                    <PlaceRating rating={currentPlace.rating} />
+                                    <div className={styles.titleContainer}>
+                                        <span className={styles.title}>{currentPlace.name}</span>
+                                        <PlaceRating rating={currentPlace.rating} />
+                                    </div>
+                                    {userRole === UserRole.RENTER && (
+                                        <PrimaryButton
+                                            className={styles.headRentButton}
+                                            onClick={onRentModalOpen}
+                                        >
+                                            Забронировать
+                                        </PrimaryButton>
+                                    )}
                                 </div>
                                 <div className={styles.segmentsContainer}>
                                     <PlaceMainInfo />

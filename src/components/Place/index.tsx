@@ -39,7 +39,7 @@ export default function PlaceInfo() {
 
     const isUserPlaceOwner = useMemo(
         () => currentUser?.id === currentPlace?.user?.id,
-        [currentPlace?.user?.id, currentUser?.id]
+        [currentPlace, currentUser]
     );
 
     const getPlace = useCallback(() => {
@@ -84,6 +84,7 @@ export default function PlaceInfo() {
                 <PlaceInfoDetails
                     currentPlace={currentPlace}
                     isUserPlaceOwner={isUserPlaceOwner}
+                    userRole={currentUser?.userRole}
                 />
             </div>
         );

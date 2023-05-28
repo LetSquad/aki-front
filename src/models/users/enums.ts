@@ -23,3 +23,20 @@ export enum LandlordBaseUserFieldsName {
     ORGANIZATION = "organization",
     JOB_TITLE = "jobTitle"
 }
+
+export enum RenterBaseUserFieldsName {
+    SPECIALIZATIONS = "specializations"
+}
+
+export enum UserSpecialization {
+    ART = "ART",
+    ARCHITECTURE = "ARCHITECTURE",
+    VIDEO_GAMES_AND_SOFTWARE = "VIDEO_GAMES_AND_SOFTWARE",
+    DESIGN = "DESIGN",
+    PUBLISHING_AND_NEW_MEDIA = "PUBLISHING_AND_NEW_MEDIA",
+    PERFORMING_ARTS = "PERFORMING_ARTS",
+    FILM_AND_ANIMATION = "FILM_AND_ANIMATION",
+    FASHION = "FASHION",
+    MUSIC = "MUSIC",
+    ADVERTISING = "ADVERTISING"
+}

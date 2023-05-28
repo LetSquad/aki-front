@@ -4,6 +4,7 @@ import thunk from "redux-thunk";
 
 import infoReducer from "./info/reducer";
 import placeReducer from "./place/reducer";
+import rentReducer from "./rent/reducer";
 import rentSlotReducer from "./rentSlot/reducer";
 import userReducer from "./user/reducer";
 
@@ -11,6 +12,7 @@ export const store = configureStore({
     reducer: {
         place: placeReducer,
         info: infoReducer,
+        rent: rentReducer,
         rentSlot: rentSlotReducer,
         user: userReducer
     },

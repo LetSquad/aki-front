@@ -1,4 +1,4 @@
-import { UserRole } from "@models/users/enums";
+import { UserRole, UserSpecialization } from "@models/users/enums";
 
 interface BaseUserInfo {
     userRole: UserRole;
@@ -7,12 +7,13 @@ interface BaseUserInfo {
     phone: string;
     firstName: string;
     lastName: string;
-    middleName?: string;
-    userImage?: string;
+    middleName?: string | null;
+    userImage?: string | null;
 }
 
 export interface RenterInfo extends BaseUserInfo {
     userRole: UserRole.RENTER;
+    specializations: UserSpecialization[];
 }
 
 export interface LandlordInfo extends BaseUserInfo {

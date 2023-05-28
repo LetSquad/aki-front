@@ -29,7 +29,8 @@ export default function TimePickerField({
     minTime,
     onChange: additionalOnChange,
     popperPlacement,
-    disabled = false
+    disabled = false,
+    includeTimes
 }: TimePickerFieldProps) {
     const [{ value }, { error, touched }, { setValue, setTouched }] = useField<string | undefined>({ name, type: "select" });
 
@@ -87,6 +88,7 @@ export default function TimePickerField({
                 showTimeSelectOnly
                 onBlur={setTouchedTrue}
                 popperPlacement={popperPlacement}
+                includeTimes={includeTimes}
             />
             {isErrorDisplay && (
                 <Label

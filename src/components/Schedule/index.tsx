@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useMemo } from "react";
 
-import { Navigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Loader, Segment } from "semantic-ui-react";
 
 import Calendar from "@components/Schedule/Calendar";
 import partsStyles from "@coreStyles/baseParts.module.scss";
+import NotFoundErrorScreen from "@coreUtils/NotFoundErrorScreen";
 import { Place } from "@models/places/types";
 import LoadingErrorBlock from "@parts/LoadingErrorBlock/LoadingErrorBlock";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
@@ -58,7 +59,7 @@ export default function Schedule() {
     }
 
     if (!isUserPlaceOwner) {
-        return <Navigate to="not-found" />;
+        return <NotFoundErrorScreen />;
     }
 
     return (

@@ -3,7 +3,7 @@ import { DateTime } from "luxon";
 import { PriceType } from "@models/places/enums";
 import { RentSlotDuration } from "@models/rentSlots/enums";
 
-export function getFullName(firstName?: string, middleName?: string, lastName?: string): string {
+export function getFullName(firstName?: string | null, middleName?: string | null, lastName?: string | null): string {
     return `${lastName || ""}${lastName && (firstName || middleName) ? " " : ""}${firstName || ""}${
         firstName && middleName ? " " : ""
     }${middleName || ""}`;
@@ -101,7 +101,7 @@ export function getPriceTypeTitleFromEnum(priceType: PriceType): string {
     }
 }
 
-export function getCapacityTitleFromNumbers(minCapacity?: number, maxCapacity?: number): string {
+export function getCapacityTitleFromNumbers(minCapacity?: number | null, maxCapacity?: number | null): string {
     const minCapacityTitle = minCapacity
         ? `от ${minCapacity}`
         : "";
