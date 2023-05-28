@@ -101,7 +101,7 @@ export default function RentCard({ rent, children }: RentCardProps) {
                 </div>
                 <div className={styles.contentContainer}>
                     <div className={styles.mainContentContainer}>
-                        <Link to={generatePath(BasePageSlugs.PLACE, { placeId: rent.place.toString() })}>
+                        <Link to={generatePath(BasePageSlugs.PLACE, { placeId: rent.place.id.toString() })}>
                             <span className={styles.title}>{rent.place.name}</span>
                         </Link>
                         <div className={styles.rentInfoContainer}>
