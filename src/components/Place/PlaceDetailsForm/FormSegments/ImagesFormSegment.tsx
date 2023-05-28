@@ -8,7 +8,7 @@ import { PlaceFieldsName } from "@models/places/enums";
 export const ImageFields: (index: number) => FormFieldProps[] = (index) => [{
     name: `${PlaceFieldsName.PLACE_IMAGES}.${index}`,
     type: FormFieldType.IMAGE_SELECTOR,
-    placeholder: "Выберете изображения для галереи в формате .jpg, .jpeg или .png (максимум 10 МБ)"
+    placeholder: "Выберите изображения для галереи в формате .jpg, .jpeg или .png (максимум 10 МБ)"
 }];
 
 export default function ImagesFormSegment() {
