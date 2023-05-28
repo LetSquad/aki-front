@@ -7,7 +7,7 @@ import React, {
 
 import classNames from "classnames";
 import { useSearchParams } from "react-router-dom";
-import { Segment } from "semantic-ui-react";
+import { Dimmer, Loader, Segment } from "semantic-ui-react";
 
 import flipEditCardPartsStyles from "@coreStyles/flipEditCardParts.module.scss";
 import { getFullName } from "@coreUtils/utils";
@@ -17,9 +17,13 @@ import { useEditFlipCardAdditionalColumnsWidth } from "@hooks/useEditFlipCardAdd
 import { useEditFlipCardBaseColumnsWidth } from "@hooks/useEditFlipCardBaseColumnsWidth";
 import { BaseUserFieldsName, LandlordBaseUserFieldsName, UserRole } from "@models/users/enums";
 import { LandlordInfo, User } from "@models/users/types";
-import BlockIcons from "@parts/BlockIcons/BlockIcons";
+import AdminBlockIcons from "@parts/AdminBlockIcons/AdminBlockIcons";
+import BlockIcons, { BlockIconsIndent } from "@parts/BlockIcons/BlockIcons";
 import ImageWithLoading from "@parts/ImageWithLoading/ImageWithLoading";
 import nullUserAvatar from "@static/images/nullUserAvatar.png";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
+import { banUserRequest } from "@store/user/reducer";
+import { selectCurrentUser, selectIsCurrentUserBanning } from "@store/user/selectors";
 
 import styles from "./styles/UserInfoDetails.module.scss";
 
@@ -35,14 +39,26 @@ interface UserInfoDetailsProps {
 }
 
 export default function UserInfoDetails({ user, editable = false }: UserInfoDetailsProps) {
+    const dispatch = useAppDispatch();
+
     const [searchParams] = useSearchParams();
 
     const changeEditParam = useChangeEditSearchParam();
+
+    const currentUser = useAppSelector(selectCurrentUser);
+    const isCurrentUserBanning = useAppSelector(selectIsCurrentUserBanning);
 
     const [isEditUser, setIsEditUser] = useState((!!searchParams.get("edit") && editable) || false);
 
     const baseColumnsWidth = useEditFlipCardBaseColumnsWidth();
     const additionalColumnsWidth = useEditFlipCardAdditionalColumnsWidth();
+
+    const banPlace = useCallback(
+        (userId: number, userName: string, banReason?: string) => {
+            dispatch(banUserRequest({ userId, userName, banReason }));
+        },
+        [dispatch]
+    );
 
     const changeEditState = useCallback(
         (state: boolean) => {
@@ -113,12 +129,35 @@ export default function UserInfoDetails({ user, editable = false }: UserInfoDeta
             firstName,
             middleName,
             lastName,
-            userImage
+            userImage, id
         } = user;
+
+        const userFullName = getFullName(firstName, middleName, lastName);
 
         return (
             <div className={flipEditCardPartsStyles.info}>
-                {editable && <BlockIcons onEditClick={() => changeEditState(!isEditUser)} />}
+                {isCurrentUserBanning && (
+                    <Dimmer
+                        active
+                        inverted
+                    >
+                        <Loader />
+                    </Dimmer>
+                )}
+                {editable && (
+                    <BlockIcons
+                        indent={BlockIconsIndent.LARGE}
+                        onEditClick={() => changeEditState(!isEditUser)}
+                    />
+                )}
+                {currentUser?.userRole === UserRole.ADMIN && currentUser.id !== id && (
+                    <AdminBlockIcons
+                        indent={BlockIconsIndent.LARGE}
+                        banAction={(reason) => banPlace(id, userFullName, reason)}
+                        banConfirmationText={`Вы уверены, что хотите забанить пользователя "${userFullName}"?`}
+                        modalTitle="Подтверждение бана"
+                    />
+                )}
                 <div className={styles.contentContainer}>
                     <ImageWithLoading
                         circular
@@ -126,7 +165,7 @@ export default function UserInfoDetails({ user, editable = false }: UserInfoDeta
                         src={userImage || nullUserAvatar}
                     />
                     <div className={styles.content}>
-                        <h1 className={styles.contentFullName}>{getFullName(firstName, middleName, lastName)}</h1>
+                        <h1 className={styles.contentFullName}>{userFullName}</h1>
                         <div className={styles.gridContainer}>
                             <WithSuspense>
                                 <CardGrid position="top">{baseRows}</CardGrid>
@@ -139,7 +178,18 @@ export default function UserInfoDetails({ user, editable = false }: UserInfoDeta
                 </WithSuspense>
             </div>
         );
-    }, [user, editable, baseRows, additionalRows, changeEditState, isEditUser]);
+    }, [
+        user,
+        isCurrentUserBanning,
+        editable,
+        currentUser?.userRole,
+        currentUser?.id,
+        baseRows,
+        additionalRows,
+        changeEditState,
+        isEditUser,
+        banPlace
+    ]);
 
     const editUserForm = useMemo(
         () => (

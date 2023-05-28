@@ -13,7 +13,12 @@ import {
     useNavigate,
     useSearchParams
 } from "react-router-dom";
-import { Icon } from "semantic-ui-react";
+import {
+    Dimmer,
+    Icon,
+    Loader,
+    Popup
+} from "semantic-ui-react";
 
 import PlaceEquipments from "@components/Place/PlaceInfoDetails/PlaceEquipments";
 import PlaceFacilities from "@components/Place/PlaceInfoDetails/PlaceFacilities";
@@ -22,17 +27,29 @@ import { PlaceInfoContext } from "@components/Place/PlaceInfoDetails/PlaceInfoCo
 import PlaceMainInfo from "@components/Place/PlaceInfoDetails/PlaceMainInfo";
 import PlaceServices from "@components/Place/PlaceInfoDetails/PlaceServices";
 import PlaceRating from "@components/Place/PlaceRating";
+import { getPlaceStatusColorFromEnum, getPlaceStatusTitleFromEnum } from "@components/Place/utils/utils";
 import NewRentModal from "@components/Rent/NewRentModal";
 import flipEditCardPartsStyles from "@coreStyles/flipEditCardParts.module.scss";
 import { useChangeEditSearchParam } from "@hooks/useChangeEditSearchParam";
-import { LandLordPageSlugs } from "@models/pages/enums";
+import { LandlordPageSlugs } from "@models/pages/enums";
 import { Place, PlaceAddFormValues } from "@models/places/types";
 import { UserRole } from "@models/users/enums";
+import AdminBlockIcons from "@parts/AdminBlockIcons/AdminBlockIcons";
 import BlockIcons, { BlockIconsIndent } from "@parts/BlockIcons/BlockIcons";
 import PrimaryButton from "@parts/Buttons/PrimaryButton";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
-import { deletePlaceRequest, updatePlaceRequest } from "@store/place/reducer";
-import { selectIsUpdatingCurrentPlace } from "@store/place/selectors";
+import {
+    approvePlaceRequest,
+    banPlaceRequest,
+    deletePlaceRequest,
+    updatePlaceRequest
+} from "@store/place/reducer";
+import {
+    selectIsCurrentPlaceApproving,
+    selectIsCurrentPlaceBanning,
+    selectIsCurrentPlaceDeleting,
+    selectIsUpdatingCurrentPlace
+} from "@store/place/selectors";
 import { setCurrentRentPlace } from "@store/rent/reducer";
 
 import styles from "./styles/PlaceInfoDetails.module.scss";
@@ -54,10 +71,15 @@ export default function PlaceInfoDetails({ currentPlace, isUserPlaceOwner, userR
     const [isPlaceEdit, setIsPlaceEdit] = useState((searchParams.get("edit") && isUserPlaceOwner) || false);
 
     const isUpdatingCurrentPlace = useAppSelector(selectIsUpdatingCurrentPlace);
+    const isCurrentPlaceDeleting = useAppSelector(selectIsCurrentPlaceDeleting);
+    const isCurrentPlaceBanning = useAppSelector(selectIsCurrentPlaceBanning);
+    const isCurrentPlaceApproving = useAppSelector(selectIsCurrentPlaceApproving);
+
+    const isLoading = isCurrentPlaceDeleting || isCurrentPlaceBanning || isCurrentPlaceApproving;
 
     const deletePlace = useCallback(
         (placeId: number, placeName: string) => {
-            dispatch(deletePlaceRequest({ placeId, placeName })).then(() => navigate(LandLordPageSlugs.MY_PLACES));
+            dispatch(deletePlaceRequest({ placeId, placeName })).then(() => navigate(LandlordPageSlugs.MY_PLACES));
         },
         [dispatch, navigate]
     );
@@ -68,6 +90,20 @@ export default function PlaceInfoDetails({ currentPlace, isUserPlaceOwner, userR
             changeEditParam(state);
         },
         [changeEditParam]
+    );
+
+    const banPlace = useCallback(
+        (placeId: number, placeName: string, banReason?: string) => {
+            dispatch(banPlaceRequest({ placeId, placeName, banReason }));
+        },
+        [dispatch]
+    );
+
+    const approvePlace = useCallback(
+        (placeId: number, placeName: string) => {
+            dispatch(approvePlaceRequest({ placeId, placeName }));
+        },
+        [dispatch]
     );
 
     const onSubmitButtonClicked = useCallback(
@@ -93,7 +129,7 @@ export default function PlaceInfoDetails({ currentPlace, isUserPlaceOwner, userR
     );
 
     const scheduleIcon = useCallback((iconClassName: string) => (
-        <Link to={generatePath(LandLordPageSlugs.PLACE_SCHEDULE, { placeId: currentPlace.id.toString() })}>
+        <Link to={generatePath(LandlordPageSlugs.PLACE_SCHEDULE, { placeId: currentPlace.id.toString() })}>
             <Icon
                 className={iconClassName}
                 name="calendar check outline"
@@ -125,6 +161,14 @@ export default function PlaceInfoDetails({ currentPlace, isUserPlaceOwner, userR
                         )
                         : (
                             <div className={flipEditCardPartsStyles.info}>
+                                {isLoading && (
+                                    <Dimmer
+                                        active
+                                        inverted
+                                    >
+                                        <Loader />
+                                    </Dimmer>
+                                )}
                                 <NewRentModal />
                                 <div className={styles.head}>
                                     {isUserPlaceOwner && (
@@ -136,9 +180,40 @@ export default function PlaceInfoDetails({ currentPlace, isUserPlaceOwner, userR
                                             additionalIcon={scheduleIcon}
                                         />
                                     )}
+                                    {userRole === UserRole.ADMIN && (
+                                        <AdminBlockIcons
+                                            indent={BlockIconsIndent.CENTER}
+                                            approveAction={() => approvePlace(currentPlace.id, currentPlace.name)}
+                                            banAction={(banReason) => banPlace(currentPlace.id, currentPlace.name, banReason)}
+                                            banConfirmationText={`Вы уверены, что хотите забанить площадку "${currentPlace.name}"?`}
+                                            modalTitle="Подтверждение бана"
+                                        />
+                                    )}
                                     <div className={styles.titleContainer}>
                                         <span className={styles.title}>{currentPlace.name}</span>
                                         <PlaceRating rating={currentPlace.rating} />
+                                        <div className={styles.statusContainer}>
+                                            <span
+                                                className={classNames(
+                                                    styles.status,
+                                                    getPlaceStatusColorFromEnum(currentPlace.status)
+                                                )}
+                                            >
+                                                {getPlaceStatusTitleFromEnum(currentPlace.status)}
+                                            </span>
+                                            {currentPlace.banReason && (
+                                                <Popup
+                                                    content={currentPlace.banReason}
+                                                    position="top center"
+                                                    trigger={(
+                                                        <Icon
+                                                            className={getPlaceStatusColorFromEnum(currentPlace.status)}
+                                                            name="info circle"
+                                                        />
+                                                    )}
+                                                />
+                                            )}
+                                        </div>
                                     </div>
                                     {userRole === UserRole.RENTER && (
                                         <PrimaryButton

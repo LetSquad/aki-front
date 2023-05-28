@@ -1,4 +1,9 @@
-import { BasePageSlugs, LandLordPageSlugs, RenterPageSlugs } from "@models/pages/enums";
+import {
+    AdminPageSlugs,
+    BasePageSlugs,
+    LandlordPageSlugs,
+    RenterPageSlugs
+} from "@models/pages/enums";
 
 export const CommonItems: { name: string, url: string }[] = [
     {
@@ -19,13 +24,17 @@ export const LandlordItems: { name: string, url: string }[] = [
     ...CommonItems,
     {
         name: "Создать площадку",
-        url: LandLordPageSlugs.NEW_PLACE
+        url: LandlordPageSlugs.NEW_PLACE
     }, {
         name: "Мои площадки",
-        url: LandLordPageSlugs.MY_PLACES
+        url: LandlordPageSlugs.MY_PLACES
     }
 ];
 
 export const AdminItems: { name: string, url: string }[] = [
-    ...CommonItems
+    ...CommonItems,
+    {
+        name: "Неопубликованные площадки",
+        url: AdminPageSlugs.UNVERIFIED_PLACES
+    }
 ];

@@ -1,3 +1,4 @@
+import statusStyles from "@coreStyles/parts.module.scss";
 import { PlaceSpecialization, PlaceStatus } from "@models/places/enums";
 
 export function getPlaceSpecializationTitleFromEnum(specialization: PlaceSpecialization): string {
@@ -78,8 +79,8 @@ export function getPlaceSpecializationTitleFromEnum(specialization: PlaceSpecial
     }
 }
 
-export function getPlaceStatusTitleFromEnum(placeConfirmationStatus: PlaceStatus): string {
-    switch (placeConfirmationStatus) {
+export function getPlaceStatusTitleFromEnum(placeStatus: PlaceStatus): string {
+    switch (placeStatus) {
         case PlaceStatus.VERIFIED: {
             return "Опубликована";
         }
@@ -88,6 +89,21 @@ export function getPlaceStatusTitleFromEnum(placeConfirmationStatus: PlaceStatus
         }
         case PlaceStatus.BANNED: {
             return "Забанена";
+        }
+        // skip default
+    }
+}
+
+export function getPlaceStatusColorFromEnum(placeStatus: PlaceStatus): string {
+    switch (placeStatus) {
+        case PlaceStatus.UNVERIFIED: {
+            return statusStyles.statusInProgress;
+        }
+        case PlaceStatus.VERIFIED: {
+            return statusStyles.statusSuccess;
+        }
+        case PlaceStatus.BANNED: {
+            return statusStyles.statusError;
         }
         // skip default
     }

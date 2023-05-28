@@ -7,7 +7,12 @@ import FooterContacts from "@components/Footer/FooterContacts";
 import FooterLogo from "@components/Footer/FooterLogo";
 import FooterSocials from "@components/Footer/FooterSocials";
 import { MOBILE_MAX_WIDTH } from "@coreUtils/constants";
-import { AdminItems, LandlordItems, RenterItems } from "@coreUtils/MenuItems";
+import {
+    AdminItems,
+    CommonItems,
+    LandlordItems,
+    RenterItems
+} from "@coreUtils/MenuItems";
 import { UserRole } from "@models/users/enums";
 import { useAppSelector } from "@store/hooks";
 import { selectUserRole } from "@store/info/selectors";
@@ -27,8 +32,11 @@ export default function AuthFooterContent() {
             case UserRole.LANDLORD: {
                 return LandlordItems;
             }
-            default: {
+            case UserRole.RENTER: {
                 return RenterItems;
+            }
+            default: {
+                return CommonItems;
             }
         }
     }, [role]);

@@ -22,6 +22,8 @@ import { cancelRentSlotsRequest, createRentSlotsRequest } from "@store/rentSlot/
 const ADD_PLACE_TOAST_NAME = (placeName: string) => `add-place-${placeName}`;
 const DELETE_PLACE_TOAST_ID = (placeId: number) => `delete-place-${placeId}`;
 const UPDATE_PLACE_TOAST_ID = (placeId: number) => `update-place-${placeId}`;
+const BAN_PLACE_TOAST_ID = (placeId: number) => `ban-place-${placeId}`;
+const APPROVE_PLACE_TOAST_ID = (placeId: number) => `approve-place-${placeId}`;
 
 interface PlaceState {
     places: Place[];
@@ -40,6 +42,8 @@ interface PlaceState {
     isPlaceAdding: boolean;
     isUpdatingCurrentPlace: boolean;
     deletingCurrentPlaceId?: number;
+    banningCurrentPlaceId?: number;
+    approvingCurrentPlaceId?: number;
 }
 
 const initialState: PlaceState = {
@@ -58,7 +62,9 @@ const initialState: PlaceState = {
     isCurrentPlaceLoading: true,
     isCurrentPlaceLoadingFailed: false,
     isUpdatingCurrentPlace: false,
-    deletingCurrentPlaceId: undefined
+    deletingCurrentPlaceId: undefined,
+    banningCurrentPlaceId: undefined,
+    approvingCurrentPlaceId: undefined
 };
 
 export const getPlacesRequest = createAsyncThunk("getPlacesRequest", async (params: BasePageRequest & PlacesFiltersFormValues & PlacesSortRequest) => {
@@ -130,6 +136,20 @@ export const updatePlaceRequest = createAsyncThunk("updatePlaceRequest", async (
 
 export const deletePlaceRequest = createAsyncThunk("deletePlaceRequest", async ({ placeId }: { placeId: number; placeName: string }) => {
     const { data } = await axios.delete(apiUrls.placeId(placeId));
+    return data;
+});
+
+export const banPlaceRequest = createAsyncThunk("banPlaceRequest", async (
+    { placeId, banReason }: { placeId: number; banReason?: string; placeName: string }
+) => {
+    const { data } = await axios.post<PlaceResponse>(apiUrls.placeBan(), { data: { id: placeId, banReason } });
+    return data;
+});
+
+export const approvePlaceRequest = createAsyncThunk("approvePlaceRequest", async (
+    { placeId }: { placeId: number; placeName: string }
+) => {
+    const { data } = await axios.post<PlaceResponse>(apiUrls.placeApprove(placeId));
     return data;
 });
 
@@ -245,6 +265,44 @@ export const placeSlice = createSlice({
             state.currentPlace = action.payload;
             toast.success(`Информация о площадке ${action.meta.arg.name} обновлена успешно. Обновление передано на проверку модератору и очень скоро ее проверят`, {
                 id: UPDATE_PLACE_TOAST_ID(action.meta.arg.id)
+            });
+        });
+        builder.addCase(banPlaceRequest.pending, (state, action) => {
+            toast.loading(`Площадка ${action.meta.arg.placeName} банится`, {
+                id: BAN_PLACE_TOAST_ID(action.meta.arg.placeId)
+            });
+            state.banningCurrentPlaceId = action.meta.arg.placeId;
+        });
+        builder.addCase(banPlaceRequest.rejected, (state, action) => {
+            state.banningCurrentPlaceId = undefined;
+            toast.error(`При бане площадки ${action.meta.arg.placeName} произошла ошибка. Повторите бан позже`, {
+                id: BAN_PLACE_TOAST_ID(action.meta.arg.placeId)
+            });
+        });
+        builder.addCase(banPlaceRequest.fulfilled, (state, action) => {
+            state.banningCurrentPlaceId = undefined;
+            state.currentPlace = action.payload;
+            toast.success(`Площадка ${action.meta.arg.placeName} успешно забанена`, {
+                id: BAN_PLACE_TOAST_ID(action.meta.arg.placeId)
+            });
+        });
+        builder.addCase(approvePlaceRequest.pending, (state, action) => {
+            toast.loading(`Площадка ${action.meta.arg.placeName} подтверждается`, {
+                id: APPROVE_PLACE_TOAST_ID(action.meta.arg.placeId)
+            });
+            state.approvingCurrentPlaceId = action.meta.arg.placeId;
+        });
+        builder.addCase(approvePlaceRequest.rejected, (state, action) => {
+            state.approvingCurrentPlaceId = undefined;
+            toast.error(`При подтверждении площадки ${action.meta.arg.placeName} произошла ошибка. Повторите подтверждение позже`, {
+                id: APPROVE_PLACE_TOAST_ID(action.meta.arg.placeId)
+            });
+        });
+        builder.addCase(approvePlaceRequest.fulfilled, (state, action) => {
+            state.approvingCurrentPlaceId = undefined;
+            state.currentPlace = action.payload;
+            toast.success(`Площадка ${action.meta.arg.placeName} успешно подтверждена`, {
+                id: APPROVE_PLACE_TOAST_ID(action.meta.arg.placeId)
             });
         });
         builder.addMatcher(isAnyOf(createRentSlotsRequest.fulfilled, cancelRentSlotsRequest.fulfilled), (state, action) => {

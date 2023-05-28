@@ -70,13 +70,19 @@ export default function PlaceCard({ place, children }: PlaceCardProps) {
                                 <PlaceRating rating={place.rating} />
                             </div>
                             <span className={styles.address}>{place.address}</span>
-                            {currentUser && place.price.priceType === PriceType.FREE
-                                ? <span className={styles.price}>{getPriceTypeTitleFromEnum(place.price.priceType)}</span>
-                                : (
-                                    <span className={styles.price}>
-                                        {`от ${place.price.price}₽${getPriceTypeTitleFromEnum(place.price.priceType)}`}
-                                    </span>
-                                )}
+                            {currentUser && (
+                                place.price.priceType === PriceType.FREE
+                                    ? (
+                                        <span className={styles.price}>
+                                            {getPriceTypeTitleFromEnum(place.price.priceType)}
+                                        </span>
+                                    )
+                                    : (
+                                        <span className={styles.price}>
+                                            {`от ${place.price.price}₽${getPriceTypeTitleFromEnum(place.price.priceType)}`}
+                                        </span>
+                                    )
+                            )}
                         </div>
                         <PlaceAdditionalInfo currentPlace={place} />
                         {currentUser?.userRole === UserRole.RENTER && (

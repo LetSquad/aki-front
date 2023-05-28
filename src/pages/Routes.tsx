@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { lazy, useMemo } from "react";
 
 import { Route, Routes as RouterRoutes } from "react-router-dom";
 
@@ -11,6 +11,8 @@ import { RenterPages } from "@pages/RenterPages/RenterPages";
 import { pagesToRoutes } from "@pages/utils";
 import { useAppSelector } from "@store/hooks";
 import { selectUserRole } from "@store/info/selectors";
+
+const PlaceCatalog = lazy(/* webpackChunkName: "PlaceCatalog" */ () => import("@components/PlaceCatalog"));
 
 export default function Routes() {
     const role = useAppSelector(selectUserRole);
@@ -33,6 +35,11 @@ export default function Routes() {
 
     return (
         <RouterRoutes>
+            <Route
+                key="dashboard"
+                path="/"
+                element={<PlaceCatalog />}
+            />
             {pagesToRoutes(pages)}
             {pagesToRoutes(CommonPages)}
             <Route

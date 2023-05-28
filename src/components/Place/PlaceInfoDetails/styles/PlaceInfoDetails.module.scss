@@ -93,3 +93,17 @@
   flex-wrap: nowrap;
   row-gap: 30px;
 }
+
+.status,
+%rent-status {
+  font-weight: 700;
+  justify-self: flex-end;
+  text-transform: uppercase;
+  width: fit-content;
+
+  &-container {
+    align-items: flex-start;
+    column-gap: 7px;
+    display: flex;
+  }
+}
