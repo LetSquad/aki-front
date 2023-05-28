@@ -113,7 +113,7 @@ export default function PeriodsFields() {
                     }]}
                     addButtonTitle="Добавить слот"
                 />
-                {errors[NewRentSlotsFieldName.DATE_PERIOD] && (
+                {errors[NewRentSlotsFieldName.DATE_PERIOD] && typeof errors[NewRentSlotsFieldName.DATE_PERIOD] === "string" && (
                     <Label className={classNames("pointing", styles.promptLabel)}>
                         {errors[NewRentSlotsFieldName.DATE_PERIOD]}
                     </Label>

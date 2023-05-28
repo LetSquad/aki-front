@@ -226,10 +226,10 @@ export default function PlaceInfoDetails({ currentPlace, isUserPlaceOwner, userR
                                 </div>
                                 <div className={styles.segmentsContainer}>
                                     <PlaceMainInfo />
+                                    <PlaceGallery />
                                     <PlaceFacilities />
                                     <PlaceServices />
                                     <PlaceEquipments />
-                                    <PlaceGallery />
                                 </div>
                             </div>
                         )

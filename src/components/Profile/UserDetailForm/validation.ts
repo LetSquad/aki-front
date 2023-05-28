@@ -4,9 +4,6 @@ import { AVATAR_IMAGE_MAX_SIZE, PHONE_REG_EXP } from "@coreUtils/constants";
 import { LandlordRegistrationFieldName } from "@models/auth/enums";
 import { BaseUserFieldsName } from "@models/users/enums";
 
-const EMAIL_INVALID_MESSAGE = "Введите корректный адрес электронной почты";
-const EMAIL_REQUIRED_MESSAGE = "Необходимо ввести адрес электронной почты";
-
 const AMOUNT_OF_NAME_CHARACTERS = {
     min: 1,
     max: 20
@@ -48,11 +45,6 @@ const JOB_TITLE_REQUIRED_MESSAGE = "Необходимо ввести должн
 const USER_IMAGE_MAX_SIZE_INVALID_MESSAGE = "Размер обрезанного аватара не должен превышать 1 МБ";
 
 export const baseUserValidationSchema = yup.object()
-    .shape({
-        [BaseUserFieldsName.EMAIL]: yup.string()
-            .required(EMAIL_REQUIRED_MESSAGE)
-            .email(EMAIL_INVALID_MESSAGE)
-    })
     .shape({
         [BaseUserFieldsName.FIRST_NAME]: yup.string()
             .trim()

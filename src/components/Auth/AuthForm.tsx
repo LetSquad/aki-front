@@ -57,7 +57,7 @@ export default function AuthForm({ onClose }: AuthFormProps) {
             <Modal
                 open
                 onClose={onClose}
-                closeOnDimmerClick={!!onClose}
+                closeOnDimmerClick={false}
                 closeOnEscape={!!onClose}
                 closeIcon={!!onClose}
                 className={modalStyles}

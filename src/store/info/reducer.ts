@@ -11,12 +11,15 @@ interface InfoState {
 
 const storageRole = localStorage.getItem("aki_role");
 
+const params = new URL(document.location.href).searchParams;
+const isActivation = params.get("activation");
+
 const initialState: InfoState = {
     auth: true,
     role: storageRole && storageRole !== "undefined" && storageRole !== "null"
         ? $enum(UserRole).asValueOrDefault(JSON.parse(storageRole))
         : undefined,
-    isLoginOpen: false
+    isLoginOpen: !!isActivation
 };
 
 export const infoSlice = createSlice({

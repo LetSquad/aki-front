@@ -38,7 +38,7 @@ export default function AddPlaceSuccessToast({ toast: t, createdPlaceId, created
         >
             <div className={customSuccessToastStyles.successToastContent}>
                 <span className={customSuccessToastStyles.successToastText}>
-                    {`Площадка ${createdPlaceName} успешно добавлена! Информация передана на проверку модератору и очень скоро она появится в списке площадок`}
+                    {`Площадка "${createdPlaceName}" успешно добавлена! Информация передана на проверку модератору и очень скоро она появится в списке площадок`}
                 </span>
                 <div className={customSuccessToastStyles.successToastButtonContainer}>
                     <SecondaryButton

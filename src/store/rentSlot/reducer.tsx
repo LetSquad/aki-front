@@ -51,15 +51,15 @@ export const createRentSlotsRequest = createAsyncThunk("createRentSlotsRequest",
         do {
             if (duration === RentSlotDuration.DAY) {
                 const dateSlot = {
-                    timeStart: `${dayDate.toISODate()}T${timeStart}`,
-                    timeEnd: `${dayDate.toISODate()}T${timeEnd}`,
+                    timeStart: `${dayDate.toISODate()}T${aroundTheClock ? "00:00:00.000+03:00" : timeStart}`,
+                    timeEnd: `${dayDate.toISODate()}T${aroundTheClock ? "24:00:00.000+03:00" : timeEnd}`,
                     price,
                     placeId
                 };
                 rentSlots = [...rentSlots, dateSlot];
             } else {
-                const start = DateTime.fromISO(`${dayDate.toISODate()}T${aroundTheClock ? "00:00:00.000+03.00" : timeStart}`);
-                const end = DateTime.fromISO(`${dayDate.toISODate()}T${aroundTheClock ? "24:00:00.000+03.00" : timeEnd}`);
+                const start = DateTime.fromISO(`${dayDate.toISODate()}T${aroundTheClock ? "00:00:00.000+03:00" : timeStart}`);
+                const end = DateTime.fromISO(`${dayDate.toISODate()}T${aroundTheClock ? "24:00:00.000+03:00" : timeEnd}`);
 
                 const dateSlots = Interval
                     .fromDateTimes(start, end)

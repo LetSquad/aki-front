@@ -240,7 +240,6 @@ export const placeSlice = createSlice({
             state.currentPlace = undefined;
         });
         builder.addCase(getPlaceRequest.rejected, (state) => {
-            // TODO: нужен отдельный код ошибки, если площадка с переданным id не найдена
             state.isCurrentPlaceLoading = false;
             state.isCurrentPlaceLoadingFailed = true;
         });

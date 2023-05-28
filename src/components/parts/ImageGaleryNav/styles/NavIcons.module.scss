@@ -1,0 +1,40 @@
+@use "src/styles/variables.module" as variables;
+
+.icon,
+%image-gallery-icon {
+  appearance: none;
+  background-color: transparent;
+  border: 0;
+  color: variables.$primary-text-color;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 2px variables.$background-color);
+  outline: none;
+  position: absolute;
+  transition: all .3s ease-out;
+  z-index: 4;
+
+  &:hover {
+    color: variables.$primary-button-main-color;
+  }
+
+  &-nav {
+    top: 50%;
+    transform: translateY(-50%);
+
+    &-right {
+      @extend %image-gallery-icon-nav;
+      right: 0;
+    }
+
+    &-left {
+      @extend %image-gallery-icon-nav;
+      left: 0;
+    }
+
+    &-full-screen {
+      bottom: 0;
+      margin: 0 10px 10px 0 !important;
+      right: 0;
+    }
+  }
+}
