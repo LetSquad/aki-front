@@ -4,6 +4,8 @@ import classNames from "classnames";
 import { Icon, Segment } from "semantic-ui-react";
 
 import { PlacesSortDirection, PlacesSortType } from "@models/places/enums";
+import { useAppSelector } from "@store/hooks";
+import { selectCurrentUser } from "@store/user/selectors";
 
 import styles from "./styles/PlacesListSorter.module.scss";
 
@@ -14,6 +16,8 @@ interface PlacesListSorterProps {
 }
 
 export default function PlacesListSorter({ sort, onSortChanged, disabled }: PlacesListSorterProps) {
+    const currentUser = useAppSelector(selectCurrentUser);
+
     const onClickPersonalSort = useCallback(() => {
         onSortChanged([PlacesSortType.PERSONAL, PlacesSortDirection.DESC]);
     }, [onSortChanged]);
@@ -37,17 +41,19 @@ export default function PlacesListSorter({ sort, onSortChanged, disabled }: Plac
     return (
         <Segment className={styles.segment}>
             <div className={styles.container}>
-                <span
-                    className={
-                        classNames({
-                            [styles.itemActive]: sort[0] !== PlacesSortType.PERSONAL
-                        })
-                    }
-                    aria-hidden
-                    onClick={sort[0] === PlacesSortType.PERSONAL || disabled ? undefined : onClickPersonalSort}
-                >
-                    Персональная подборка
-                </span>
+                {currentUser && (
+                    <span
+                        className={
+                            classNames({
+                                [styles.itemActive]: sort[0] !== PlacesSortType.PERSONAL
+                            })
+                        }
+                        aria-hidden
+                        onClick={sort[0] === PlacesSortType.PERSONAL || disabled ? undefined : onClickPersonalSort}
+                    >
+                        Персональная подборка
+                    </span>
+                )}
                 <span
                     className={
                         classNames({
@@ -70,23 +76,25 @@ export default function PlacesListSorter({ sort, onSortChanged, disabled }: Plac
                 >
                     По рейтингу
                 </span>
-                <div className={styles.priceContainer}>
-                    <span
-                        className={
-                            classNames({
-                                [styles.itemActive]: sort[0] !== PlacesSortType.PRICE,
-                                [styles.itemSelectedActive]: sort[0] === PlacesSortType.PRICE
-                            })
-                        }
-                        aria-hidden
-                        onClick={disabled ? undefined : onClickPriceSort}
-                    >
-                        По цене
-                    </span>
-                    {sort[0] === PlacesSortType.PRICE && (
-                        <Icon name={sort[1] === PlacesSortDirection.DESC ? "sort amount down" : "sort amount up"} />
-                    )}
-                </div>
+                {currentUser && (
+                    <div className={styles.priceContainer}>
+                        <span
+                            className={
+                                classNames({
+                                    [styles.itemActive]: sort[0] !== PlacesSortType.PRICE,
+                                    [styles.itemSelectedActive]: sort[0] === PlacesSortType.PRICE
+                                })
+                            }
+                            aria-hidden
+                            onClick={disabled ? undefined : onClickPriceSort}
+                        >
+                            По цене
+                        </span>
+                        {sort[0] === PlacesSortType.PRICE && (
+                            <Icon name={sort[1] === PlacesSortDirection.DESC ? "sort amount down" : "sort amount up"} />
+                        )}
+                    </div>
+                )}
             </div>
         </Segment>
     );
