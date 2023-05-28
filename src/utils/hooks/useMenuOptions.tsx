@@ -3,7 +3,12 @@ import { useCallback } from "react";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
 
-import { AdminItems, LandlordItems, RenterItems } from "@coreUtils/MenuItems";
+import {
+    AdminItems,
+    CommonItems,
+    LandlordItems,
+    RenterItems
+} from "@coreUtils/MenuItems";
 import { useLocationActive } from "@hooks/useLocationActive";
 import { UserRole } from "@models/users/enums";
 import { useAppSelector } from "@store/hooks";
@@ -41,8 +46,11 @@ export function useMenuOptions(onClose?: () => void) {
         case UserRole.LANDLORD: {
             return getOptions(LandlordItems);
         }
-        default: {
+        case UserRole.RENTER: {
             return getOptions(RenterItems);
+        }
+        default: {
+            return getOptions(CommonItems);
         }
     }
 }

@@ -64,6 +64,7 @@ export default function RentCard({ rent, children }: RentCardProps) {
                 deleteIconName="cancel"
                 deleteAction={onCancelHandle}
                 deleteConfirmationText={`Вы уверены, что хотите отменить бронирование площадки "${rent.place.name}"`}
+                modalTitle="Подтверждение отмены бронирования"
             />
             <div className={styles.container}>
                 <div className={styles.statusContainer}>

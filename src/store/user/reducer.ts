@@ -6,19 +6,22 @@ import apiUrls from "@api/apiUrls";
 import { User, UserResponse } from "@models/users/types";
 
 const UPDATE_USER_TOAST = (id: number) => `update-user-${id}`;
+const BAN_USER_TOAST = (id: number) => `ban-user-${id}`;
 
 interface UserState {
     currentUser?: User;
     isCurrentUserLoading: boolean;
     isCurrentUserLoadingFailed: boolean;
     isUpdatingCurrentUser: boolean;
+    banningCurrentUserId?: number;
 }
 
 const initialState: UserState = {
     currentUser: undefined,
     isCurrentUserLoading: true,
     isCurrentUserLoadingFailed: false,
-    isUpdatingCurrentUser: false
+    isUpdatingCurrentUser: false,
+    banningCurrentUserId: undefined
 };
 
 export const getUserRequest = createAsyncThunk("getUserRequest", async () => {
@@ -40,6 +43,13 @@ export const updateUserRequest = createAsyncThunk("updateUserRequest", async ({ 
         headers: { "Content-Type": "multipart/form-data" }
     });
     return response.data;
+});
+
+export const banUserRequest = createAsyncThunk("banUserRequest", async (
+    { userId, banReason }: { userId: number; banReason?: string; userName: string }
+) => {
+    const { data } = await axios.post<UserResponse>(apiUrls.userBan(), { data: { id: userId, banReason } });
+    return data;
 });
 
 export const userSlice = createSlice({
@@ -74,6 +84,25 @@ export const userSlice = createSlice({
             state.isUpdatingCurrentUser = false;
             state.currentUser = action.payload;
             toast.success("Информация о вашем профиле обновлена успешно", { id: UPDATE_USER_TOAST(action.meta.arg.id) });
+        });
+        builder.addCase(banUserRequest.pending, (state, action) => {
+            toast.loading(`Пользователь ${action.meta.arg.userName} банится`, {
+                id: BAN_USER_TOAST(action.meta.arg.userId)
+            });
+            state.banningCurrentUserId = action.meta.arg.userId;
+        });
+        builder.addCase(banUserRequest.rejected, (state, action) => {
+            state.banningCurrentUserId = undefined;
+            toast.error(`При бане пользователя ${action.meta.arg.userName} произошла ошибка. Повторите бан позже`, {
+                id: BAN_USER_TOAST(action.meta.arg.userId)
+            });
+        });
+        builder.addCase(banUserRequest.fulfilled, (state, action) => {
+            state.banningCurrentUserId = undefined;
+            state.currentUser = action.payload;
+            toast.success(`Пользователь ${action.meta.arg.userName} успешно забанен`, {
+                id: BAN_USER_TOAST(action.meta.arg.userId)
+            });
         });
     }
 });
