@@ -29,10 +29,7 @@ export default function SignInCard() {
         }
 
         return (
-            <SignInForm
-                setForgotPassword={setForgetPassword}
-                setIsLoginLoading={setIsLoginLoading}
-            />
+            <SignInForm setIsLoginLoading={setIsLoginLoading} />
         );
     }, [forgetPassword]);
 
