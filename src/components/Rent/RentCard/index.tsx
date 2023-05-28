@@ -59,13 +59,15 @@ export default function RentCard({ rent, children }: RentCardProps) {
                 </Dimmer>
             )}
             {children && children}
-            <BlockIcons
-                indent={BlockIconsIndent.LARGE}
-                deleteIconName="cancel"
-                deleteAction={onCancelHandle}
-                deleteConfirmationText={`Вы уверены, что хотите отменить бронирование площадки "${rent.place.name}"`}
-                modalTitle="Подтверждение отмены бронирования"
-            />
+            {rent.status === RentStatus.OPEN && (
+                <BlockIcons
+                    indent={BlockIconsIndent.LARGE}
+                    deleteIconName="cancel"
+                    deleteAction={onCancelHandle}
+                    deleteConfirmationText={`Вы уверены, что хотите отменить бронирование площадки "${rent.place.name}"`}
+                    modalTitle="Подтверждение отмены бронирования"
+                />
+            )}
             <div className={styles.container}>
                 <div className={styles.statusContainer}>
                     <span

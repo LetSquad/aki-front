@@ -157,13 +157,13 @@ function NewRentModalView({ currentPlace }: NewRentModalViewProps) {
     });
 
     const isByDaysSubmitDisabled = useMemo(
-        () => Object.keys(byDaysFormik.errors).length > 0 || isNewRentAdding,
-        [byDaysFormik.errors, isNewRentAdding]
+        () => Object.keys(byDaysFormik.errors).length > 0 || isNewRentAdding || byDayRentSlots.length === 0,
+        [byDayRentSlots.length, byDaysFormik.errors, isNewRentAdding]
     );
 
     const isByHoursSubmitDisabled = useMemo(
-        () => Object.keys(byHoursFormik.errors).length > 0 || isNewRentAdding,
-        [byHoursFormik.errors, isNewRentAdding]
+        () => Object.keys(byHoursFormik.errors).length > 0 || isNewRentAdding || byHoursRentSlots.length === 0,
+        [byHoursFormik.errors, byHoursRentSlots.length, isNewRentAdding]
     );
 
     return (

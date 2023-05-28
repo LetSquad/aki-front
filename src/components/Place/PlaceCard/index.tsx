@@ -17,6 +17,7 @@ import { getPriceTypeTitleFromEnum } from "@coreUtils/utils";
 import { BasePageSlugs } from "@models/pages/enums";
 import { PriceType } from "@models/places/enums";
 import { Place } from "@models/places/types";
+import { RentSlotStatus } from "@models/rentSlots/enums";
 import { UserRole } from "@models/users/enums";
 import PrimaryButton from "@parts/Buttons/PrimaryButton";
 import FullScreenIcon from "@parts/ImageGaleryNav/FullScreenIcon";
@@ -50,6 +51,11 @@ export default function PlaceCard({ place, children }: PlaceCardProps) {
             loading: "lazy"
         }))
     ), [place.placeImages]);
+
+    const isPlaceHaveOpenSlots = useMemo(() => (
+        place.rentSlots &&
+        place.rentSlots?.filter((rentSlot) => rentSlot.status === RentSlotStatus.OPEN).length > 0
+    ), [place.rentSlots]);
 
     return (
         <Link
@@ -110,7 +116,7 @@ export default function PlaceCard({ place, children }: PlaceCardProps) {
                             )}
                         </div>
                         <PlaceAdditionalInfo currentPlace={place} />
-                        {currentUser?.userRole === UserRole.RENTER && (
+                        {currentUser?.userRole === UserRole.RENTER && isPlaceHaveOpenSlots && (
                             <PrimaryButton onClick={onRentModalOpen}>Забронировать</PrimaryButton>
                         )}
                     </div>
