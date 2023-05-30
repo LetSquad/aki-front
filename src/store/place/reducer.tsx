@@ -6,6 +6,7 @@ import { Toast, toast } from "react-hot-toast";
 
 import apiUrls from "@api/apiUrls";
 import AddPlaceSuccessToast from "@components/Place/AddPlace/AddPlaceSuccessToast";
+import { parseParams } from "@coreUtils/utils";
 import { BasePageRequest } from "@models/http/types";
 import {
     Place,
@@ -68,7 +69,7 @@ const initialState: PlaceState = {
 };
 
 export const getPlacesRequest = createAsyncThunk("getPlacesRequest", async (params: BasePageRequest & PlacesFiltersFormValues & PlacesSortRequest) => {
-    const { data } = await axios.get<PlacesResponse>(apiUrls.place(), { params });
+    const { data } = await axios.get<PlacesResponse>(apiUrls.place(), { params, paramsSerializer: parseParams });
     return data;
 });
 

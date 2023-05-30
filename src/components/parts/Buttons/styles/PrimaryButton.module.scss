@@ -21,7 +21,7 @@
   padding: 0 32px !important;
   position: relative;
   text-align: center !important;
-  z-index: 1;
+  z-index: 0;
 
   &-default {
     background-color: variables.$primary-button-main-color !important;

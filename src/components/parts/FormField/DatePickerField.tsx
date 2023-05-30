@@ -32,11 +32,11 @@ export default function DatePickerField({
 }: DatePickerFieldProps) {
     const [{ value }, { error, touched }, { setValue, setTouched }] = useField<string | undefined>({ name, type: "select" });
 
-    const formatJSDate = useCallback((date: Date) => DateTime.fromJSDate(date).toISODate() as string, []);
+    const formatJSDate = useCallback((date: Date | null) => (date ? DateTime.fromJSDate(date).toISODate() as string : undefined), []);
 
     const setTouchedTrue = useCallback(() => setTouched(true), [setTouched]);
 
-    const changeDateValue = useCallback((date: Date) => {
+    const changeDateValue = useCallback((date: Date | null) => {
         const formatTime = formatJSDate(date);
 
         if (additionalOnChange) {

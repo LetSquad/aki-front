@@ -34,7 +34,7 @@ export default function TimePickerField({
 }: TimePickerFieldProps) {
     const [{ value }, { error, touched }, { setValue, setTouched }] = useField<string | undefined>({ name, type: "select" });
 
-    const formatJSDate = useCallback((date: Date) => DateTime.fromJSDate(date).toISOTime() as string, []);
+    const formatJSDate = useCallback((date: Date | null) => (date ? DateTime.fromJSDate(date).toISOTime() as string : undefined), []);
 
     const setTouchedTrue = useCallback(() => setTouched(true), [setTouched]);
 

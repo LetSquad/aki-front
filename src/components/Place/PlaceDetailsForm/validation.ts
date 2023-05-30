@@ -27,7 +27,7 @@ const AMOUNT_OF_PLACE_DESCRIPTION_CHARACTERS = {
     min: 1,
     max: 500
 };
-const PLACE_DESCRIPTION_INVALID_MESSAGE = "Описание площадки должно состоять не более, чем из 500 кириллических букв и символов";
+const PLACE_DESCRIPTION_INVALID_MESSAGE = "Описание площадки должно состоять не более, чем из 500 символов";
 const PLACE_DESCRIPTION_REQUIRED_MESSAGE = "Описание площадки должно быть указано";
 
 const PHONE_INVALID_MESSAGE = "Введите корректный номер телефона";
@@ -144,7 +144,6 @@ export const validationSchema = yup.object()
             .trim()
             .min(AMOUNT_OF_PLACE_DESCRIPTION_CHARACTERS.min, PLACE_DESCRIPTION_REQUIRED_MESSAGE)
             .max(AMOUNT_OF_PLACE_DESCRIPTION_CHARACTERS.max, PLACE_DESCRIPTION_INVALID_MESSAGE)
-            .matches(BASE_CYRILLIC_AND_LATIN_REG_EXP, PLACE_DESCRIPTION_INVALID_MESSAGE)
             .required(PLACE_DESCRIPTION_REQUIRED_MESSAGE),
         [PlaceFieldsName.PHONE]: yup.string()
             .required(PHONE_REQUIRED_MESSAGE)

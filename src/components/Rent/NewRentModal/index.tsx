@@ -24,7 +24,6 @@ import PrimaryButton from "@parts/Buttons/PrimaryButton";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { createRentRequest, setCurrentRentPlace } from "@store/rent/reducer";
 import { selectCurrentRentPlace, selectIsNewRentAdding } from "@store/rent/selectors";
-import { createRentSlotsRequest } from "@store/rentSlot/reducer";
 
 import RentByDaysForm from "./RentByDaysForm";
 import styles from "./styles/NewRentModal.module.scss";
@@ -98,8 +97,10 @@ function NewRentModalView({ currentPlace }: NewRentModalViewProps) {
                     millisecond: 0
                 });
                 return (
-                    DateTime.fromISO(values[NewRentFieldName.DATE_TIME_START] as string) <= startDateTime &&
-                    DateTime.fromISO(values[NewRentFieldName.DATE_TIME_END] as string) >= startDateTime
+                    DateTime.fromISO(values[NewRentFieldName.DATE_TIME_START] as string).set({ millisecond: 0 }) <=
+                        startDateTime.set({ millisecond: 0 }) &&
+                    DateTime.fromISO(values[NewRentFieldName.DATE_TIME_END] as string).set({ millisecond: 0 }) >=
+                        startDateTime.set({ millisecond: 0 })
                 );
             })
             .map((rentSlot) => rentSlot.id);
@@ -110,7 +111,7 @@ function NewRentModalView({ currentPlace }: NewRentModalViewProps) {
             placeName: currentPlace.name
         }))
             .then((response) => {
-                if (response.type === createRentSlotsRequest.fulfilled.type) {
+                if (response.type === createRentRequest.fulfilled.type) {
                     onClose();
                 }
             });
@@ -136,7 +137,7 @@ function NewRentModalView({ currentPlace }: NewRentModalViewProps) {
             placeName: currentPlace.name
         }))
             .then((response) => {
-                if (response.type === createRentSlotsRequest.fulfilled.type) {
+                if (response.type === createRentRequest.fulfilled.type) {
                     onClose();
                 }
             });

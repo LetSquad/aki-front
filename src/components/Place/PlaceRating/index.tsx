@@ -9,7 +9,7 @@ interface PlaceRatingProps {
 }
 
 export default function PlaceRating({ rating }: PlaceRatingProps) {
-    return rating
+    return rating && rating.rate > 0
         ? (
             <div className={styles.ratingContainer}>
                 <Rating
