@@ -5,8 +5,10 @@ const adminUrl = `${baseUrl}/admin`;
 const placesUrl = `${baseUrl}/places`;
 const rentSlotsUrl = `${baseUrl}/rentSlots`;
 const rentsUrl = `${baseUrl}/rents`;
+const agreementUrl = `${baseUrl}/agreement`;
 
 const apiUrls = {
+    agreement: () => agreementUrl,
     user: () => userUrl,
     admin: () => adminUrl,
     userId: (userId: number | string) => `${userUrl}/${userId}`,
