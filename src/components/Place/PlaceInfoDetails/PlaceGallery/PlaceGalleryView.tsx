@@ -46,16 +46,15 @@ export default function PlaceGalleryView({ placeImages }: PlaceGalleryViewProps)
                             disabled={disabled}
                         />
                     )}
-                    renderFullscreenButton={(onClick: MouseEventHandler<HTMLElement>, disabled: boolean) => (
+                    renderFullscreenButton={(onClick: MouseEventHandler<HTMLElement>, isFullscreen: boolean) => (
                         <FullScreenIcon
                             onClick={onClick}
-                            disabled={disabled}
+                            isFullscreen={isFullscreen}
                         />
                     )}
                     showThumbnails={!isMobile}
                     showBullets={isMobile}
                     items={galleryImages}
-                    lazyLoad
                     showPlayButton={false}
                 />
             </div>

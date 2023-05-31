@@ -12,6 +12,7 @@ export interface Rent {
     rating?: number | null;
     status: RentStatus;
     banReason?: string | null;
+    agreement: string;
 }
 
 export interface NewRentRequest {

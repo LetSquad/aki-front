@@ -77,16 +77,15 @@ export default function PlaceCard({ place, children }: PlaceCardProps) {
                                 disabled={disabled}
                             />
                         )}
-                        renderFullscreenButton={(onClick: MouseEventHandler<HTMLElement>, disabled: boolean) => (
+                        renderFullscreenButton={(onClick: MouseEventHandler<HTMLElement>, isFullscreen: boolean) => (
                             <FullScreenIcon
                                 onClick={onClick}
-                                disabled={disabled}
+                                isFullscreen={isFullscreen}
                             />
                         )}
                         showBullets
                         showThumbnails={false}
                         items={galleryImages}
-                        lazyLoad
                         showPlayButton={false}
                     />
                 </div>

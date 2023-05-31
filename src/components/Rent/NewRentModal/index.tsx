@@ -272,7 +272,6 @@ function NewRentModalView({ currentPlace }: NewRentModalViewProps) {
                                     <a
                                         target="_blank"
                                         href={agreementLink}
-                                        download="agreement.pdf"
                                         rel="noreferrer"
                                         ref={linkRef}
                                     >
