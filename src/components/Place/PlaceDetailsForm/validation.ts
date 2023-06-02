@@ -8,6 +8,7 @@ import {
     URL_REG_EXP
 } from "@coreUtils/constants";
 import {
+    PlaceCoordinatesFieldsName,
     PlaceEquipmentFieldsName,
     PlaceFacilityFieldsName,
     PlaceFieldsName,
@@ -107,11 +108,14 @@ const PLACE_EQUIPMENT_NAME_REQUIRED_MESSAGE = "Название оборудов
 
 const PLACE_EQUIPMENT_COUNT_REQUIRED_MESSAGE = "Количество оборудования должно быть больше 1 или не быть указано";
 
-const AREA_PLACE_IMAGE_MAX_SIZE_INVALID_MESSAGE = "Размер изображения не должен превышать 10 МБ";
-const AMOUNT_OF_AREA_PLACE_IMAGES_CHARACTERS = {
+const PLACE_IMAGE_MAX_SIZE_INVALID_MESSAGE = "Размер изображения не должен превышать 10 МБ";
+const AMOUNT_OF_PLACE_IMAGES_CHARACTERS = {
     max: 10
 };
-const AREA_PLACE_IMAGES_INVALID_COUNT_MESSAGE = "Количество изображений не должно быть больше 10";
+const PLACE_IMAGES_INVALID_COUNT_MESSAGE = "Количество изображений не должно быть больше 10";
+
+const PLACE_LATITUDE_INVALID_MESSAGE = "Широта должна быть указана в корректном формате с указанием градусов и минут: 55.7525391";
+const PLACE_LONGITUDE_INVALID_MESSAGE = "Долгота должна быть указана в корректном формате с указанием градусов и минут: 37.6218525";
 
 const priceValidationSchema = yup.object()
     .shape({
@@ -181,6 +185,37 @@ export const validationSchema = yup.object()
             .max(AMOUNT_OF_MIN_CAPACITY_CHARACTERS.max, MIN_CAPACITY_INVALID_MAX_MESSAGE)
             .nullable()
             .optional(),
+        [PlaceFieldsName.COORDINATES]: yup.object()
+            .shape({
+                [PlaceCoordinatesFieldsName.LATITUDE]: yup.mixed()
+                    .test(
+                        "isLatitudeCorrect",
+                        PLACE_LATITUDE_INVALID_MESSAGE,
+                        (latitude) => {
+                            if (latitude === undefined || latitude === null) {
+                                return true;
+                            }
+
+                            return /^-?\d\d?(.\d{1,6})?$/.test(latitude);
+                        }
+                    )
+                    .nullable()
+                    .optional(),
+                [PlaceCoordinatesFieldsName.LONGITUDE]: yup.mixed()
+                    .test(
+                        "islLongitudeCorrect",
+                        PLACE_LONGITUDE_INVALID_MESSAGE,
+                        (longitude) => {
+                            if (longitude === undefined || longitude === null) {
+                                return true;
+                            }
+
+                            return /^-?\d\d?(\.\d{1,6})?$/.test(longitude);
+                        }
+                    )
+                    .nullable()
+                    .optional()
+            }),
         [PlaceFieldsName.FREE_SQUARE]: yup.number()
             .required(FREE_SQUARE_REQUIRE_MESSAGE)
             .min(AMOUNT_OF_FREE_SQUARE_CHARACTERS.min, FREE_SQUARE_REQUIRE_MESSAGE)
@@ -251,13 +286,13 @@ export const validationSchema = yup.object()
         [PlaceFieldsName.PLACE_IMAGES]: yup.array()
             .of(
                 yup.mixed()
-                    .test("fileSize", AREA_PLACE_IMAGE_MAX_SIZE_INVALID_MESSAGE, (value: string | File | undefined) => (
+                    .test("fileSize", PLACE_IMAGE_MAX_SIZE_INVALID_MESSAGE, (value: string | File | undefined) => (
                         !value || typeof value === "string"
                             ? true
                             : value.size <= IMAGE_MAX_SIZE
                     ))
             )
-            .max(AMOUNT_OF_AREA_PLACE_IMAGES_CHARACTERS.max, AREA_PLACE_IMAGES_INVALID_COUNT_MESSAGE)
+            .max(AMOUNT_OF_PLACE_IMAGES_CHARACTERS.max, PLACE_IMAGES_INVALID_COUNT_MESSAGE)
             .nullable()
             .optional()
     });

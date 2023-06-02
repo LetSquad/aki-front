@@ -16,9 +16,9 @@ export default function AddPlace() {
 
     const addPlaceFormRef = useRef<PlaceDetailsFormRef>(null);
 
-    const isPetAdding = useAppSelector(selectIsPlaceAdding);
+    const isPlaceAdding = useAppSelector(selectIsPlaceAdding);
 
-    const addPet = useCallback(
+    const addPlace = useCallback(
         (values: PlaceAddFormValues) => {
             dispatch(addPlaceRequest({ ...values, addPlaceFormRef }));
         },
@@ -43,11 +43,12 @@ export default function AddPlace() {
                         [PlaceFieldsName.MAX_CAPACITY]: undefined,
                         [PlaceFieldsName.MIN_CAPACITY]: undefined,
                         [PlaceFieldsName.LEVEL_NUMBER]: undefined,
+                        [PlaceFieldsName.COORDINATES]: undefined,
                         [PlaceFieldsName.PARKING]: false
                     }}
                     ref={addPlaceFormRef}
-                    onSubmit={addPet}
-                    isLoading={isPetAdding}
+                    onSubmit={addPlace}
+                    isLoading={isPlaceAdding}
                 />
             </WithSuspense>
         </div>

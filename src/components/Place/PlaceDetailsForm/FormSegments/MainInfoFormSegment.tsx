@@ -4,7 +4,7 @@ import basePlaceStyles from "@components/Place/PlaceInfoDetails/styles/PlaceInfo
 import { getPlaceSpecializationTitleFromEnum } from "@components/Place/utils/utils";
 import { FormFieldType } from "@models/forms/enums";
 import { DropdownOption, FormFieldProps } from "@models/forms/types";
-import { PlaceFieldsName, PlaceSpecialization } from "@models/places/enums";
+import { PlaceCoordinatesFieldsName, PlaceFieldsName, PlaceSpecialization } from "@models/places/enums";
 import BaseFormFields from "@parts/EditForm/BaseFormFields";
 
 const PlaceSpecializationsOptions: DropdownOption[] = Object.values(PlaceSpecialization).map((specialization) => ({
@@ -82,27 +82,41 @@ export const MainInfoFields: FormFieldProps[] = [
         inputLabel: "м²",
         placeholder: "92"
     }, {
-        name: PlaceFieldsName.MIN_CAPACITY,
-        label: "Минимальная вместимость",
-        type: FormFieldType.INPUT,
-        inputType: "number",
-        min: 0,
-        max: 10_000,
-        step: 1,
-        labelPosition: "right",
-        inputLabel: "чел.",
-        placeholder: "15"
+        name: "capacity",
+        label: "Вместимость",
+        type: FormFieldType.FORM_FIELDS_RANGE,
+        from: {
+            name: PlaceFieldsName.MIN_CAPACITY,
+            type: FormFieldType.INPUT,
+            inputType: "number",
+            min: 0,
+            max: 10_000,
+            step: 1,
+            labelPosition: "right",
+            inputLabel: "чел.",
+            placeholder: "От"
+        },
+        to: {
+            name: PlaceFieldsName.MAX_CAPACITY,
+            type: FormFieldType.INPUT,
+            inputType: "number",
+            min: 0,
+            max: 10_000,
+            step: 1,
+            labelPosition: "right",
+            inputLabel: "чел.",
+            placeholder: "До"
+        }
     }, {
-        name: PlaceFieldsName.MAX_CAPACITY,
-        label: "Максимальная вместимость",
+        name: `${PlaceFieldsName.COORDINATES}.${PlaceCoordinatesFieldsName.LATITUDE}`,
+        label: "Широта",
         type: FormFieldType.INPUT,
-        inputType: "number",
-        min: 0,
-        max: 10_000,
-        step: 1,
-        labelPosition: "right",
-        inputLabel: "чел.",
-        placeholder: "80"
+        placeholder: "55.7525391"
+    }, {
+        name: `${PlaceFieldsName.COORDINATES}.${PlaceCoordinatesFieldsName.LONGITUDE}`,
+        label: "Долгота",
+        type: FormFieldType.INPUT,
+        placeholder: "37.6218525"
     }, {
         name: PlaceFieldsName.LEVEL_NUMBER,
         label: "Этаж размещения",

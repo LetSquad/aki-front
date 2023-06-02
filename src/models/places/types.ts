@@ -29,12 +29,23 @@ export interface Place {
     maxCapacity?: number | null;
     minCapacity?: number | null;
     levelNumber?: number | null;
+    coordinates?: PlaceCoordinates | null;
     parking?: boolean | null;
     services?: PlaceService[] | null;
     equipments?: PlaceEquipment[] | null;
     facilities?: PlaceFacilities[] | null;
     rentSlots?: RentSlot[] | null;
     user: LandlordInfo;
+}
+
+export interface PlaceCoordinates {
+    latitude: number;
+    longitude: number;
+}
+
+export interface PlaceCoordinatesStrings {
+    latitude: number | string;
+    longitude: number | string;
 }
 
 export interface PlaceRating {
@@ -69,7 +80,7 @@ export interface PlacesResponse extends BasePageResponse {
     places: Place[];
 }
 
-export type PlaceUpdateFormValues = Omit<Place, "user" | "status" | "rating" | "price">;
+export type PlaceUpdateFormValues = Omit<Place, "user" | "status" | "rating" | "price" | "coordinates"> & { coordinates?: PlaceCoordinatesStrings | null };
 export type PlaceAddFormValues = Omit<PlaceUpdateFormValues, "id">;
 
 export interface PlaceDetailsFormRef {

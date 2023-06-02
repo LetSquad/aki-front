@@ -88,6 +88,7 @@ export const addPlaceRequest = createAsyncThunk(
     async ({
         placeImages,
         addPlaceFormRef: _addPlaceFormRef,
+        coordinates,
         ...place
     }: PlaceAddFormValues & { addPlaceFormRef: RefObject<PlaceDetailsFormRef> }) => {
         const formData = new FormData();
@@ -98,9 +99,17 @@ export const addPlaceRequest = createAsyncThunk(
             }
         }
 
+        let numberCoordinates;
+        if (coordinates) {
+            numberCoordinates = {
+                longitude: typeof coordinates.longitude === "string" ? Number.parseFloat(coordinates.longitude) : coordinates.longitude,
+                latitude: typeof coordinates.latitude === "string" ? Number.parseFloat(coordinates.latitude) : coordinates.latitude
+            };
+        }
+
         formData.append(
             "place",
-            new Blob([JSON.stringify(place)], {
+            new Blob([JSON.stringify({ ...place, coordinates: numberCoordinates })], {
                 type: "application/json"
             })
         );

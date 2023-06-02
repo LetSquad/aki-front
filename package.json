@@ -25,6 +25,7 @@
       ]
    },
    "dependencies": {
+      "@pbe/react-yandex-maps": "1.2.4",
       "@reduxjs/toolkit": "1.9.5",
       "axios": "1.4.0",
       "axios-auth-refresh": "3.3.6",

@@ -18,6 +18,7 @@
     column-gap: 10px;
     display: flex;
     flex-wrap: wrap;
+    row-gap: 10px;
   }
 
   &-title {
@@ -26,6 +27,30 @@
 
   &-item {
     @extend %base-item;
+  }
+
+  &-address-container {
+    column-gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+
+  &-map {
+    @extend %base-item;
+    color: variables.$primary-button-main-color;
+    cursor: pointer;
+    position: relative;
+    transition: .2s linear;
+
+    &:hover {
+      color: variables.$primary-button-main-color;
+      opacity: .8;
+    }
+
+    &:focus {
+      color: variables.$primary-button-main-color;
+    }
   }
 
   &-link {
@@ -43,5 +68,81 @@
     font-size: 18px;
     font-weight: 500;
     line-height: 25px;
+  }
+}
+
+.map,
+%place-map {
+  position: relative;
+
+  &-zoom-buttons {
+    margin: -5px 0;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+  }
+
+  &-zoom-button {
+    background: #1b2b40;
+    border-radius: 2px;
+    cursor: pointer;
+    height: 50px;
+    margin: 5px 0;
+    position: relative;
+    text-align: center;
+    transition: .2s linear;
+    width: 50px;
+
+    &:hover {
+      opacity: 0.5;
+    }
+
+    &::before {
+      background-color: variables.$primary-text-color;
+      content: "";
+      display: block;
+      height: 2px;
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%,-50%);
+      width: 20px;
+    }
+
+    &-plus {
+      @extend %place-map-zoom-button;
+
+      &::after {
+        background-color: variables.$primary-text-color;
+        content: "";
+        display: block;
+        height: 2px;
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%,-50%) rotate(90deg);
+        width: 20px
+      }
+    }
+
+    &-minus {
+      @extend %place-map-zoom-button;
+    }
+  }
+
+  :global {
+    [class$='ground-pane'] {
+      filter: grayscale(100%) invert(100%);
+    }
+
+    [class$='gototaxi'] {
+      display: none;
+    }
+
+    [class$='gototech'] {
+      display: none;
+    }
   }
 }
