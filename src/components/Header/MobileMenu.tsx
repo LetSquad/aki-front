@@ -5,7 +5,6 @@ import LoginButton from "@components/Header/LoginButton";
 import { useAppSelector } from "@store/hooks";
 import { selectIsUserNotAuth } from "@store/info/selectors";
 
-import headerStyles from "./styles/Header.module.scss";
 import styles from "./styles/MobileMenu.module.scss";
 
 interface MobileMenuProps {
@@ -16,10 +15,7 @@ export default function MobileMenu({ setSidebarOpen }: MobileMenuProps) {
     const isNotAuth = useAppSelector(selectIsUserNotAuth);
 
     return (
-        <Menu
-            attached="top"
-            className={headerStyles.header}
-        >
+        <>
             <HeaderLogo />
             {
                 isNotAuth
@@ -46,6 +42,6 @@ export default function MobileMenu({ setSidebarOpen }: MobileMenuProps) {
                         </Menu.Item>
                     )
             }
-        </Menu>
+        </>
     );
 }

@@ -1,5 +1,6 @@
 @use 'src/styles/_mq' as *;
 @use 'src/styles/variables.module' as variables;
+@use 'src/styles/parts.module' as *;
 
 .header {
   align-items: center;
@@ -9,9 +10,9 @@
   flex: 0 0 auto;
   height: variables.$header-height;
   margin: 0 !important;
-  position: relative;
+  position: fixed;
   width: 100% !important;
-  z-index: 1;
+  z-index: 100;
 
   @include mq($until: mobile) {
     padding: 0 20px;
@@ -21,6 +22,21 @@
   }
   @include mq($from: tablet) {
     padding: 0 60px;
+  }
+
+  &-scroll {
+    background-color: variables.$background-color !important;
+    transition: top 0.4s ease-out, background-color 0.4s ease-out;
+  }
+
+  &-visible {
+    top: 0 !important;
+    transition: top 0.4s ease-out, background-color 0.4s ease-out;
+  }
+
+  &-hidden {
+    top: -130px !important;
+    transition: top 0.4s ease-out, background-color 0.4s ease-out;
   }
 
   &-profile {
@@ -44,5 +60,61 @@
       height: 30px;
       width: 30px;
     }
+  }
+}
+
+.sidebar,
+%header-sidebar {
+  background: url('/src/static/images/mobMenuBg.jpg') 50%/cover no-repeat;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  padding: 40px 20px;
+  position: fixed;
+  right: 0;
+  top: 0;
+
+  &-show {
+    @extend %header-sidebar;
+    opacity: 1;
+    transition: opacity ease-out 0.4s, z-index ease-out 0.4s;
+    z-index: 1001;
+  }
+
+  &-close {
+    @extend %header-sidebar;
+    opacity: 0;
+    transition: opacity ease-out 0.4s, z-index ease-out 0.4s;
+    z-index: -100;
+  }
+
+  &-image {
+    cursor: pointer;
+    height: 120px;
+    margin: 15px auto;
+    transition: transform 0.1s linear;
+    width: 120px;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  &-items-container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+  }
+
+  &-exit-item {
+    @extend %base-item-link;
+  }
+
+  &-close-icon {
+    position: absolute;
+    right: 20px;
+    top: 20px;
   }
 }

@@ -1,8 +1,8 @@
 @use 'src/styles/variables.module' as variables;
 
 .container {
-  height: calc(100% - #{variables.$header-height});
-  overflow: hidden overlay;
+  height: 100%;
+  margin-top: 130px;
 }
 
 .main-content-wrapper {

@@ -1,7 +1,6 @@
 import { useCallback } from "react";
 
 import Footer from "@components/Footer";
-import Header from "@components/Header";
 import { WithSuspense } from "@coreUtils/WithSuspense";
 import Routes from "@pages/Routes";
 import LoadingErrorBlock from "@parts/LoadingErrorBlock/LoadingErrorBlock";
@@ -11,11 +10,7 @@ import { selectIsCurrentUserLoadingFailed } from "@store/user/selectors";
 
 import styles from "./styles/AppContent.module.scss";
 
-interface AppContentProps {
-    openSidebar?: () => void;
-}
-
-export default function AppContent({ openSidebar }: AppContentProps) {
+export default function AppContent() {
     const dispatch = useAppDispatch();
 
     const isUserInfoLoadingFailed = useAppSelector(selectIsCurrentUserLoadingFailed);
@@ -23,27 +18,24 @@ export default function AppContent({ openSidebar }: AppContentProps) {
     const reloadUserInfo = useCallback(() => dispatch(getUserRequest()), [dispatch]);
 
     return (
-        <>
-            <Header setSidebarOpen={openSidebar} />
-            <div className={styles.container}>
-                <div className={styles.mainContentWrapper}>
-                    {
-                        isUserInfoLoadingFailed
-                            ? (
-                                <LoadingErrorBlock
-                                    isLoadingErrorObjectText="информации о профиле"
-                                    reload={reloadUserInfo}
-                                />
-                            )
-                            : (
-                                <WithSuspense>
-                                    <Routes />
-                                </WithSuspense>
-                            )
-                    }
-                </div>
-                <Footer />
+        <div className={styles.container}>
+            <div className={styles.mainContentWrapper}>
+                {
+                    isUserInfoLoadingFailed
+                        ? (
+                            <LoadingErrorBlock
+                                isLoadingErrorObjectText="информации о профиле"
+                                reload={reloadUserInfo}
+                            />
+                        )
+                        : (
+                            <WithSuspense>
+                                <Routes />
+                            </WithSuspense>
+                        )
+                }
             </div>
-        </>
+            <Footer />
+        </div>
     );
 }

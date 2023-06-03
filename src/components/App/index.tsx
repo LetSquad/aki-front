@@ -2,12 +2,10 @@ import { useCallback, useEffect } from "react";
 
 import axios from "axios";
 import createAuthRefreshInterceptor from "axios-auth-refresh";
-import { useMediaQuery } from "react-responsive";
 
 import apiUrls from "@api/apiUrls";
 import AppContent from "@components/App/AppContent";
-import SidebarMenu from "@components/Header/SidebarMenu";
-import { TABLET_MAX_WIDTH } from "@coreUtils/constants";
+import Header from "@components/Header";
 import { useLogout } from "@hooks/useLogout";
 import { SignInResponse } from "@models/auth/types";
 import { useAppDispatch } from "@store/hooks";
@@ -19,8 +17,6 @@ export default function App() {
     const dispatch = useAppDispatch();
 
     const logout = useLogout();
-
-    const isMobile = useMediaQuery({ maxWidth: TABLET_MAX_WIDTH });
 
     const refreshAuthLogic = useCallback(
         () => axios.post<SignInResponse>(apiUrls.refreshToken(), undefined, { validateStatus: () => true })
@@ -44,12 +40,12 @@ export default function App() {
     }, []);
 
     return (
-        <div className={styles.app}>
-            {
-                isMobile
-                    ? <SidebarMenu />
-                    : <AppContent />
-            }
+        <div
+            id="app"
+            className={styles.app}
+        >
+            <Header />
+            <AppContent />
         </div>
     );
 }
