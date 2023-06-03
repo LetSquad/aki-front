@@ -12,7 +12,8 @@ export enum LandlordPageSlugs {
 }
 
 export enum RenterPageSlugs {
-    MY_RENTS = "/rents"
+    MY_RENTS = "/rents",
+    FAVORITE_PLACES = "/places/favorite"
 }
 
 export enum AdminPageSlugs {

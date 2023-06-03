@@ -31,9 +31,11 @@ export const selectIsPlaceAdding = (state: RootState) => state.place.isPlaceAddi
 export const selectDeletingCurrentPlaceId = (state: RootState) => state.place.deletingCurrentPlaceId;
 export const selectBanningCurrentPlaceId = (state: RootState) => state.place.banningCurrentPlaceId;
 export const selectApprovingCurrentPlaceId = (state: RootState) => state.place.approvingCurrentPlaceId;
+export const selectFavoritePlaceId = (state: RootState) => state.place.favoritePlaceId;
 
 const selectPlaceId = (_state: RootState, placeId?: string | number) => placeId;
 
 export const selectIsCurrentPlaceDeleting = createSelector([selectDeletingCurrentPlaceId, selectPlaceId], equalNumberWithStringOrNumber);
 export const selectIsCurrentPlaceBanning = createSelector([selectBanningCurrentPlaceId, selectPlaceId], equalNumberWithStringOrNumber);
 export const selectIsCurrentPlaceApproving = createSelector([selectApprovingCurrentPlaceId, selectPlaceId], equalNumberWithStringOrNumber);
+export const selectIsPlaceFavorite = createSelector([selectFavoritePlaceId, selectPlaceId], equalNumberWithStringOrNumber);

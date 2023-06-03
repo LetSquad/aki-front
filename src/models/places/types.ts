@@ -36,6 +36,7 @@ export interface Place {
     facilities?: PlaceFacilities[] | null;
     rentSlots?: RentSlot[] | null;
     user: LandlordInfo;
+    isFavorite?: boolean | null;
 }
 
 export interface PlaceCoordinates {

@@ -17,6 +17,9 @@ export const RenterItems: { name: string, url: string }[] = [
     {
         name: "Мои бронирования",
         url: RenterPageSlugs.MY_RENTS
+    }, {
+        name: "Избранные площадки",
+        url: RenterPageSlugs.FAVORITE_PLACES
     }
 ];
 

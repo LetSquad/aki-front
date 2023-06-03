@@ -13,6 +13,14 @@
   }
 }
 
+.title-container {
+  align-items: baseline;
+  column-gap: 10px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
 .link {
   color: variables.$primary-text-color;
 

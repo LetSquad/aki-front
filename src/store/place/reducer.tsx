@@ -25,6 +25,8 @@ const DELETE_PLACE_TOAST_ID = (placeId: number) => `delete-place-${placeId}`;
 const UPDATE_PLACE_TOAST_ID = (placeId: number) => `update-place-${placeId}`;
 const BAN_PLACE_TOAST_ID = (placeId: number) => `ban-place-${placeId}`;
 const APPROVE_PLACE_TOAST_ID = (placeId: number) => `approve-place-${placeId}`;
+const ADD_FAVORITE_PLACE_TOAST_ID = (placeId: number) => `add-favorite-place-${placeId}`;
+const REMOVE_FAVORITE_PLACE_TOAST_ID = (placeId: number) => `remove-favorite-place-${placeId}`;
 
 interface PlaceState {
     places: Place[];
@@ -45,6 +47,7 @@ interface PlaceState {
     deletingCurrentPlaceId?: number;
     banningCurrentPlaceId?: number;
     approvingCurrentPlaceId?: number;
+    favoritePlaceId?: number;
 }
 
 const initialState: PlaceState = {
@@ -65,7 +68,8 @@ const initialState: PlaceState = {
     isUpdatingCurrentPlace: false,
     deletingCurrentPlaceId: undefined,
     banningCurrentPlaceId: undefined,
-    approvingCurrentPlaceId: undefined
+    approvingCurrentPlaceId: undefined,
+    favoritePlaceId: undefined
 };
 
 export const getPlacesRequest = createAsyncThunk("getPlacesRequest", async (params: BasePageRequest & PlacesFiltersFormValues & PlacesSortRequest) => {
@@ -160,6 +164,20 @@ export const approvePlaceRequest = createAsyncThunk("approvePlaceRequest", async
     { placeId }: { placeId: number; placeName: string }
 ) => {
     const { data } = await axios.post<PlaceResponse>(apiUrls.placeApprove(placeId));
+    return data;
+});
+
+export const addFavoritePlaceRequest = createAsyncThunk("addFavoritePlaceRequest", async (
+    { placeId }: { placeId: number; }
+) => {
+    const { data } = await axios.post<PlaceResponse>(apiUrls.placeFavorite(placeId));
+    return data;
+});
+
+export const removeFavoritePlaceRequest = createAsyncThunk("removeFavoritePlaceRequest", async (
+    { placeId }: { placeId: number; }
+) => {
+    const { data } = await axios.delete<PlaceResponse>(apiUrls.placeFavorite(placeId));
     return data;
 });
 
@@ -312,6 +330,70 @@ export const placeSlice = createSlice({
             state.currentPlace = action.payload;
             toast.success(`Площадка ${action.meta.arg.placeName} успешно подтверждена`, {
                 id: APPROVE_PLACE_TOAST_ID(action.meta.arg.placeId)
+            });
+        });
+        builder.addCase(addFavoritePlaceRequest.pending, (state, action) => {
+            toast.loading("Добавляем площадку в избранное", {
+                id: ADD_FAVORITE_PLACE_TOAST_ID(action.meta.arg.placeId)
+            });
+            if (state.currentPlace?.id === action.meta.arg.placeId) {
+                state.currentPlace.isFavorite = true;
+            }
+            state.places = state.places
+                .map((place) => (place.id === action.meta.arg.placeId ? { ...place, isFavorite: true } : place));
+            state.userPlaces = state.userPlaces
+                .map((place) => (place.id === action.meta.arg.placeId ? { ...place, isFavorite: true } : place));
+            state.favoritePlaceId = action.meta.arg.placeId;
+        });
+        builder.addCase(addFavoritePlaceRequest.rejected, (state, action) => {
+            if (state.currentPlace?.id === action.meta.arg.placeId) {
+                state.currentPlace.isFavorite = false;
+            }
+            state.places = state.places
+                .map((place) => (place.id === action.meta.arg.placeId ? { ...place, isFavorite: false } : place));
+            state.userPlaces = state.userPlaces
+                .map((place) => (place.id === action.meta.arg.placeId ? { ...place, isFavorite: false } : place));
+            state.favoritePlaceId = undefined;
+            toast.error("При добавлении площадки в избранное произошла ошибка. Повторите попытку позже", {
+                id: ADD_FAVORITE_PLACE_TOAST_ID(action.meta.arg.placeId)
+            });
+        });
+        builder.addCase(addFavoritePlaceRequest.fulfilled, (state, action) => {
+            state.favoritePlaceId = undefined;
+            toast.success("Площадка добавлена в избранное", {
+                id: ADD_FAVORITE_PLACE_TOAST_ID(action.meta.arg.placeId)
+            });
+        });
+        builder.addCase(removeFavoritePlaceRequest.pending, (state, action) => {
+            toast.loading("Удаляем площадку из избранного", {
+                id: REMOVE_FAVORITE_PLACE_TOAST_ID(action.meta.arg.placeId)
+            });
+            if (state.currentPlace?.id === action.meta.arg.placeId) {
+                state.currentPlace.isFavorite = false;
+            }
+            state.places = state.places
+                .map((place) => (place.id === action.meta.arg.placeId ? { ...place, isFavorite: false } : place));
+            state.userPlaces = state.userPlaces
+                .map((place) => (place.id === action.meta.arg.placeId ? { ...place, isFavorite: false } : place));
+            state.favoritePlaceId = action.meta.arg.placeId;
+        });
+        builder.addCase(removeFavoritePlaceRequest.rejected, (state, action) => {
+            if (state.currentPlace?.id === action.meta.arg.placeId) {
+                state.currentPlace.isFavorite = true;
+            }
+            state.places = state.places
+                .map((place) => (place.id === action.meta.arg.placeId ? { ...place, isFavorite: true } : place));
+            state.userPlaces = state.userPlaces
+                .map((place) => (place.id === action.meta.arg.placeId ? { ...place, isFavorite: true } : place));
+            state.favoritePlaceId = undefined;
+            toast.error("При удалении площадки из избранного произошла ошибка. Повторите попытку позже", {
+                id: REMOVE_FAVORITE_PLACE_TOAST_ID(action.meta.arg.placeId)
+            });
+        });
+        builder.addCase(removeFavoritePlaceRequest.fulfilled, (state, action) => {
+            state.favoritePlaceId = undefined;
+            toast.success("Площадка удалена из избранного", {
+                id: REMOVE_FAVORITE_PLACE_TOAST_ID(action.meta.arg.placeId)
             });
         });
         builder.addMatcher(isAnyOf(createRentSlotsRequest.fulfilled, cancelRentSlotsRequest.fulfilled), (state, action) => {

@@ -11,6 +11,7 @@ import ImageGallery, { ReactImageGalleryItem } from "react-image-gallery";
 import { generatePath, Link } from "react-router-dom";
 import { Segment } from "semantic-ui-react";
 
+import FavoritePlaceIcon from "@components/Place/FavoritePlaceIcon";
 import PlaceAdditionalInfo from "@components/Place/PlaceAdditionalInfo";
 import PlaceRating from "@components/Place/PlaceRating";
 import { getPriceTypeTitleFromEnum } from "@coreUtils/utils";
@@ -91,9 +92,12 @@ export default function PlaceCard({ place, children }: PlaceCardProps) {
                 </div>
                 <div className={styles.contentContainer}>
                     <div className={styles.mainContentContainer}>
-                        <div>
-                            <span className={styles.title}>{place.name}</span>
-                            <PlaceRating rating={place.rating} />
+                        <div className={styles.titleContainer}>
+                            <div>
+                                <span className={styles.title}>{place.name}</span>
+                                <PlaceRating rating={place.rating} />
+                            </div>
+                            <FavoritePlaceIcon place={place} />
                         </div>
                         <span className={styles.address}>{place.address}</span>
                         {currentUser && (

@@ -41,6 +41,13 @@
   }
 }
 
+.renter-actions-container {
+  align-items: center;
+  column-gap: 10px;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
 .secondary-title,
 %secondary-place-segment-title {
   display: block;

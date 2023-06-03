@@ -56,7 +56,7 @@ export default function UserInfoDetails({ user, editable = false }: UserInfoDeta
     const adminBlockIconsRef = useRef<AdminBlockIconsFormRef>(null);
 
     const currentUser = useAppSelector(selectCurrentUser);
-    const isCurrentUserBanning = useAppSelector(selectIsCurrentUserBanning);
+    const isCurrentUserBanning = useAppSelector((state) => selectIsCurrentUserBanning(state, user.id));
 
     const [isEditUser, setIsEditUser] = useState((!!searchParams.get("edit") && editable) || false);
 
