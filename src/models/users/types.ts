@@ -10,22 +10,26 @@ interface BaseUserInfo {
     middleName?: string | null;
     userImage?: string | null;
     isBanned?: boolean;
+    organizationLogo?: string | null;
 }
 
 export interface RenterInfo extends BaseUserInfo {
     userRole: UserRole.RENTER;
+    organizationLogo?: null;
     specializations: UserSpecialization[];
 }
 
 export interface LandlordInfo extends BaseUserInfo {
     userRole: UserRole.LANDLORD;
     inn: string;
+    organizationLogo?: string | null;
     organization: string;
     jobTitle: string;
 }
 
 export interface AdminInfo extends BaseUserInfo {
     userRole: UserRole.ADMIN;
+    organizationLogo?: null;
 }
 
 export type User = RenterInfo | LandlordInfo | AdminInfo;

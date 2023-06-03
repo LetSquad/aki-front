@@ -29,14 +29,28 @@ export const getUserRequest = createAsyncThunk("getUserRequest", async () => {
     return response.data;
 });
 
-export const updateUserRequest = createAsyncThunk("updateUserRequest", async ({ userImage, ...data }: User) => {
+export const updateUserRequest = createAsyncThunk("updateUserRequest", async ({ userImage, organizationLogo, ...data }: User) => {
     const formData = new FormData();
     if (userImage && typeof userImage === "object") {
         formData.append("image", userImage);
     }
 
+    if (organizationLogo && typeof organizationLogo === "object") {
+        formData.append("organizationLogo", organizationLogo);
+    }
+
+    let finalData: any = data;
+
+    if (typeof userImage === "string") {
+        finalData = { ...finalData, userImage };
+    }
+
+    if (typeof organizationLogo === "string") {
+        finalData = { ...finalData, organizationLogo };
+    }
+
     formData.append("user", new Blob([
-        JSON.stringify(typeof userImage === "string" ? { ...data, userImage } : data)
+        JSON.stringify(finalData)
     ], { type: "application/json" }));
 
     const response: AxiosResponse<UserResponse> = await axios.put<UserResponse>(apiUrls.user(), formData, {

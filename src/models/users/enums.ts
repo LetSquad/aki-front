@@ -20,6 +20,7 @@ export enum BaseUserFieldsName {
 
 export enum LandlordBaseUserFieldsName {
     INN = "inn",
+    ORGANIZATION_LOGO = "organizationLogo",
     ORGANIZATION = "organization",
     JOB_TITLE = "jobTitle"
 }
