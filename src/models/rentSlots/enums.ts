@@ -1,6 +1,7 @@
 export enum RentSlotStatus {
     OPEN = "OPEN",
-    BOOKED = "BOOKED"
+    BOOKED = "BOOKED",
+    CLOSED = "CLOSED"
 }
 
 export enum RentSlotDuration {

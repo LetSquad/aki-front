@@ -4,9 +4,9 @@ import { DateTime } from "luxon";
 
 import NewRentSlotModal from "@components/Schedule/NewRentSlotModal";
 import RentSlotEventModal from "@components/Schedule/RentSlotEventModal";
+import { getEventStatusByRentSlotStatusEnum, getRentSlotNameByRentSlotStatusEnum } from "@components/Schedule/utils/utils";
 import { getFormatTimeInterval } from "@coreUtils/utils";
 import { Place } from "@models/places/types";
-import { RentSlotStatus } from "@models/rentSlots/enums";
 import { RentSlot } from "@models/rentSlots/types";
 import EventCalendar from "@parts/EventCalendar/EventCalendar";
 import { CalendarView } from "@parts/EventCalendar/types/enums";
@@ -42,9 +42,10 @@ export default function Calendar({ currentPlace }: CalendarProps) {
         id: slot.id,
         startAt: slot.timeStart,
         endAt: slot.timeEnd,
-        title: `${slot.status === RentSlotStatus.OPEN ? "Открытый слот" : "Забронированный слот"} ${getFormatTimeInterval(slot.timeStart, slot.timeEnd)}`,
+        title: `${getRentSlotNameByRentSlotStatusEnum(slot.status)} ${getFormatTimeInterval(slot.timeStart, slot.timeEnd)}`,
         isMonthVisible: true,
-        additionalInfo: slot
+        additionalInfo: slot,
+        status: getEventStatusByRentSlotStatusEnum(slot.status)
     })), [currentPlace.rentSlots]);
 
     const slotsInDayEvent = useCallback((dayEvents: CalendarEvent[]) => (

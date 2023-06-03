@@ -71,6 +71,22 @@
     }
   }
 
+  &-dark {
+    background-color: variables.$dark-button-main-color !important;
+
+    &::before {
+      background: variables.$dark-button-additional-color;
+    }
+
+    &::after {
+      background: variables.$dark-button-additional-color;
+    }
+
+    &:focus {
+      outline: 5px double variables.$dark-button-main-color !important;
+    }
+  }
+
   span {
     display: block;
     position: relative;

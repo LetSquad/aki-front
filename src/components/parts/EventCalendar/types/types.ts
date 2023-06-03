@@ -2,7 +2,7 @@ import { MouseEvent } from "react";
 
 import { DateTime } from "luxon";
 
-import { CalendarView } from "./enums";
+import { CalendarView, EventStatus } from "./enums";
 
 export type CalendarEvent<T = any> = {
     id: number;
@@ -11,6 +11,7 @@ export type CalendarEvent<T = any> = {
     additionalInfo?: T;
     isMonthVisible?: boolean;
     linkTo?: string;
+    status?: EventStatus;
 } & (
     {
         endAt: string;

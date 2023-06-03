@@ -7,7 +7,7 @@ import styles from "./styles/PrimaryButton.module.scss";
 
 interface PrimaryButtonProps extends Omit<ButtonProps, "color"> {
     active?: boolean,
-    color?: "default" | "negative" | "positive"
+    color?: "default" | "negative" | "positive" | "dark"
 }
 
 export default function PrimaryButton({
