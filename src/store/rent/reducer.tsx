@@ -92,13 +92,9 @@ export const rateRentRequest = createAsyncThunk(
         placeName: string;
     }) => {
         const { data } = await axios.post<RentResponse>(
-            apiUrls.rentRate(),
-            undefined,
+            apiUrls.rentRate(rentId),
             {
-                params: {
-                    rentId,
-                    rating
-                }
+                rating
             }
         );
 
