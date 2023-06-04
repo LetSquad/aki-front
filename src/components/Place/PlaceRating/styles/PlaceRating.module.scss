@@ -4,11 +4,11 @@
   width: fit-content;
 
   :global {
-    .ui.rating .active.icon {
+    .active.icon {
       color: variables.$primary-button-main-color !important;
     }
 
-    .ui.rating .icon {
+    .icon {
       color: variables.$background-color !important;
     }
   }
