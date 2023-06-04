@@ -1,4 +1,5 @@
 import { BasePageResponse } from "@models/http/types";
+import { MetroStation } from "@models/metro/enums";
 import {
     PlacesFiltersFieldsName,
     PlaceSpecialization,
@@ -37,6 +38,7 @@ export interface Place {
     rentSlots?: RentSlot[] | null;
     user: LandlordInfo;
     isFavorite?: boolean | null;
+    metroStations?: MetroStation[] | null
 }
 
 export interface PlaceCoordinates {
@@ -102,6 +104,7 @@ export interface PlacesFiltersFormValues {
     [PlacesFiltersFieldsName.WITH_PARKING]: boolean;
     [PlacesFiltersFieldsName.DATE_FROM]?: string;
     [PlacesFiltersFieldsName.DATE_TO]?: string;
+    [PlacesFiltersFieldsName.METRO_STATIONS]?: MetroStation[];
 }
 
 export interface PlacesSortRequest {

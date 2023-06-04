@@ -11,6 +11,7 @@ import ImageGallery, { ReactImageGalleryItem } from "react-image-gallery";
 import { generatePath, Link } from "react-router-dom";
 import { Segment } from "semantic-ui-react";
 
+import MetroStationList from "@components/Metro/MetroStationList";
 import FavoritePlaceIcon from "@components/Place/FavoritePlaceIcon";
 import PlaceAdditionalInfo from "@components/Place/PlaceAdditionalInfo";
 import PlaceRating from "@components/Place/PlaceRating";
@@ -100,6 +101,7 @@ export default function PlaceCard({ place, children }: PlaceCardProps) {
                             <FavoritePlaceIcon place={place} />
                         </div>
                         <span className={styles.address}>{place.address}</span>
+                        {place.metroStations && <MetroStationList stations={place.metroStations} />}
                         {currentUser && (
                             place.price.priceType === PriceType.FREE
                                 ? (

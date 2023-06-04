@@ -6,9 +6,12 @@ import { DateTime } from "luxon";
 import { useMediaQuery } from "react-responsive";
 import { Segment } from "semantic-ui-react";
 
+import MetroStationElement from "@components/Metro/MetroStationElement";
+import { getMetroStationTitleFromEnum } from "@components/Metro/utils/utils";
 import { getPlaceSpecializationTitleFromEnum } from "@components/Place/utils/utils";
 import { FormFieldType } from "@models/forms/enums";
 import { DropdownOption, FormFieldProps } from "@models/forms/types";
+import { MetroStation } from "@models/metro/enums";
 import { PlacesFiltersFieldsName, PlaceSpecialization } from "@models/places/enums";
 import { PlacesFiltersFormValues } from "@models/places/types";
 import BaseAddEditForm from "@parts/EditForm/BaseAddEditForm";
@@ -18,6 +21,15 @@ import styles from "./styles/PlaceCatalogFilters.module.scss";
 const PlaceSpecializationsOptions: DropdownOption[] = Object.values(PlaceSpecialization).map((specialization) => ({
     value: specialization,
     text: getPlaceSpecializationTitleFromEnum(specialization)
+}));
+
+const MetroStationsOptions: DropdownOption[] = Object.values(MetroStation).map((metroStation) => ({
+    value: metroStation,
+    text: getMetroStationTitleFromEnum(metroStation),
+    content: <MetroStationElement
+        station={metroStation}
+        color="dark"
+    />
 }));
 
 const fields: (fromDate?: string) => FormFieldProps[] = (fromDate) => [
@@ -138,6 +150,13 @@ const fields: (fromDate?: string) => FormFieldProps[] = (fromDate) => [
             maxDate: DateTime.now().plus({ month: 3 }).toJSDate(),
             popperPlacement: "top"
         }
+    }, {
+        name: PlacesFiltersFieldsName.METRO_STATIONS,
+        options: MetroStationsOptions,
+        label: "Ближайшие станции метро",
+        type: FormFieldType.DROPDOWN,
+        multiple: true,
+        placeholder: "Выберите ближайшие станции метро из списка"
     }
 ];
 
@@ -157,6 +176,8 @@ export default function PlaceCatalogFilters({ isLoading }: PlaceCatalogFiltersPr
                 isLoading={isLoading}
                 formik={formik}
                 submitButtonText="Фильтр"
+                cancelButtonText="Сбросить фильтр"
+                onCancel={formik.resetForm}
             />
         </Segment>
     );

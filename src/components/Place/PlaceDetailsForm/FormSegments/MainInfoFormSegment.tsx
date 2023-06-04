@@ -1,15 +1,27 @@
 import { Segment } from "semantic-ui-react";
 
+import MetroStationElement from "@components/Metro/MetroStationElement";
+import { getMetroStationTitleFromEnum } from "@components/Metro/utils/utils";
 import basePlaceStyles from "@components/Place/PlaceInfoDetails/styles/PlaceInfoDetails.module.scss";
 import { getPlaceSpecializationTitleFromEnum } from "@components/Place/utils/utils";
 import { FormFieldType } from "@models/forms/enums";
 import { DropdownOption, FormFieldProps } from "@models/forms/types";
+import { MetroStation } from "@models/metro/enums";
 import { PlaceCoordinatesFieldsName, PlaceFieldsName, PlaceSpecialization } from "@models/places/enums";
 import BaseFormFields from "@parts/EditForm/BaseFormFields";
 
 const PlaceSpecializationsOptions: DropdownOption[] = Object.values(PlaceSpecialization).map((specialization) => ({
     value: specialization,
     text: getPlaceSpecializationTitleFromEnum(specialization)
+}));
+
+const MetroStationsOptions: DropdownOption[] = Object.values(MetroStation).map((metroStation) => ({
+    value: metroStation,
+    text: getMetroStationTitleFromEnum(metroStation),
+    content: <MetroStationElement
+        station={metroStation}
+        color="dark"
+    />
 }));
 
 export const MainInfoFields: FormFieldProps[] = [
@@ -39,6 +51,13 @@ export const MainInfoFields: FormFieldProps[] = [
         required: true,
         type: FormFieldType.INPUT,
         placeholder: "ул. Площадковая, д. 1"
+    }, {
+        name: PlaceFieldsName.METRO_STATIONS,
+        options: MetroStationsOptions,
+        label: "Ближайшие станции метро",
+        type: FormFieldType.DROPDOWN,
+        multiple: true,
+        placeholder: "Выберите ближайшие станции метро из списка"
     }, {
         name: PlaceFieldsName.SITE,
         label: "Сайт площадки",

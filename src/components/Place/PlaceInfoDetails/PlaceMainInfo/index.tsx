@@ -3,6 +3,7 @@ import React, { useCallback, useMemo, useRef } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Segment } from "semantic-ui-react";
 
+import MetroStationList from "@components/Metro/MetroStationList";
 import PlaceAdditionalInfo from "@components/Place/PlaceAdditionalInfo";
 import { useCurrentPlace } from "@components/Place/PlaceInfoDetails/PlaceInfoContext";
 import { useToggle } from "@hooks/useToogle";
@@ -98,6 +99,10 @@ export default function PlaceMainInfo() {
                                 instanceRef={mapRef}
                                 height={mapSize[1]}
                                 width={mapSize[0]}
+                                options={{
+                                    maxZoom: 20,
+                                    minZoom: 10
+                                }}
                                 defaultState={{ zoom: 15, center: [currentPlace.coordinates.latitude, currentPlace.coordinates.longitude] }}
                             >
                                 <Placemark
@@ -107,6 +112,7 @@ export default function PlaceMainInfo() {
                             </Map>
                         </div>
                     )}
+                    {currentPlace.metroStations && <MetroStationList stations={currentPlace.metroStations} />}
                     <div className={styles.contactsLinks}>
                         <a
                             href={currentPlace.site}

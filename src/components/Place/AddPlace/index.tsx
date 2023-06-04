@@ -34,6 +34,7 @@ export default function AddPlace() {
                         [PlaceFieldsName.NAME]: "",
                         [PlaceFieldsName.DESCRIPTION]: "",
                         [PlaceFieldsName.ADDRESS]: "",
+                        [PlaceFieldsName.METRO_STATIONS]: [],
                         [PlaceFieldsName.EMAIL]: "",
                         [PlaceFieldsName.SITE]: "",
                         [PlaceFieldsName.SPECIALIZATION]: [],
