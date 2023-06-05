@@ -12,12 +12,12 @@ import {
 import { useLocationActive } from "@hooks/useLocationActive";
 import { UserRole } from "@models/users/enums";
 import { useAppSelector } from "@store/hooks";
-import { selectUserRole } from "@store/info/selectors";
+import { selectCurrentUserRole } from "@store/user/selectors";
 
 import styles from "./styles/useMenuOptions.module.scss";
 
 export function useMenuOptions(onClose?: () => void) {
-    const role = useAppSelector(selectUserRole);
+    const role = useAppSelector(selectCurrentUserRole);
 
     const isLocationActive = useLocationActive();
 

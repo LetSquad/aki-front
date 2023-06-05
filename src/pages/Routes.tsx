@@ -11,11 +11,16 @@ import { RenterPages } from "@pages/RenterPages/RenterPages";
 import { pagesToRoutes } from "@pages/utils";
 import { useAppSelector } from "@store/hooks";
 import { selectUserRole } from "@store/info/selectors";
+import { selectCurrentUserRole } from "@store/user/selectors";
 
 const PlaceCatalog = lazy(/* webpackChunkName: "PlaceCatalog" */ () => import("@components/PlaceCatalog"));
 
 export default function Routes() {
-    const role = useAppSelector(selectUserRole);
+    const currentUserRole = useAppSelector(selectCurrentUserRole);
+    const userRole = useAppSelector(selectUserRole);
+
+    const role = currentUserRole ?? userRole;
+
     const pages = useMemo(() => {
         switch (role) {
             case UserRole.RENTER: {

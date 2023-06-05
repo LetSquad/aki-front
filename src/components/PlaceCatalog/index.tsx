@@ -102,8 +102,8 @@ export default function PlaceCatalog() {
     const onSortChanged = useCallback((sorting: [PlacesSortType, PlacesSortDirection]) => {
         setSort(sorting);
         setCurrentPageNumber(1);
-        getPlaces(currentPageNumber, filterValues, sorting);
-    }, [currentPageNumber, filterValues, getPlaces]);
+        getPlaces(1, filterValues, sorting);
+    }, [filterValues, getPlaces]);
 
     const placesList = useMemo(() => (
         <div className={styles.placesContainer}>

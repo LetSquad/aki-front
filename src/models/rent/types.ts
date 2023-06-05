@@ -12,17 +12,28 @@ export interface Rent {
     rating?: number | null;
     status: RentStatus;
     banReason?: string | null;
+    agreement: string;
 }
 
 export interface NewRentRequest {
     placeId: number;
     rentSlotIds: number[];
+    agreement: string;
+}
+
+export interface GenerateAgreementRequest {
+    placeId: number;
 }
 
 export interface RentsResponse extends BasePageResponse {
     rents : Rent[];
 }
 export type RentResponse = Rent;
+
+export interface AgreementResponse {
+    placeId: number;
+    agreement: string;
+}
 
 export interface NewRentByHoursFormValues {
     [NewRentFieldName.TIME_START]?: string;

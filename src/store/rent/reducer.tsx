@@ -6,6 +6,8 @@ import apiUrls from "@api/apiUrls";
 import { BasePageRequest } from "@models/http/types";
 import { Place } from "@models/places/types";
 import {
+    AgreementResponse,
+    GenerateAgreementRequest,
     NewRentRequest,
     Rent,
     RentResponse,
@@ -22,6 +24,9 @@ interface RentState {
     rentsTotalPages?: number,
     isRentsLoading: boolean;
     isRentsLoadingFailed: boolean;
+    agreement?: string;
+    isAgreementLoading: boolean;
+    isAgreementLoadingFailed: boolean;
     isNewRentAdding: boolean;
     cancelRentId?: number;
     ratingRentId?: number;
@@ -34,6 +39,9 @@ const initialState: RentState = {
     rentsTotalPages: undefined,
     isRentsLoading: true,
     isRentsLoadingFailed: false,
+    agreement: undefined,
+    isAgreementLoading: true,
+    isAgreementLoadingFailed: false,
     isNewRentAdding: false,
     cancelRentId: undefined,
     ratingRentId: undefined
@@ -44,12 +52,22 @@ export const getRentsRequest = createAsyncThunk("getRentsRequest", async (params
     return data;
 });
 
-export const createRentRequest = createAsyncThunk("createRentRequest", async ({ placeId, rentSlotIds }: NewRentRequest & {
-    placeName: string;
-}) => {
-    const { data } = await axios.post<RentResponse>(
-        apiUrls.rents(),
-        { placeId, rentSlotIds }
+export const createRentRequest = createAsyncThunk(
+    "createRentRequest",
+    async ({ placeId, rentSlotIds, agreement }: NewRentRequest & { placeName: string; }) => {
+        const { data } = await axios.post<RentResponse>(
+            apiUrls.rents(),
+            { placeId, rentSlotIds, agreement }
+        );
+
+        return data;
+    }
+);
+
+export const generateAgreementRequest = createAsyncThunk("generateAgreementRequest", async ({ placeId }: GenerateAgreementRequest) => {
+    const { data } = await axios.post<AgreementResponse>(
+        apiUrls.agreement(),
+        { placeId }
     );
 
     return data;
@@ -74,13 +92,9 @@ export const rateRentRequest = createAsyncThunk(
         placeName: string;
     }) => {
         const { data } = await axios.post<RentResponse>(
-            apiUrls.rentRate(),
-            undefined,
+            apiUrls.rentRate(rentId),
             {
-                params: {
-                    rentId,
-                    rating
-                }
+                rating
             }
         );
 
@@ -168,6 +182,19 @@ export const rentSlice = createSlice({
                 { id: ADD_RENT_TOAST(action.meta.arg.placeId) }
             );
             state.isNewRentAdding = false;
+        });
+        builder.addCase(generateAgreementRequest.pending, (state) => {
+            state.isAgreementLoading = true;
+            state.isAgreementLoadingFailed = false;
+            state.agreement = undefined;
+        });
+        builder.addCase(generateAgreementRequest.rejected, (state) => {
+            state.isAgreementLoading = false;
+            state.isAgreementLoadingFailed = true;
+        });
+        builder.addCase(generateAgreementRequest.fulfilled, (state, action) => {
+            state.isAgreementLoading = false;
+            state.agreement = action.payload.agreement;
         });
     }
 });

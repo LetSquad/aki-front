@@ -7,6 +7,7 @@ import {
     RenterBaseUserFieldsName,
     UserSpecialization
 } from "@models/users/enums";
+import imagePlaceholder from "@static/images/imagePlaceholder.png";
 import nullUserAvatar from "@static/images/nullUserAvatar.png";
 
 export const BaseFields: FormFieldProps[] = [
@@ -58,6 +59,12 @@ export const LandlordFields: FormFieldProps[] = [
         type: FormFieldType.INPUT,
         placeholder: "Введите ИНН",
         maxLength: 12
+    }, {
+        name: LandlordBaseUserFieldsName.ORGANIZATION_LOGO,
+        label: "Логотип организации",
+        previewType: ImageEditorPreviewType.SQUARE,
+        type: FormFieldType.IMAGE_EDITOR,
+        nullAvatar: imagePlaceholder
     }, {
         name: LandlordBaseUserFieldsName.ORGANIZATION,
         label: "Название юр. лица",

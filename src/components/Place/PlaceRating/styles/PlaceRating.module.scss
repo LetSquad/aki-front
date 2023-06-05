@@ -3,8 +3,14 @@
 .rating {
   width: fit-content;
 
-  i {
-    color: variables.$primary-button-main-color !important;
+  :global {
+    .active.icon {
+      color: variables.$primary-button-main-color !important;
+    }
+
+    .icon {
+      color: variables.$background-color !important;
+    }
   }
 
   &-container {

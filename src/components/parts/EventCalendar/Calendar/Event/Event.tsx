@@ -9,6 +9,7 @@ import classNames from "classnames";
 import { Link } from "react-router-dom";
 
 import PrimaryButton from "@parts/Buttons/PrimaryButton";
+import { getEventColorByStatus } from "@parts/EventCalendar/Calendar/utils";
 import { useOnEventClick } from "@parts/EventCalendar/EventCalendarContext";
 import { CalendarEvent } from "@parts/EventCalendar/types/types";
 
@@ -52,10 +53,11 @@ export default function Event({
             )}
             onClick={onEventClickHandler}
             style={customStyle}
+            color={getEventColorByStatus(event.status)}
         >
             {title || event.title}
         </PrimaryButton>
-    ), [className, customStyle, event.linkTo, event.title, onEventClick, onEventClickHandler, title, wide]);
+    ), [className, customStyle, event.linkTo, event.status, event.title, onEventClick, onEventClickHandler, title, wide]);
 
     return event.linkTo
         ? (

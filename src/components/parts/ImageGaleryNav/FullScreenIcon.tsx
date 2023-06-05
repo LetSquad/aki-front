@@ -10,18 +10,17 @@ import styles from "./styles/NavIcons.module.scss";
 
 interface FullScreenIconProps {
     onClick: MouseEventHandler<HTMLElement>;
-    disabled: boolean
+    isFullscreen: boolean
 }
 
-export default function FullScreenIcon({ onClick, disabled }: FullScreenIconProps) {
+export default function FullScreenIcon({ onClick, isFullscreen }: FullScreenIconProps) {
     return (
         <Icon
-            name="expand arrows alternate"
+            name={isFullscreen ? "compress" : "expand"}
             link
             size="big"
             className={classNames(styles.icon, styles.iconNavFullScreen)}
             onClick={(event: MouseEvent<HTMLElement>) => onClickWithPrevent(event, onClick)}
-            disabled={disabled}
         />
     );
 }

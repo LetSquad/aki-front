@@ -5,6 +5,7 @@ import { useMediaQuery } from "react-responsive";
 import { Modal } from "semantic-ui-react";
 import { SemanticWIDTHSNUMBER } from "semantic-ui-react/src/generic";
 
+import { getRentSlotNameByRentSlotStatusEnum } from "@components/Schedule/utils/utils";
 import modalStyles from "@coreStyles/modals.module.scss";
 import { Place } from "@models/places/types";
 import { RentSlotStatus } from "@models/rentSlots/enums";
@@ -96,7 +97,7 @@ function RentSlotEventModalView({ currentPlace, event, onClose }: Required<RentS
             size="mini"
         >
             <Modal.Header>
-                {event.additionalInfo?.status === RentSlotStatus.OPEN ? "Свободный слот аренды" : "Забронированный слот аренды"}
+                {getRentSlotNameByRentSlotStatusEnum(event.additionalInfo?.status as RentSlotStatus)}
             </Modal.Header>
             <Modal.Content className={modalStyles.modalContent}>
                 <CardGrid>

@@ -37,7 +37,7 @@ export default function RentByDaysForm({ rentSlots }: RentByDaysFormProps) {
         do {
             eligibleRentSlotsDates.push(rentSlotsDates[i]);
             i += 1;
-        } while (!!rentSlotsDates[i + 1] && Math.abs(rentSlotsDates[i].diff(rentSlotsDates[i - 1], "days").days) === 1);
+        } while (!!rentSlotsDates[i] && Math.abs(rentSlotsDates[i].diff(rentSlotsDates[i - 1], "days").days) === 1);
 
         return eligibleRentSlotsDates.map((rentSlotDate) => rentSlotDate.toJSDate());
     }, [rentSlots, values]);

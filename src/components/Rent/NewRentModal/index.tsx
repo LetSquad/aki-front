@@ -1,13 +1,24 @@
 import {
+    FormEvent,
     SyntheticEvent,
     useCallback,
+    useEffect,
     useMemo,
+    useRef,
     useState
 } from "react";
+import * as React from "react";
 
 import { FormikProvider, useFormik } from "formik";
 import { DateTime } from "luxon";
-import { Dropdown, Form, Modal } from "semantic-ui-react";
+import {
+    Checkbox,
+    Dropdown,
+    Form,
+    Loader,
+    Modal
+} from "semantic-ui-react";
+import { CheckboxProps } from "semantic-ui-react/dist/commonjs/modules/Checkbox/Checkbox";
 import { DropdownProps } from "semantic-ui-react/dist/commonjs/modules/Dropdown/Dropdown";
 
 import RentByHoursForm from "@components/Rent/NewRentModal/RentByHoursForm";
@@ -22,9 +33,14 @@ import { RentSlotDuration, RentSlotStatus } from "@models/rentSlots/enums";
 import { RentSlot } from "@models/rentSlots/types";
 import PrimaryButton from "@parts/Buttons/PrimaryButton";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
-import { createRentRequest, setCurrentRentPlace } from "@store/rent/reducer";
-import { selectCurrentRentPlace, selectIsNewRentAdding } from "@store/rent/selectors";
-import { createRentSlotsRequest } from "@store/rentSlot/reducer";
+import { createRentRequest, generateAgreementRequest, setCurrentRentPlace } from "@store/rent/reducer";
+import {
+    selectAgreement,
+    selectCurrentRentPlace,
+    selectIsAgreementLoading,
+    selectIsAgreementLoadingFailed,
+    selectIsNewRentAdding
+} from "@store/rent/selectors";
 
 import RentByDaysForm from "./RentByDaysForm";
 import styles from "./styles/NewRentModal.module.scss";
@@ -52,7 +68,20 @@ interface NewRentModalViewProps {
 function NewRentModalView({ currentPlace }: NewRentModalViewProps) {
     const dispatch = useAppDispatch();
 
+    const linkRef = useRef<HTMLAnchorElement>(null);
+
     const isNewRentAdding = useAppSelector(selectIsNewRentAdding);
+    const agreementLink = useAppSelector(selectAgreement);
+    const isAgreementLoading = useAppSelector(selectIsAgreementLoading);
+    const isAgreementLoadingFailed = useAppSelector(selectIsAgreementLoadingFailed);
+
+    const [isAgreementAccepted, setIsAgreementAccepted] = useState(false);
+
+    const onAgreementAcceptChanged = useCallback((event: FormEvent<HTMLInputElement>, data: CheckboxProps) => {
+        if (event.target !== linkRef.current) {
+            setIsAgreementAccepted(data.checked === undefined ? false : data.checked);
+        }
+    }, []);
 
     const onClose = useCallback(() => {
         dispatch(setCurrentRentPlace(undefined));
@@ -88,6 +117,10 @@ function NewRentModalView({ currentPlace }: NewRentModalViewProps) {
         setDuration(data.value as RentSlotDuration);
     }, []);
 
+    const getAggrement = useCallback(() => {
+        dispatch(generateAgreementRequest({ placeId: currentPlace.id }));
+    }, [currentPlace.id, dispatch]);
+
     const addRentByDaysSlots = useCallback((values: NewRentByDaysFormValues) => {
         const rentSlotIds = byDayRentSlots
             .filter((rentSlot) => {
@@ -98,8 +131,10 @@ function NewRentModalView({ currentPlace }: NewRentModalViewProps) {
                     millisecond: 0
                 });
                 return (
-                    DateTime.fromISO(values[NewRentFieldName.DATE_TIME_START] as string) <= startDateTime &&
-                    DateTime.fromISO(values[NewRentFieldName.DATE_TIME_END] as string) >= startDateTime
+                    DateTime.fromISO(values[NewRentFieldName.DATE_TIME_START] as string).set({ millisecond: 0 }) <=
+                        startDateTime.set({ millisecond: 0 }) &&
+                    DateTime.fromISO(values[NewRentFieldName.DATE_TIME_END] as string).set({ millisecond: 0 }) >=
+                        startDateTime.set({ millisecond: 0 })
                 );
             })
             .map((rentSlot) => rentSlot.id);
@@ -107,14 +142,15 @@ function NewRentModalView({ currentPlace }: NewRentModalViewProps) {
         dispatch(createRentRequest({
             rentSlotIds,
             placeId: currentPlace.id,
-            placeName: currentPlace.name
+            placeName: currentPlace.name,
+            agreement: agreementLink as string
         }))
             .then((response) => {
-                if (response.type === createRentSlotsRequest.fulfilled.type) {
+                if (response.type === createRentRequest.fulfilled.type) {
                     onClose();
                 }
             });
-    }, [byDayRentSlots, currentPlace.id, currentPlace.name, dispatch, onClose]);
+    }, [agreementLink, byDayRentSlots, currentPlace.id, currentPlace.name, dispatch, onClose]);
 
     const addRentByHoursSlots = useCallback((values: NewRentByHoursFormValues) => {
         const rentSlotIds = byHoursRentSlots
@@ -133,14 +169,15 @@ function NewRentModalView({ currentPlace }: NewRentModalViewProps) {
         dispatch(createRentRequest({
             rentSlotIds,
             placeId: currentPlace.id,
-            placeName: currentPlace.name
+            placeName: currentPlace.name,
+            agreement: agreementLink as string
         }))
             .then((response) => {
-                if (response.type === createRentSlotsRequest.fulfilled.type) {
+                if (response.type === createRentRequest.fulfilled.type) {
                     onClose();
                 }
             });
-    }, [byHoursRentSlots, currentPlace.id, currentPlace.name, dispatch, onClose]);
+    }, [agreementLink, byHoursRentSlots, currentPlace.id, currentPlace.name, dispatch, onClose]);
 
     const byDaysFormik = useFormik<NewRentByDaysFormValues>({
         onSubmit: addRentByDaysSlots,
@@ -156,15 +193,23 @@ function NewRentModalView({ currentPlace }: NewRentModalViewProps) {
         validateOnBlur: false
     });
 
-    const isByDaysSubmitDisabled = useMemo(
-        () => Object.keys(byDaysFormik.errors).length > 0 || isNewRentAdding || byDayRentSlots.length === 0,
-        [byDayRentSlots.length, byDaysFormik.errors, isNewRentAdding]
-    );
+    const isByDaysSubmitDisabled = useMemo(() => (
+        Object.keys(byDaysFormik.errors).length > 0 ||
+            isNewRentAdding ||
+            byDayRentSlots.length === 0 ||
+            !isAgreementAccepted
+    ), [byDayRentSlots.length, byDaysFormik.errors, isAgreementAccepted, isNewRentAdding]);
 
-    const isByHoursSubmitDisabled = useMemo(
-        () => Object.keys(byHoursFormik.errors).length > 0 || isNewRentAdding || byHoursRentSlots.length === 0,
-        [byHoursFormik.errors, byHoursRentSlots.length, isNewRentAdding]
-    );
+    const isByHoursSubmitDisabled = useMemo(() => (
+        Object.keys(byHoursFormik.errors).length > 0 ||
+            isNewRentAdding ||
+            byHoursRentSlots.length === 0 ||
+            !isAgreementAccepted
+    ), [byHoursFormik.errors, byHoursRentSlots.length, isAgreementAccepted, isNewRentAdding]);
+
+    useEffect(() => {
+        getAggrement();
+    }, [getAggrement]);
 
     return (
         <Modal
@@ -216,6 +261,27 @@ function NewRentModalView({ currentPlace }: NewRentModalViewProps) {
                                 </FormikProvider>
                             )
                     }
+                    <div className={styles.agreementContainer}>
+                        <Checkbox
+                            onChange={onAgreementAcceptChanged}
+                            checked={isAgreementAccepted}
+                            disabled={isAgreementLoading || isAgreementLoadingFailed}
+                            label={(
+                                <label>
+                                    {"Подтвердите, что вы согласны с условиями "}
+                                    <a
+                                        target="_blank"
+                                        href={agreementLink}
+                                        rel="noreferrer"
+                                        ref={linkRef}
+                                    >
+                                        договора оферты
+                                    </a>
+                                </label>
+                            )}
+                        />
+                        {isAgreementLoading && <Loader inline />}
+                    </div>
                 </div>
             </Modal.Content>
             <Modal.Actions className={modalStyles.modalActions}>

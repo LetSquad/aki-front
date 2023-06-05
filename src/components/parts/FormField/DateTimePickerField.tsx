@@ -37,7 +37,7 @@ export default function DateTimePickerField({
 }: DateTimePickerFieldProps) {
     const [{ value }, { error, touched }, { setValue, setTouched }] = useField<string | undefined>({ name, type: "select" });
 
-    const formatJSDate = useCallback((date: Date) => DateTime.fromJSDate(date).toISO() as string, []);
+    const formatJSDate = useCallback((date: Date | null) => (date ? DateTime.fromJSDate(date).toISO() as string : undefined), []);
 
     const setTouchedTrue = useCallback(() => setTouched(true), [setTouched]);
 

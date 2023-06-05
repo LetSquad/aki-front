@@ -8,6 +8,11 @@ export const selectCurrentRentPlace = (state: RootState) => state.rent.currentRe
 export const selectRents = (state: RootState) => state.rent.rents;
 export const selectIsRentsLoading = (state: RootState) => state.rent.isRentsLoading;
 export const selectIsRentsLoadingFailed = (state: RootState) => state.rent.isRentsLoadingFailed;
+
+export const selectAgreement = (state: RootState) => state.rent.agreement;
+export const selectIsAgreementLoading = (state: RootState) => state.rent.isAgreementLoading;
+export const selectIsAgreementLoadingFailed = (state: RootState) => state.rent.isAgreementLoadingFailed;
+
 export const selectRentsTotalPages = (state: RootState) => state.rent.rentsTotalPages;
 
 export const selectCancelRentId = (state: RootState) => state.rent.cancelRentId;

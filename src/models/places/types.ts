@@ -1,4 +1,5 @@
 import { BasePageResponse } from "@models/http/types";
+import { MetroStation } from "@models/metro/enums";
 import {
     PlacesFiltersFieldsName,
     PlaceSpecialization,
@@ -29,12 +30,25 @@ export interface Place {
     maxCapacity?: number | null;
     minCapacity?: number | null;
     levelNumber?: number | null;
+    coordinates?: PlaceCoordinates | null;
     parking?: boolean | null;
     services?: PlaceService[] | null;
     equipments?: PlaceEquipment[] | null;
     facilities?: PlaceFacilities[] | null;
     rentSlots?: RentSlot[] | null;
     user: LandlordInfo;
+    isFavorite?: boolean | null;
+    metroStations?: MetroStation[] | null
+}
+
+export interface PlaceCoordinates {
+    latitude: number;
+    longitude: number;
+}
+
+export interface PlaceCoordinatesStrings {
+    latitude: number | string;
+    longitude: number | string;
 }
 
 export interface PlaceRating {
@@ -69,7 +83,7 @@ export interface PlacesResponse extends BasePageResponse {
     places: Place[];
 }
 
-export type PlaceUpdateFormValues = Omit<Place, "user" | "status" | "rating" | "price">;
+export type PlaceUpdateFormValues = Omit<Place, "user" | "status" | "rating" | "price" | "coordinates"> & { coordinates?: PlaceCoordinatesStrings | null };
 export type PlaceAddFormValues = Omit<PlaceUpdateFormValues, "id">;
 
 export interface PlaceDetailsFormRef {
@@ -90,6 +104,7 @@ export interface PlacesFiltersFormValues {
     [PlacesFiltersFieldsName.WITH_PARKING]: boolean;
     [PlacesFiltersFieldsName.DATE_FROM]?: string;
     [PlacesFiltersFieldsName.DATE_TO]?: string;
+    [PlacesFiltersFieldsName.METRO_STATIONS]?: MetroStation[];
 }
 
 export interface PlacesSortRequest {

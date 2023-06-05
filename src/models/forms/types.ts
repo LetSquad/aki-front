@@ -72,7 +72,7 @@ export interface DropdownFieldProps extends BaseFieldProps {
 }
 
 export interface DatePickerFieldProps extends BaseFieldProps {
-    onChange?: (value: string) => void;
+    onChange?: (value?: string) => void;
     maxDate?: Date;
     minDate?: Date;
     dateFormat?: string;
@@ -82,7 +82,7 @@ export interface DatePickerFieldProps extends BaseFieldProps {
 }
 
 export interface TimePickerFieldProps extends BaseFieldProps {
-    onChange?: (value: string) => void;
+    onChange?: (value?: string) => void;
     timeCaption?: string;
     timeFormat?: string;
     maxTime?: Date;

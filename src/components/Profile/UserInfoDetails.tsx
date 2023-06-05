@@ -27,6 +27,7 @@ import { LandlordInfo, RenterInfo, User } from "@models/users/types";
 import AdminBlockIcons, { AdminBlockIconsFormRef } from "@parts/AdminBlockIcons/AdminBlockIcons";
 import BlockIcons, { BlockIconsIndent } from "@parts/BlockIcons/BlockIcons";
 import ImageWithLoading from "@parts/ImageWithLoading/ImageWithLoading";
+import imagePlaceholder from "@static/images/imagePlaceholder.png";
 import nullUserAvatar from "@static/images/nullUserAvatar.png";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { banUserRequest } from "@store/user/reducer";
@@ -55,7 +56,7 @@ export default function UserInfoDetails({ user, editable = false }: UserInfoDeta
     const adminBlockIconsRef = useRef<AdminBlockIconsFormRef>(null);
 
     const currentUser = useAppSelector(selectCurrentUser);
-    const isCurrentUserBanning = useAppSelector(selectIsCurrentUserBanning);
+    const isCurrentUserBanning = useAppSelector((state) => selectIsCurrentUserBanning(state, user.id));
 
     const [isEditUser, setIsEditUser] = useState((!!searchParams.get("edit") && editable) || false);
 
@@ -161,7 +162,9 @@ export default function UserInfoDetails({ user, editable = false }: UserInfoDeta
             firstName,
             middleName,
             lastName,
-            userImage, id
+            userImage,
+            id,
+            organizationLogo
         } = user;
 
         const userFullName = getFullName(firstName, middleName, lastName);
@@ -206,9 +209,17 @@ export default function UserInfoDetails({ user, editable = false }: UserInfoDeta
                         </div>
                     </div>
                 </div>
-                <WithSuspense>
-                    <CardGrid position="bottom">{additionalRows}</CardGrid>
-                </WithSuspense>
+                <div className={styles.additionalContent}>
+                    <WithSuspense>
+                        <CardGrid position="bottom">{additionalRows}</CardGrid>
+                    </WithSuspense>
+                    {organizationLogo && (
+                        <ImageWithLoading
+                            className={styles.organizationLogo}
+                            src={organizationLogo || imagePlaceholder}
+                        />
+                    )}
+                </div>
             </div>
         );
     }, [

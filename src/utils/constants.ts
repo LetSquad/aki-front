@@ -12,8 +12,8 @@ export const BASENAME = process.env.PUBLIC_URL;
 export const PHONE_REG_EXP = /^(\+?7|8)[\s-]?\(?\d{3}\)?[\s-]?\d{3}(?:[\s-]?\d{2}){2}$/;
 
 export const URL_REG_EXP =
-    /^((http|https):\/\/)?(www.)?(?!.*(http|https|www.))(([\w-]+(\.[\dA-Za-z]+)+)|([\d_ЁА-яё-]+(\.рф)+))((\/)[\w#]+)*(\/\w+\?\w+=\w+(&\w+=\w+)*)?(\/)?$/;
+    /^((http|https):\/\/)?(www.)?(?!.*(http|https|www.))(([\w-]+(\.[\dA-Za-z]+)+)|([\d_ЁА-яё-]+(\.рф)+))((\/)[\w#.-]+)*(\/\w+\?\w+=\w+(&\w+=-\w+)*)?(\/)?$/;
 
 // eslint-disable-next-line unicorn/better-regex
-export const BASE_CYRILLIC_REG_EXP = /^[\d_ЁА-яё()\-.\],:"';*/[{} ]+$/;
-export const BASE_CYRILLIC_AND_LATIN_REG_EXP = /^[\w "'()*,./:;[\]{}ЁА-яё-]+$/;
+export const BASE_CYRILLIC_REG_EXP = /^[\d_ЁА-яё()\-.\],:"';*/[{} №«»!?&^$%#@+=—]+$/;
+export const BASE_CYRILLIC_AND_LATIN_REG_EXP = /^[\w !"#$%&'()*+,./:;=?@[\]^{}«»ЁА-яё-№]+$/;

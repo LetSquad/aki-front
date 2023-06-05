@@ -21,6 +21,7 @@ import {
     Popup
 } from "semantic-ui-react";
 
+import FavoritePlaceIcon from "@components/Place/FavoritePlaceIcon";
 import PlaceEquipments from "@components/Place/PlaceInfoDetails/PlaceEquipments";
 import PlaceFacilities from "@components/Place/PlaceInfoDetails/PlaceFacilities";
 import PlaceGallery from "@components/Place/PlaceInfoDetails/PlaceGallery";
@@ -73,9 +74,9 @@ export default function PlaceInfoDetails({ currentPlace, isUserPlaceOwner, userR
     const [isPlaceEdit, setIsPlaceEdit] = useState((searchParams.get("edit") && isUserPlaceOwner) || false);
 
     const isUpdatingCurrentPlace = useAppSelector(selectIsUpdatingCurrentPlace);
-    const isCurrentPlaceDeleting = useAppSelector(selectIsCurrentPlaceDeleting);
-    const isCurrentPlaceBanning = useAppSelector(selectIsCurrentPlaceBanning);
-    const isCurrentPlaceApproving = useAppSelector(selectIsCurrentPlaceApproving);
+    const isCurrentPlaceDeleting = useAppSelector((state) => selectIsCurrentPlaceDeleting(state, currentPlace.id));
+    const isCurrentPlaceBanning = useAppSelector((state) => selectIsCurrentPlaceBanning(state, currentPlace.id));
+    const isCurrentPlaceApproving = useAppSelector((state) => selectIsCurrentPlaceApproving(state, currentPlace.id));
 
     const isLoading = isCurrentPlaceDeleting || isCurrentPlaceBanning || isCurrentPlaceApproving;
 
@@ -227,14 +228,17 @@ export default function PlaceInfoDetails({ currentPlace, isUserPlaceOwner, userR
                                             </div>
                                         )}
                                     </div>
-                                    {userRole === UserRole.RENTER && isPlaceHaveOpenSlots && (
-                                        <PrimaryButton
-                                            className={styles.headRentButton}
-                                            onClick={onRentModalOpen}
-                                        >
-                                            Забронировать
-                                        </PrimaryButton>
-                                    )}
+                                    <div className={styles.renterActionsContainer}>
+                                        {userRole === UserRole.RENTER && isPlaceHaveOpenSlots && (
+                                            <PrimaryButton
+                                                className={styles.headRentButton}
+                                                onClick={onRentModalOpen}
+                                            >
+                                                Забронировать
+                                            </PrimaryButton>
+                                        )}
+                                        <FavoritePlaceIcon place={currentPlace} />
+                                    </div>
                                 </div>
                                 <div className={styles.segmentsContainer}>
                                     <PlaceMainInfo />

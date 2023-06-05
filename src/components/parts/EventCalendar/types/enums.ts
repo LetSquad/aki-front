@@ -3,3 +3,9 @@ export enum CalendarView {
     WEEK = "week",
     MONTH = "month"
 }
+
+export enum EventStatus {
+    CLOSED = "CLOSED",
+    OPEN = "OPEN",
+    BOOKED = "BOOKED"
+}

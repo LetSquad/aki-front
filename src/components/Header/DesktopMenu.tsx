@@ -24,49 +24,44 @@ export default function DesktopMenu() {
     const onLogoutButtonClicked = useLogout();
 
     return (
-        <div>
-            <Menu
-                attached="top"
-                className={headerStyles.header}
-            >
-                <HeaderLogo />
-                <div className={styles.itemsContainer}>
-                    {menuOptions}
-                </div>
-                {
-                    isNotAuth
-                        ? <LoginButton />
-                        : (
-                            <Menu.Menu position="right">
-                                <Dropdown
-                                    item
-                                    simple
-                                    icon={(
-                                        <ImageWithLoading
-                                            className={headerStyles.headerProfileImage}
-                                            src={user?.userImage || nullUserAvatar}
-                                            circular
-                                        />
-                                    )}
-                                >
-                                    <Dropdown.Menu className={headerStyles.headerProfileMenu}>
-                                        <Link to={BasePageSlugs.MY_PROFILE}>
-                                            <Dropdown.Item className={headerStyles.headerProfileLink}>Профиль</Dropdown.Item>
-                                        </Link>
-                                        <div>
-                                            <Dropdown.Item
-                                                onClick={onLogoutButtonClicked}
-                                                className={headerStyles.headerProfileLink}
-                                            >
-                                                Выйти
-                                            </Dropdown.Item>
-                                        </div>
-                                    </Dropdown.Menu>
-                                </Dropdown>
-                            </Menu.Menu>
-                        )
-                }
-            </Menu>
-        </div>
+        <>
+            <HeaderLogo />
+            <div className={styles.itemsContainer}>
+                {menuOptions}
+            </div>
+            {
+                isNotAuth
+                    ? <LoginButton />
+                    : (
+                        <Menu.Menu position="right">
+                            <Dropdown
+                                item
+                                simple
+                                icon={(
+                                    <ImageWithLoading
+                                        className={headerStyles.headerProfileImage}
+                                        src={user?.userImage || nullUserAvatar}
+                                        circular
+                                    />
+                                )}
+                            >
+                                <Dropdown.Menu className={headerStyles.headerProfileMenu}>
+                                    <Link to={BasePageSlugs.MY_PROFILE}>
+                                        <Dropdown.Item className={headerStyles.headerProfileLink}>Профиль</Dropdown.Item>
+                                    </Link>
+                                    <div>
+                                        <Dropdown.Item
+                                            onClick={onLogoutButtonClicked}
+                                            className={headerStyles.headerProfileLink}
+                                        >
+                                            Выйти
+                                        </Dropdown.Item>
+                                    </div>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </Menu.Menu>
+                    )
+            }
+        </>
     );
 }

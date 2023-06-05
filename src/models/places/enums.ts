@@ -42,6 +42,7 @@ export enum PlaceFieldsName {
     NAME = "name",
     DESCRIPTION = "description",
     ADDRESS = "address",
+    METRO_STATIONS = "metroStations",
     EMAIL = "email",
     SITE = "site",
     SPECIALIZATION = "specialization",
@@ -52,10 +53,16 @@ export enum PlaceFieldsName {
     MIN_CAPACITY = "minCapacity",
     LEVEL_NUMBER = "levelNumber",
     PARKING = "parking",
+    COORDINATES = "coordinates",
     SERVICES = "services",
     EQUIPMENTS = "equipments",
     FACILITIES = "facilities",
     PLACE_IMAGES = "placeImages"
+}
+
+export enum PlaceCoordinatesFieldsName {
+    LATITUDE = "latitude",
+    LONGITUDE = "longitude"
 }
 
 export enum PlacePriceFieldsName {
@@ -92,7 +99,8 @@ export enum PlacesFiltersFieldsName {
     LEVEL_NUMBER_MAX = "levelNumberMax",
     WITH_PARKING = "withParking",
     DATE_FROM = "dateFrom",
-    DATE_TO = "dateTo"
+    DATE_TO = "dateTo",
+    METRO_STATIONS = "metroStations"
 }
 
 export enum PlacesSortType {

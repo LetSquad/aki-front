@@ -1,9 +1,12 @@
 import { createSelector } from "@reduxjs/toolkit";
 
 import { equalNumberWithStringOrNumber } from "@coreUtils/utils";
+import { User } from "@models/users/types";
 import { RootState } from "@store/index";
 
 export const selectCurrentUser = (state: RootState) => state.user.currentUser;
+
+export const selectCurrentUserRole = createSelector([selectCurrentUser], (currentUser?: User) => currentUser?.userRole);
 
 export const selectIsCurrentUserLoading = (state: RootState) => state.user.isCurrentUserLoading;
 

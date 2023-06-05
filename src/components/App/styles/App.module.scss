@@ -1,9 +1,11 @@
+@use 'src/styles/variables.module' as variables;
+
 .app {
   background: url('/src/static/images/firstBg.jpg') top/100% auto no-repeat, url('/src/static/images/repeatBg.jpg') center top calc(144vw + 420px)/100% auto repeat-y;
-  color: #fff;
+  color: variables.$primary-text-color;
   display: flex;
   flex-direction: column;
   font-family: 'Cera Pro', sans-serif;
   height: 100%;
-  overflow: hidden;
+  overflow: hidden auto;
 }

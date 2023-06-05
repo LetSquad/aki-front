@@ -139,6 +139,16 @@ export default function RentCard({ rent, children }: RentCardProps) {
                                 {rent.place.email}
                             </a>
                         </div>
+                        {rent.agreement && (
+                            <a
+                                className={styles.contactsLink}
+                                target="_blank"
+                                href={rent.agreement}
+                                rel="noreferrer"
+                            >
+                                Договор оферты
+                            </a>
+                        )}
                     </div>
                 </div>
             </div>
