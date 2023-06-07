@@ -153,6 +153,7 @@ export default function RentCard({ rent, children }: RentCardProps) {
                                 target="_blank"
                                 href={rent.agreement}
                                 rel="noreferrer"
+                                type="application/pdf"
                             >
                                 Договор оферты
                             </a>

@@ -29,10 +29,10 @@ export default function CalendarExporter({ place }: CalendarExporterProps) {
             id: EXPORT_CALENDAR_TOAST(place.id)
         });
 
-        axios.get<Blob>(apiUrls.calendarExportUrl(place.id))
+        axios.get<ArrayBuffer>(apiUrls.calendarExportUrl(place.id), { responseType: "arraybuffer" })
             .then((response) => {
                 toast.dismiss(EXPORT_CALENDAR_TOAST(place.id));
-                const url = URL.createObjectURL(response.data);
+                const url = URL.createObjectURL(new Blob([response.data], { type: "text/calendar" }));
                 const a = document.createElement("a");
                 a.href = url;
                 a.download = `Календарь ${place.name}.ics`;
