@@ -17,6 +17,7 @@ import NewRentModal from "@components/Rent/NewRentModal";
 import { useToggle } from "@hooks/useToogle";
 import { PlacesFiltersFieldsName, PlacesSortDirection, PlacesSortType } from "@models/places/enums";
 import { PlacesFiltersFormValues } from "@models/places/types";
+import { UserRole } from "@models/users/enums";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { selectIsUserNotAuth } from "@store/info/selectors";
 import { getPlacesRequest } from "@store/place/reducer";
@@ -26,6 +27,7 @@ import {
     selectPlaces,
     selectPlacesTotalPages
 } from "@store/place/selectors";
+import { selectCurrentUser } from "@store/user/selectors";
 
 import styles from "./styles/PlaceCatalog.module.scss";
 
@@ -51,6 +53,7 @@ export default function PlaceCatalog() {
     const withSidebar = useMediaQuery({ maxWidth: 1250 });
 
     const isUserNotAuth = useAppSelector(selectIsUserNotAuth);
+    const currentUser = useAppSelector(selectCurrentUser);
     const places = useAppSelector(selectPlaces);
     const placesTotalPages = useAppSelector(selectPlacesTotalPages);
     const isPlacesLoading = useAppSelector(selectIsPlacesLoading);
@@ -60,9 +63,9 @@ export default function PlaceCatalog() {
     const [isSidebarOpen, toggleSidebar, , closeSidebar] = useToggle();
     const [filterValues, setFilterValues] = useState(initialValues);
     const [sort, setSort] = useState<[PlacesSortType, PlacesSortDirection]>([
-        isUserNotAuth
-            ? PlacesSortType.POPULAR
-            : PlacesSortType.PERSONAL,
+        !isUserNotAuth && currentUser?.userRole === UserRole.RENTER
+            ? PlacesSortType.PERSONAL
+            : PlacesSortType.POPULAR,
         PlacesSortDirection.DESC
     ]);
 

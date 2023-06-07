@@ -4,6 +4,7 @@ import classNames from "classnames";
 import { Icon, Segment } from "semantic-ui-react";
 
 import { PlacesSortDirection, PlacesSortType } from "@models/places/enums";
+import { UserRole } from "@models/users/enums";
 import { useAppSelector } from "@store/hooks";
 import { selectCurrentUser } from "@store/user/selectors";
 
@@ -41,7 +42,7 @@ export default function PlacesListSorter({ sort, onSortChanged, disabled }: Plac
     return (
         <Segment className={styles.segment}>
             <div className={styles.container}>
-                {currentUser && (
+                {currentUser?.userRole === UserRole.RENTER && (
                     <span
                         className={
                             classNames({
