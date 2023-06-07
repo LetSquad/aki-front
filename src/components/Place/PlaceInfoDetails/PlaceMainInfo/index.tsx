@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useRef } from "react";
 
 import { useMediaQuery } from "react-responsive";
-import { Segment } from "semantic-ui-react";
+import { Icon, Segment } from "semantic-ui-react";
 
 import MetroStationList from "@components/Metro/MetroStationList";
 import PlaceAdditionalInfo from "@components/Place/PlaceAdditionalInfo";
@@ -120,18 +120,24 @@ export default function PlaceMainInfo() {
                             className={styles.contactsLink}
                             rel="noreferrer"
                         >
+                            <Icon name="globe" />
                             {currentPlace.site}
                         </a>
                         <a
                             href={`tel:${currentPlace.phone}`}
                             className={styles.contactsLink}
                         >
+                            <Icon
+                                className={styles.contactsPhoneIcon}
+                                name="phone"
+                            />
                             {currentPlace.phone}
                         </a>
                         <a
                             href={`mailto:${currentPlace.email}`}
                             className={styles.contactsLink}
                         >
+                            <Icon name="mail" />
                             {currentPlace.email}
                         </a>
                     </div>

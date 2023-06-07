@@ -2,6 +2,7 @@ import { useCallback, useMemo, useState } from "react";
 
 import { DateTime } from "luxon";
 
+import CalendarExporter from "@components/Schedule/CalendarExporter";
 import NewRentSlotModal from "@components/Schedule/NewRentSlotModal";
 import RentSlotEventModal from "@components/Schedule/RentSlotEventModal";
 import { getEventStatusByRentSlotStatusEnum, getRentSlotNameByRentSlotStatusEnum } from "@components/Schedule/utils/utils";
@@ -80,6 +81,7 @@ export default function Calendar({ currentPlace }: CalendarProps) {
                 isLoading={isLoading}
                 onDayClick={onNewSlotAdd}
                 onHourClick={onNewSlotAdd}
+                exportElement={<CalendarExporter place={currentPlace} />}
             />
             <RentSlotEventModal
                 currentPlace={currentPlace}

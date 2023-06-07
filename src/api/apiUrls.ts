@@ -6,6 +6,7 @@ const placesUrl = `${baseUrl}/places`;
 const rentSlotsUrl = `${baseUrl}/rentSlots`;
 const rentsUrl = `${baseUrl}/rents`;
 const agreementUrl = `${baseUrl}/agreement`;
+const calendarUrl = `${baseUrl}/calendar`;
 
 const apiUrls = {
     agreement: () => agreementUrl,
@@ -26,7 +27,8 @@ const apiUrls = {
     refreshToken: () => `${baseUrl}/auth/refresh`,
     register: () => `${userUrl}/register`,
     resetPassword: () => `${userUrl}/reset-password`,
-    rentSlots: () => `${rentSlotsUrl}`
+    rentSlots: () => `${rentSlotsUrl}`,
+    calendarExportUrl: (placeId: number | string) => `${calendarUrl}/${placeId}/export`
 };
 
 export default apiUrls;

@@ -2,6 +2,7 @@ import { lazy } from "react";
 
 import { useMediaQuery } from "react-responsive";
 
+import { MOBILE_MAX_WIDTH } from "@coreUtils/constants";
 import { WithSuspense } from "@coreUtils/WithSuspense";
 import styles from "@parts/EventCalendar/Navigation/styles/Navigation.module.scss";
 
@@ -14,7 +15,7 @@ const MobileNavigation = lazy(
 );
 
 export default function Navigation() {
-    const isMobile = useMediaQuery({ maxWidth: 650 });
+    const isMobile = useMediaQuery({ maxWidth: MOBILE_MAX_WIDTH });
 
     return (
         <WithSuspense>

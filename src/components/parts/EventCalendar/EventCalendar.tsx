@@ -27,7 +27,8 @@ export default function EventCalendar({
     isLoading,
     isSomeBusyDay,
     isFullFreeDay,
-    highlightEmptyDay
+    highlightEmptyDay,
+    exportElement
 }: EventCalendarProps) {
     const [selectedDate, setSelectedDate] = useState<DateTime>(initialDate ? DateTime.fromISO(initialDate) : DateTime.now());
     const [selectedView, setSelectedView] = useState<CalendarView>(initialView);
@@ -52,7 +53,8 @@ export default function EventCalendar({
         isLoading,
         isSomeBusyDay,
         isFullFreeDay,
-        highlightEmptyDay
+        highlightEmptyDay,
+        exportElement
     }), [
         disabledViews,
         events,
@@ -66,7 +68,8 @@ export default function EventCalendar({
         onHourClick,
         selectedDate,
         selectedView,
-        setNewSelectedDate
+        setNewSelectedDate,
+        exportElement
     ]);
 
     useEffect(() => {

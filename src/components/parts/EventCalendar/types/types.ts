@@ -1,4 +1,4 @@
-import { MouseEvent } from "react";
+import React, { MouseEvent } from "react";
 
 import { DateTime } from "luxon";
 
@@ -35,5 +35,6 @@ export interface EventCalendarProps {
     isFullFreeDay?: (calendarEvents: CalendarEvent[]) => boolean;
     fullFreeDayColor?: string;
     highlightEmptyDay?: true | string;
-    isLoading?: boolean
+    isLoading?: boolean;
+    exportElement?: React.JSX.Element;
 }
