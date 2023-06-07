@@ -57,6 +57,7 @@ export const MainInfoFields: FormFieldProps[] = [
         label: "Ближайшие станции метро",
         type: FormFieldType.DROPDOWN,
         multiple: true,
+        search: true,
         placeholder: "Выберите ближайшие станции метро из списка"
     }, {
         name: PlaceFieldsName.SITE,

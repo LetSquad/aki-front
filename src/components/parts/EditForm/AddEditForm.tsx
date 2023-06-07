@@ -38,7 +38,6 @@ export default function AddEditForm<Values>({
                 {isLoading && (
                     <Dimmer
                         active
-                        inverted
                     >
                         <Loader />
                     </Dimmer>

@@ -18,6 +18,7 @@ import { useToggle } from "@hooks/useToogle";
 import { PlacesFiltersFieldsName, PlacesSortDirection, PlacesSortType } from "@models/places/enums";
 import { PlacesFiltersFormValues } from "@models/places/types";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
+import { selectIsUserNotAuth } from "@store/info/selectors";
 import { getPlacesRequest } from "@store/place/reducer";
 import {
     selectIsPlacesLoading,
@@ -25,7 +26,6 @@ import {
     selectPlaces,
     selectPlacesTotalPages
 } from "@store/place/selectors";
-import { selectCurrentUser } from "@store/user/selectors";
 
 import styles from "./styles/PlaceCatalog.module.scss";
 
@@ -50,7 +50,7 @@ export default function PlaceCatalog() {
 
     const withSidebar = useMediaQuery({ maxWidth: 1250 });
 
-    const currentUser = useAppSelector(selectCurrentUser);
+    const isUserNotAuth = useAppSelector(selectIsUserNotAuth);
     const places = useAppSelector(selectPlaces);
     const placesTotalPages = useAppSelector(selectPlacesTotalPages);
     const isPlacesLoading = useAppSelector(selectIsPlacesLoading);
@@ -60,9 +60,9 @@ export default function PlaceCatalog() {
     const [isSidebarOpen, toggleSidebar, , closeSidebar] = useToggle();
     const [filterValues, setFilterValues] = useState(initialValues);
     const [sort, setSort] = useState<[PlacesSortType, PlacesSortDirection]>([
-        currentUser
-            ? PlacesSortType.PERSONAL
-            : PlacesSortType.POPULAR,
+        isUserNotAuth
+            ? PlacesSortType.POPULAR
+            : PlacesSortType.PERSONAL,
         PlacesSortDirection.DESC
     ]);
 

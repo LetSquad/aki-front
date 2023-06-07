@@ -337,22 +337,22 @@ export const placeSlice = createSlice({
                 id: ADD_FAVORITE_PLACE_TOAST_ID(action.meta.arg.placeId)
             });
             if (state.currentPlace?.id === action.meta.arg.placeId) {
-                state.currentPlace.isFavorite = true;
+                state.currentPlace.favorite = true;
             }
             state.places = state.places
-                .map((place) => (place.id === action.meta.arg.placeId ? { ...place, isFavorite: true } : place));
+                .map((place) => (place.id === action.meta.arg.placeId ? { ...place, favorite: true } : place));
             state.userPlaces = state.userPlaces
-                .map((place) => (place.id === action.meta.arg.placeId ? { ...place, isFavorite: true } : place));
+                .map((place) => (place.id === action.meta.arg.placeId ? { ...place, favorite: true } : place));
             state.favoritePlaceId = action.meta.arg.placeId;
         });
         builder.addCase(addFavoritePlaceRequest.rejected, (state, action) => {
             if (state.currentPlace?.id === action.meta.arg.placeId) {
-                state.currentPlace.isFavorite = false;
+                state.currentPlace.favorite = false;
             }
             state.places = state.places
-                .map((place) => (place.id === action.meta.arg.placeId ? { ...place, isFavorite: false } : place));
+                .map((place) => (place.id === action.meta.arg.placeId ? { ...place, favorite: false } : place));
             state.userPlaces = state.userPlaces
-                .map((place) => (place.id === action.meta.arg.placeId ? { ...place, isFavorite: false } : place));
+                .map((place) => (place.id === action.meta.arg.placeId ? { ...place, favorite: false } : place));
             state.favoritePlaceId = undefined;
             toast.error("При добавлении площадки в избранное произошла ошибка. Повторите попытку позже", {
                 id: ADD_FAVORITE_PLACE_TOAST_ID(action.meta.arg.placeId)
@@ -369,22 +369,22 @@ export const placeSlice = createSlice({
                 id: REMOVE_FAVORITE_PLACE_TOAST_ID(action.meta.arg.placeId)
             });
             if (state.currentPlace?.id === action.meta.arg.placeId) {
-                state.currentPlace.isFavorite = false;
+                state.currentPlace.favorite = false;
             }
             state.places = state.places
-                .map((place) => (place.id === action.meta.arg.placeId ? { ...place, isFavorite: false } : place));
+                .map((place) => (place.id === action.meta.arg.placeId ? { ...place, favorite: false } : place));
             state.userPlaces = state.userPlaces
-                .map((place) => (place.id === action.meta.arg.placeId ? { ...place, isFavorite: false } : place));
+                .map((place) => (place.id === action.meta.arg.placeId ? { ...place, favorite: false } : place));
             state.favoritePlaceId = action.meta.arg.placeId;
         });
         builder.addCase(removeFavoritePlaceRequest.rejected, (state, action) => {
             if (state.currentPlace?.id === action.meta.arg.placeId) {
-                state.currentPlace.isFavorite = true;
+                state.currentPlace.favorite = true;
             }
             state.places = state.places
-                .map((place) => (place.id === action.meta.arg.placeId ? { ...place, isFavorite: true } : place));
+                .map((place) => (place.id === action.meta.arg.placeId ? { ...place, favorite: true } : place));
             state.userPlaces = state.userPlaces
-                .map((place) => (place.id === action.meta.arg.placeId ? { ...place, isFavorite: true } : place));
+                .map((place) => (place.id === action.meta.arg.placeId ? { ...place, favorite: true } : place));
             state.favoritePlaceId = undefined;
             toast.error("При удалении площадки из избранного произошла ошибка. Повторите попытку позже", {
                 id: REMOVE_FAVORITE_PLACE_TOAST_ID(action.meta.arg.placeId)
