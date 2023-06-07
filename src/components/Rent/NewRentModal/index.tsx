@@ -117,7 +117,7 @@ function NewRentModalView({ currentPlace }: NewRentModalViewProps) {
         setDuration(data.value as RentSlotDuration);
     }, []);
 
-    const getAggrement = useCallback(() => {
+    const getAgreement = useCallback(() => {
         dispatch(generateAgreementRequest({ placeId: currentPlace.id }));
     }, [currentPlace.id, dispatch]);
 
@@ -208,8 +208,8 @@ function NewRentModalView({ currentPlace }: NewRentModalViewProps) {
     ), [byHoursFormik.errors, byHoursRentSlots.length, isAgreementAccepted, isNewRentAdding]);
 
     useEffect(() => {
-        getAggrement();
-    }, [getAggrement]);
+        getAgreement();
+    }, [getAgreement]);
 
     return (
         <Modal
@@ -274,6 +274,7 @@ function NewRentModalView({ currentPlace }: NewRentModalViewProps) {
                                         href={agreementLink}
                                         rel="noreferrer"
                                         ref={linkRef}
+                                        type="application/pdf"
                                     >
                                         договора оферты
                                     </a>
