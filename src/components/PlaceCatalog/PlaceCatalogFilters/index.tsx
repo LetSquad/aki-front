@@ -156,6 +156,7 @@ const fields: (fromDate?: string) => FormFieldProps[] = (fromDate) => [
         label: "Ближайшие станции метро",
         type: FormFieldType.DROPDOWN,
         multiple: true,
+        search: true,
         placeholder: "Выберите ближайшие станции метро из списка"
     }
 ];

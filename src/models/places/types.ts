@@ -37,7 +37,7 @@ export interface Place {
     facilities?: PlaceFacilities[] | null;
     rentSlots?: RentSlot[] | null;
     user: LandlordInfo;
-    isFavorite?: boolean | null;
+    favorite?: boolean | null;
     metroStations?: MetroStation[] | null
 }
 
@@ -83,7 +83,7 @@ export interface PlacesResponse extends BasePageResponse {
     places: Place[];
 }
 
-export type PlaceUpdateFormValues = Omit<Place, "user" | "status" | "rating" | "price" | "coordinates"> & { coordinates?: PlaceCoordinatesStrings | null };
+export type PlaceUpdateFormValues = Omit<Place, "user" | "status" | "rating" | "price" | "coordinates" | "favorite"> & { coordinates?: PlaceCoordinatesStrings | null };
 export type PlaceAddFormValues = Omit<PlaceUpdateFormValues, "id">;
 
 export interface PlaceDetailsFormRef {

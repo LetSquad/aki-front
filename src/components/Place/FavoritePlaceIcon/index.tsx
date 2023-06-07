@@ -18,7 +18,7 @@ interface FavoritePlaceIconProps {
 function FavoritePlaceIconView({ place }: FavoritePlaceIconProps) {
     const dispatch = useAppDispatch();
 
-    const { isFavorite, id } = place;
+    const { favorite, id } = place;
 
     const isPlaceFavorite = useAppSelector((state) => selectIsPlaceFavorite(state, id));
 
@@ -26,19 +26,19 @@ function FavoritePlaceIconView({ place }: FavoritePlaceIconProps) {
         event.preventDefault();
         event.stopPropagation();
 
-        if (isFavorite) {
+        if (favorite) {
             dispatch(removeFavoritePlaceRequest({ placeId: id }));
         } else {
             dispatch(addFavoritePlaceRequest({ placeId: id }));
         }
-    }, [dispatch, id, isFavorite]);
+    }, [dispatch, id, favorite]);
 
     return (
         <Icon
             className={styles.icon}
             link
             disabled={isPlaceFavorite}
-            name={isFavorite ? "heart" : "heart outline"}
+            name={favorite ? "heart" : "heart outline"}
             onClick={onCLick}
         />
     );
