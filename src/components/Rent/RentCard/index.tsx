@@ -16,6 +16,7 @@ import {
     Segment
 } from "semantic-ui-react";
 
+import MetroStationList from "@components/Metro/MetroStationList";
 import RentRating from "@components/Rent/RentCard/RentRating";
 import { getRentStatusColorFromEnum, getRentStatusTitleFromEnum } from "@components/Rent/utils/utils";
 import { BasePageSlugs } from "@models/pages/enums";
@@ -117,6 +118,7 @@ export default function RentCard({ rent, children }: RentCardProps) {
                     </div>
                     <div className={styles.contacts}>
                         <span className={styles.contactsItem}>{rent.place.address}</span>
+                        {rent.place.metroStations && <MetroStationList stations={rent.place.metroStations} />}
                         <div className={styles.contactsLinks}>
                             <a
                                 href={rent.place.site}
@@ -124,18 +126,24 @@ export default function RentCard({ rent, children }: RentCardProps) {
                                 className={styles.contactsLink}
                                 rel="noreferrer"
                             >
+                                <Icon name="globe" />
                                 {rent.place.site}
                             </a>
                             <a
                                 href={`tel:${rent.place.phone}`}
                                 className={styles.contactsLink}
                             >
+                                <Icon
+                                    className={styles.contactsPhoneIcon}
+                                    name="phone"
+                                />
                                 {rent.place.phone}
                             </a>
                             <a
                                 href={`mailto:${rent.place.email}`}
                                 className={styles.contactsLink}
                             >
+                                <Icon name="mail" />
                                 {rent.place.email}
                             </a>
                         </div>

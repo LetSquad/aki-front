@@ -14,7 +14,7 @@
 
   @include mq($until: tablet) {
     flex-direction: column;
-    row-gap: 20px;
+    row-gap: 30px;
   }
   @include mq($from: tablet) {
     justify-content: space-between;
@@ -50,17 +50,24 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   row-gap: 10px;
+
+  &-phone-icon {
+    transform: scale(-1, 1);
+  }
 
   &-links {
     column-gap: 10px;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 10px;
   }
 
   &-item {
     @extend %base-item;
+    text-align: center;
   }
 
   &-link {

@@ -1,4 +1,4 @@
-import { createContext, MouseEvent, useContext } from "react";
+import React, { createContext, MouseEvent, useContext } from "react";
 
 import { DateTime } from "luxon";
 
@@ -25,6 +25,7 @@ type EventCalendarContextType = {
     isFullFreeDay?: (calendarEvents: CalendarEvent[]) => boolean;
     fullFreeDayColor?: string;
     highlightEmptyDay?: true | string;
+    exportElement?: React.JSX.Element;
 };
 
 export const EventCalendarContext = createContext<EventCalendarContextType | undefined>(undefined);
@@ -171,4 +172,12 @@ export function useHighlightEmptyDay() {
         throw new Error("useHighlightEmptyDay must be used within a EventCalendarProvider");
     }
     return context.highlightEmptyDay;
+}
+
+export function useExportElement() {
+    const context = useContext(EventCalendarContext);
+    if (!context) {
+        throw new Error("useCalendarEvents must be used within a EventCalendarProvider");
+    }
+    return context.exportElement;
 }

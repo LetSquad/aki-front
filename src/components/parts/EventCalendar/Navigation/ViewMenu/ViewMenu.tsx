@@ -2,6 +2,7 @@ import { lazy, useCallback, useMemo } from "react";
 
 import { useMediaQuery } from "react-responsive";
 
+import { MOBILE_MAX_WIDTH } from "@coreUtils/constants";
 import { WithSuspense } from "@coreUtils/WithSuspense";
 import {
     useDisabledViews,
@@ -20,7 +21,7 @@ const MobileMenu = lazy(
 );
 
 export default function ViewMenu() {
-    const isMobile = useMediaQuery({ maxWidth: 650 });
+    const isMobile = useMediaQuery({ maxWidth: MOBILE_MAX_WIDTH });
 
     const disabledView = useDisabledViews();
     const selectedDate = useSelectedDate();
