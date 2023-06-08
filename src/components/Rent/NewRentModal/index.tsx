@@ -121,23 +121,62 @@ function NewRentModalView({ currentPlace }: NewRentModalViewProps) {
         dispatch(generateAgreementRequest({ placeId: currentPlace.id }));
     }, [currentPlace.id, dispatch]);
 
-    const addRentByDaysSlots = useCallback((values: NewRentByDaysFormValues) => {
-        const rentSlotIds = byDayRentSlots
-            .filter((rentSlot) => {
-                const startDateTime = DateTime.fromISO(rentSlot.timeStart).set({
-                    hour: 0,
-                    minute: 0,
-                    second: 0,
-                    millisecond: 0
-                });
-                return (
-                    DateTime.fromISO(values[NewRentFieldName.DATE_TIME_START] as string).set({ millisecond: 0 }) <=
+    const rentSlots = useCallback((values: NewRentByDaysFormValues | NewRentByHoursFormValues) => {
+        if (
+            NewRentFieldName.DATE_TIME_START in values &&
+            values[NewRentFieldName.DATE_TIME_START] &&
+            values[NewRentFieldName.DATE_TIME_END]
+        ) {
+            return byDayRentSlots
+                .filter((rentSlot) => {
+                    const startDateTime = DateTime.fromISO(rentSlot.timeStart).set({
+                        hour: 0,
+                        minute: 0,
+                        second: 0,
+                        millisecond: 0
+                    });
+                    return (
+                        DateTime.fromISO(values[NewRentFieldName.DATE_TIME_START] as string).set({ millisecond: 0 }) <=
                         startDateTime.set({ millisecond: 0 }) &&
-                    DateTime.fromISO(values[NewRentFieldName.DATE_TIME_END] as string).set({ millisecond: 0 }) >=
+                        DateTime.fromISO(values[NewRentFieldName.DATE_TIME_END] as string).set({ millisecond: 0 }) >=
                         startDateTime.set({ millisecond: 0 })
-                );
-            })
-            .map((rentSlot) => rentSlot.id);
+                    );
+                });
+        }
+
+        if (
+            NewRentFieldName.DATE in values &&
+            values[NewRentFieldName.DATE] &&
+            values[NewRentFieldName.TIME_START] &&
+            values[NewRentFieldName.TIME_END]
+        ) {
+            return byHoursRentSlots
+                .filter((rentSlot) => {
+                    const startTime = DateTime.fromISO(rentSlot.timeStart).set({ millisecond: 0 });
+                    const endTime = DateTime.fromISO(rentSlot.timeEnd).set({ millisecond: 0 });
+                    const start = DateTime.fromISO(`${values[NewRentFieldName.DATE]}T${values[NewRentFieldName.TIME_START]}`).set({ millisecond: 0 });
+                    const end = DateTime.fromISO(`${values[NewRentFieldName.DATE]}T${values[NewRentFieldName.TIME_END]}`).set({ millisecond: 0 });
+                    return (
+                        start <= startTime &&
+                        end >= endTime
+                    );
+                });
+        }
+
+        return [];
+    }, [byDayRentSlots, byHoursRentSlots]);
+
+    const rentSlotsPrice = useCallback((values: NewRentByDaysFormValues | NewRentByHoursFormValues) => {
+        let price = 0;
+        for (const rentSlot of rentSlots(values)) {
+            price += rentSlot.price;
+        }
+
+        return price;
+    }, [rentSlots]);
+
+    const addRentByDaysSlots = useCallback((values: NewRentByDaysFormValues) => {
+        const rentSlotIds = rentSlots(values).map((rentSlot) => rentSlot.id);
 
         dispatch(createRentRequest({
             rentSlotIds,
@@ -150,21 +189,10 @@ function NewRentModalView({ currentPlace }: NewRentModalViewProps) {
                     onClose();
                 }
             });
-    }, [agreementLink, byDayRentSlots, currentPlace.id, currentPlace.name, dispatch, onClose]);
+    }, [agreementLink, currentPlace.id, currentPlace.name, dispatch, onClose, rentSlots]);
 
     const addRentByHoursSlots = useCallback((values: NewRentByHoursFormValues) => {
-        const rentSlotIds = byHoursRentSlots
-            .filter((rentSlot) => {
-                const startTime = DateTime.fromISO(rentSlot.timeStart).set({ millisecond: 0 });
-                const endTime = DateTime.fromISO(rentSlot.timeEnd).set({ millisecond: 0 });
-                const start = DateTime.fromISO(`${values[NewRentFieldName.DATE]}T${values[NewRentFieldName.TIME_START]}`).set({ millisecond: 0 });
-                const end = DateTime.fromISO(`${values[NewRentFieldName.DATE]}T${values[NewRentFieldName.TIME_END]}`).set({ millisecond: 0 });
-                return (
-                    start <= startTime &&
-                    end >= endTime
-                );
-            })
-            .map((rentSlot) => rentSlot.id);
+        const rentSlotIds = rentSlots(values).map((rentSlot) => rentSlot.id);
 
         dispatch(createRentRequest({
             rentSlotIds,
@@ -177,7 +205,7 @@ function NewRentModalView({ currentPlace }: NewRentModalViewProps) {
                     onClose();
                 }
             });
-    }, [agreementLink, byHoursRentSlots, currentPlace.id, currentPlace.name, dispatch, onClose]);
+    }, [agreementLink, currentPlace.id, currentPlace.name, dispatch, onClose, rentSlots]);
 
     const byDaysFormik = useFormik<NewRentByDaysFormValues>({
         onSubmit: addRentByDaysSlots,
@@ -261,6 +289,9 @@ function NewRentModalView({ currentPlace }: NewRentModalViewProps) {
                                 </FormikProvider>
                             )
                     }
+                    <span className={styles.price}>
+                        {`Стоимость аренды площадки на заданное время ~ ${rentSlotsPrice(duration === RentSlotDuration.DAY ? byDaysFormik.values : byHoursFormik.values)} ₽`}
+                    </span>
                     <div className={styles.agreementContainer}>
                         <Checkbox
                             onChange={onAgreementAcceptChanged}

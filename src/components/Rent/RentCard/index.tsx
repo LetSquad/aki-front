@@ -107,10 +107,10 @@ export default function RentCard({ rent, children }: RentCardProps) {
                         </Link>
                         <div className={styles.rentInfoContainer}>
                             <span className={styles.rentInfoDates}>
-                                {`с ${DateTime.fromISO(rent.rentSlots[0].timeStart).toFormat("yyyy.MM.dd, HH:mm")}`}
+                                {`с ${DateTime.fromISO(rent.rentSlots[0].timeStart).toFormat("dd.MM.yyyy, HH:mm")}`}
                             </span>
                             <span className={styles.rentInfoDates}>
-                                {`до ${DateTime.fromISO(rent.rentSlots.at(-1)?.timeEnd as string).toFormat("yyyy.MM.dd, HH:mm")}`}
+                                {`до ${DateTime.fromISO(rent.rentSlots.at(-1)?.timeEnd as string).toFormat("dd.MM.yyyy, HH:mm")}`}
                             </span>
                             <span className={styles.rentInfoPrice}>{`~${rentPrice} ₽`}</span>
                         </div>
