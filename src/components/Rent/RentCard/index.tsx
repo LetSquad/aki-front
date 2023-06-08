@@ -19,6 +19,7 @@ import {
 import MetroStationList from "@components/Metro/MetroStationList";
 import RentRating from "@components/Rent/RentCard/RentRating";
 import { getRentStatusColorFromEnum, getRentStatusTitleFromEnum } from "@components/Rent/utils/utils";
+import { getFullExternalLink } from "@coreUtils/utils";
 import { BasePageSlugs } from "@models/pages/enums";
 import { RentStatus } from "@models/rent/enums";
 import { Rent } from "@models/rent/types";
@@ -121,7 +122,7 @@ export default function RentCard({ rent, children }: RentCardProps) {
                         {rent.place.metroStations && <MetroStationList stations={rent.place.metroStations} />}
                         <div className={styles.contactsLinks}>
                             <a
-                                href={rent.place.site}
+                                href={getFullExternalLink(rent.place.site)}
                                 target="_blank"
                                 className={styles.contactsLink}
                                 rel="noreferrer"
