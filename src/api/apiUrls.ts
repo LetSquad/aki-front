@@ -23,6 +23,7 @@ const apiUrls = {
     rents: () => rentsUrl,
     rentId: (rentId: number | string) => `${rentsUrl}/${rentId}`,
     rentRate: (rentId: number | string) => `${rentsUrl}/${rentId}/rate`,
+    rentCancel: () => `${rentsUrl}/cancel`,
     signIn: () => `${baseUrl}/auth`,
     refreshToken: () => `${baseUrl}/auth/refresh`,
     register: () => `${userUrl}/register`,

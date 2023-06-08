@@ -76,9 +76,9 @@ export const generateAgreementRequest = createAsyncThunk("generateAgreementReque
 export const cancelRentRequest = createAsyncThunk(
     "cancelRentRequest",
     async ({ rentId }: { rentId: number, placeName: string }) => {
-        const { data } = await axios.delete<RentResponse>(
-            apiUrls.rents(),
-            { data: { rentId } }
+        const { data } = await axios.post<RentResponse>(
+            apiUrls.rentCancel(),
+            { rentId }
         );
         return data;
     }
