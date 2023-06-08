@@ -133,7 +133,7 @@ export const updatePlaceRequest = createAsyncThunk("updatePlaceRequest", async (
             if (placeImage && typeof placeImage === "object") {
                 formData.append(`image_${index}`, placeImage);
             } else {
-                placeOldImages.push(placeImage);
+                placeOldImages.push(placeImage as string);
             }
         }
     }
