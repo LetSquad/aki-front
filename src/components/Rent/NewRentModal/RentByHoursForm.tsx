@@ -62,7 +62,18 @@ export default function RentByHoursForm({ rentSlots }: RentByHoursFormProps) {
                 rentSlotTime.day === startTime.day &&
                 rentSlotTime.month === startTime.month &&
                 rentSlotTime.year === startTime.year
-            ));
+            ))
+            .sort((firstDate, secondDate) => {
+                if (firstDate < secondDate) {
+                    return -1;
+                }
+
+                if (firstDate > secondDate) {
+                    return 1;
+                }
+
+                return 0;
+            });
 
         let i = 0;
         const eligibleRentSlotsTimes = [];
