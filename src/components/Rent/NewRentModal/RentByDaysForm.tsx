@@ -29,7 +29,18 @@ export default function RentByDaysForm({ rentSlots }: RentByDaysFormProps) {
 
         const rentSlotsDates = rentSlots
             .map((rentSlot) => DateTime.fromISO(rentSlot.timeStart))
-            .filter((rentSlotDate) => rentSlotDate >= startDate);
+            .filter((rentSlotDate) => rentSlotDate >= startDate)
+            .sort((firstDate, secondDate) => {
+                if (firstDate < secondDate) {
+                    return -1;
+                }
+
+                if (firstDate > secondDate) {
+                    return 1;
+                }
+
+                return 0;
+            });
 
         let i = 0;
         const eligibleRentSlotsDates = [];

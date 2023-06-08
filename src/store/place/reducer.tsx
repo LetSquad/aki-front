@@ -18,6 +18,7 @@ import {
     PlacesSortRequest,
     PlaceUpdateFormValues
 } from "@models/places/types";
+import { createRentRequest } from "@store/rent/reducer";
 import { cancelRentSlotsRequest, createRentSlotsRequest } from "@store/rentSlot/reducer";
 
 const ADD_PLACE_TOAST_NAME = (placeName: string) => `add-place-${placeName}`;
@@ -395,6 +396,24 @@ export const placeSlice = createSlice({
             toast.success("Площадка удалена из избранного", {
                 id: REMOVE_FAVORITE_PLACE_TOAST_ID(action.meta.arg.placeId)
             });
+        });
+        builder.addCase(createRentRequest.fulfilled, (state, action) => {
+            if (state.currentPlace && state.currentPlace.id === action.payload.place.id) {
+                state.currentPlace.rentSlots = state.currentPlace.rentSlots?.map((rentSlot) => action.payload.rentSlots
+                    .find((_rentSlot) => _rentSlot.id === rentSlot.id) ?? rentSlot);
+            }
+
+            const placeForEdit = state.places.find((place) => place.id === action.payload.place.id);
+            if (placeForEdit) {
+                placeForEdit.rentSlots = placeForEdit.rentSlots?.map((rentSlot) => action.payload.rentSlots
+                    .find((_rentSlot) => _rentSlot.id === rentSlot.id) ?? rentSlot);
+            }
+
+            const userPlaceForEdit = state.userPlaces.find((place) => place.id === action.payload.place.id);
+            if (userPlaceForEdit) {
+                userPlaceForEdit.rentSlots = userPlaceForEdit.rentSlots?.map((rentSlot) => action.payload.rentSlots
+                    .find((_rentSlot) => _rentSlot.id === rentSlot.id) ?? rentSlot);
+            }
         });
         builder.addMatcher(isAnyOf(createRentSlotsRequest.fulfilled, cancelRentSlotsRequest.fulfilled), (state, action) => {
             state.currentPlace = action.payload;
