@@ -146,3 +146,11 @@ export function parseParams(params: Record<string, any>) {
 
     return options ? options.slice(0, -1) : options;
 }
+
+export function getFullExternalLink(link: string) {
+    if (link.startsWith("http")) {
+        return link;
+    }
+
+    return `https://${link}`;
+}

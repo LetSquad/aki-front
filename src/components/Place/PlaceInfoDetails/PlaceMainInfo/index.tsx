@@ -6,6 +6,7 @@ import { Icon, Segment } from "semantic-ui-react";
 import MetroStationList from "@components/Metro/MetroStationList";
 import PlaceAdditionalInfo from "@components/Place/PlaceAdditionalInfo";
 import { useCurrentPlace } from "@components/Place/PlaceInfoDetails/PlaceInfoContext";
+import { getFullExternalLink } from "@coreUtils/utils";
 import { useToggle } from "@hooks/useToogle";
 import marker from "@static/images/marker.svg";
 
@@ -115,7 +116,7 @@ export default function PlaceMainInfo() {
                     {currentPlace.metroStations && <MetroStationList stations={currentPlace.metroStations} />}
                     <div className={styles.contactsLinks}>
                         <a
-                            href={currentPlace.site}
+                            href={getFullExternalLink(currentPlace.site)}
                             target="_blank"
                             className={styles.contactsLink}
                             rel="noreferrer"
