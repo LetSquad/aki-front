@@ -54,7 +54,7 @@ export default function CalendarExporter({ place }: CalendarExporterProps) {
         ? (
             <Icon
                 onClick={exportCalendar}
-                disable={isCalendarLoading}
+                disabled={isCalendarLoading}
                 size="large"
                 name="download"
             />

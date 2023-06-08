@@ -24,7 +24,7 @@ export default function PlaceAdditionalInfo({ currentPlace }: AdditionalInfoProp
                     data={`${currentPlace.fullSquare} м²`}
                 />
             )}
-            {currentPlace.fullSquare && (
+            {currentPlace.freeSquare && (
                 <PlaceAdditionalInfoItem
                     icon={freeSquareIcon}
                     alt="Доступная площадь"
