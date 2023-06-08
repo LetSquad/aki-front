@@ -9,17 +9,17 @@ https://let-squad.ru/
 
 ## Учетные записи для тестирования
 ### Администратор
-Email: ushakov@mos.ru
+Email: ushakov@mos.ru1
 
 Password: string
 
 ### Арендатор
-Email: banshikov@gmail.com
+Email: banshikov@gmail.com1
 
 Password: string
 
 ### Арендодатель
-Email: sadykov@hlebozavod9.ru
+Email: sadykov@hlebozavod9.ru1
 
 Password: string
 
