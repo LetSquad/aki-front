@@ -29,7 +29,12 @@ import { getUserSpecializationTitleFromEnum, userRoleToLabel } from "@components
 import { MOBILE_MAX_WIDTH } from "@coreUtils/constants";
 import { WithSuspense } from "@coreUtils/WithSuspense";
 import { useToggle } from "@hooks/useToogle";
-import { BaseRegistrationFieldName, LandlordRegistrationFieldName, SignInFieldName } from "@models/auth/enums";
+import {
+    BaseRegistrationFieldName,
+    LandlordRegistrationFieldName,
+    RenterRegistrationFieldName,
+    SignInFieldName
+} from "@models/auth/enums";
 import { SignInFormValues, SignUpFormValues, SignUpResponse } from "@models/auth/types";
 import { FormFieldType } from "@models/forms/enums";
 import { DropdownOption, FormFieldProps } from "@models/forms/types";
@@ -48,8 +53,8 @@ const UserSpecializationsOptions: DropdownOption[] = Object.values(UserSpecializ
     text: getUserSpecializationTitleFromEnum(specialization)
 }));
 
-const BaseInputs: (setEmail: (email: string) => void, setPassword: (password: string) => void) => FormFieldProps[] =
-    (setEmail, setPassword) => [
+const BaseInputs: (setEmail: (email: string) => void) => FormFieldProps[] =
+    (setEmail) => [
         {
             name: BaseRegistrationFieldName.ROLE,
             type: FormFieldType.BUTTON_GROUP,
@@ -86,27 +91,18 @@ const BaseInputs: (setEmail: (email: string) => void, setPassword: (password: st
             required: false,
             type: FormFieldType.INPUT,
             placeholder: "Введите ваше отчество (если имеется)"
-        }, {
+        }
+    ];
+
+const RenterAdditionalInputs: FormFieldProps[] =
+    [
+        {
             name: BaseRegistrationFieldName.SPECIALIZATIONS,
             options: UserSpecializationsOptions,
             label: "Род занятий",
             type: FormFieldType.DROPDOWN,
             multiple: true,
             placeholder: "Выберите ваш род занятий"
-        }, {
-            name: BaseRegistrationFieldName.PASSWORD,
-            label: "Пароль",
-            required: true,
-            type: FormFieldType.PASSWORD_INPUT,
-            placeholder: "Введите пароль",
-            withStrength: true,
-            onChange: setPassword
-        }, {
-            name: BaseRegistrationFieldName.PASSWORD_CONFIRM,
-            label: "Подтвердите пароль",
-            required: true,
-            type: FormFieldType.PASSWORD_INPUT,
-            placeholder: "Введите пароль повторно"
         }
     ];
 
@@ -134,6 +130,25 @@ const LandlordAdditionalInputs: FormFieldProps[] =
         }
     ];
 
+const PasswordFields: (setPassword: (password: string) => void) => FormFieldProps[] =
+    (setPassword) => [
+        {
+            name: BaseRegistrationFieldName.PASSWORD,
+            label: "Пароль",
+            required: true,
+            type: FormFieldType.PASSWORD_INPUT,
+            placeholder: "Введите пароль",
+            withStrength: true,
+            onChange: setPassword
+        }, {
+            name: BaseRegistrationFieldName.PASSWORD_CONFIRM,
+            label: "Подтвердите пароль",
+            required: true,
+            type: FormFieldType.PASSWORD_INPUT,
+            placeholder: "Введите пароль повторно"
+        }
+    ];
+
 const initialValues: (loginData: SignInFormValues) => SignUpFormValues = (loginData) => ({
     [BaseRegistrationFieldName.ROLE]: BaseUserRole.RENTER,
     [BaseRegistrationFieldName.EMAIL]: loginData[SignInFieldName.EMAIL],
@@ -144,6 +159,7 @@ const initialValues: (loginData: SignInFormValues) => SignUpFormValues = (loginD
     [LandlordRegistrationFieldName.INN]: undefined,
     [LandlordRegistrationFieldName.ORGANIZATION]: undefined,
     [LandlordRegistrationFieldName.JOB_TITLE]: undefined,
+    [RenterRegistrationFieldName.SPECIALIZATIONS]: [],
     [BaseRegistrationFieldName.PASSWORD]: loginData[SignInFieldName.PASSWORD],
     [BaseRegistrationFieldName.PASSWORD_CONFIRM]: ""
 });
@@ -245,7 +261,7 @@ export default function SignUpCard() {
                                 className={authStyles.authForm}
                             >
                                 <div className={authStyles.authFieldsContainer}>
-                                    {BaseInputs(setEmail, setPassword).map((input) => (
+                                    {BaseInputs(setEmail).map((input) => (
                                         <WithSuspense
                                             key={input.name}
                                             loader={<FormFieldPlaceholder />}
@@ -270,6 +286,31 @@ export default function SignUpCard() {
                                             </WithSuspense>
                                         ))
                                     }
+                                    {
+                                        formik.values[BaseRegistrationFieldName.ROLE] === BaseUserRole.RENTER &&
+                                        RenterAdditionalInputs.map((input) => (
+                                            <WithSuspense
+                                                key={input.name}
+                                                loader={<FormFieldPlaceholder />}
+                                            >
+                                                <FormField
+                                                    {...input}
+                                                    className={authStyles.authField}
+                                                />
+                                            </WithSuspense>
+                                        ))
+                                    }
+                                    {PasswordFields(setPassword).map((input) => (
+                                        <WithSuspense
+                                            key={input.name}
+                                            loader={<FormFieldPlaceholder />}
+                                        >
+                                            <FormField
+                                                {...input}
+                                                className={authStyles.authField}
+                                            />
+                                        </WithSuspense>
+                                    ))}
                                 </div>
                                 {isDataLoadingFailed && (
                                     <div className={authStyles.messageContainer}>

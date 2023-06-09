@@ -24,3 +24,7 @@ export enum LandlordRegistrationFieldName {
     ORGANIZATION = "organization",
     JOB_TITLE = "jobTitle"
 }
+
+export enum RenterRegistrationFieldName {
+    SPECIALIZATIONS = "specializations"
+}
